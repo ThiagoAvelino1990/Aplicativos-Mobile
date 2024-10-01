@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">AppListaCursoJava</string>
+    <string name="app_lista_curso_vip">App Lista Curso Vip</string>
+    <string name="edit_txt_nome">Primeiro Nome</string>
+    <string name="edit_txt_sobrenome">Sobrenome</string>
+    <string name="edit_txt_curso_desejado">Curso desejado</string>
+    <string name="edit_txt_telefone">Telefone para contato</string>
+    <string name="btn_salvar">SALVAR</string>
+    <string name="btn_limpar">LIMPAR</string>
+    <string name="btn_finalizar">FINALIZAR</string>
+</resources>
