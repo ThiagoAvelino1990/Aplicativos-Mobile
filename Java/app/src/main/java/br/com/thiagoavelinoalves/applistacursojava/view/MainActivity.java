@@ -12,8 +12,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.util.List;
+
 import br.com.thiagoavelinoalves.applistacursojava.R;
+import br.com.thiagoavelinoalves.applistacursojava.controller.CursoController;
 import br.com.thiagoavelinoalves.applistacursojava.controller.PessoaControler;
+import br.com.thiagoavelinoalves.applistacursojava.model.Curso;
 import br.com.thiagoavelinoalves.applistacursojava.model.Pessoa;
 
 public class MainActivity extends AppCompatActivity {
@@ -42,9 +46,16 @@ public class MainActivity extends AppCompatActivity {
         PessoaControler pessoaControler = new PessoaControler(MainActivity.this);
         pessoaControler.buscar(pessoa);// Irá buscar os dados salvos no arquivo sharedpreferences
 
+        List<Curso> listaDeCursos;
+
+        CursoController cursoController = new CursoController();
+        listaDeCursos = cursoController.getListaDeCursos();
+
+
+
         editTextNome = findViewById(R.id.edit_txt_nome);
         editTextSobrenome = findViewById(R.id.edit_txt_sobrenome);
-        editTextCurso = findViewById(R.id.edit_txt_curso_desejado);
+        //ditTextCurso = findViewById(R.id.edit_txt_curso_desejado);
         editTextTelefone = findViewById(R.id.edit_txt_telefone);
         btnSalvar = findViewById(R.id.btn_salvar);
         btnLimpar = findViewById(R.id.btn_limpar);

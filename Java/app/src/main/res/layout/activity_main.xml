@@ -50,21 +50,6 @@
         app:layout_wrapBehaviorInParent="horizontal_only" />
 
     <EditText
-        android:id="@+id/edit_txt_curso_desejado"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="6dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginRight="6dp"
-        android:ems="10"
-        android:inputType="text"
-        android:hint="@string/edit_txt_curso_desejado"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_txt_sobrenome"
-        app:layout_wrapBehaviorInParent="horizontal_only" />
-
-    <EditText
         android:id="@+id/edit_txt_telefone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -72,12 +57,35 @@
         android:layout_marginTop="40dp"
         android:layout_marginRight="6dp"
         android:ems="10"
-        android:inputType="text"
         android:hint="@string/edit_txt_telefone"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_txt_curso_desejado"
+        app:layout_constraintTop_toBottomOf="@+id/edit_txt_sobrenome"
         app:layout_wrapBehaviorInParent="horizontal_only" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="6dp"
+        android:gravity="center"
+        android:text="@string/txt_view"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_txt_telefone" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="409dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="1dp" />
 
     <Button
         android:id="@+id/btn_salvar"
@@ -87,7 +95,7 @@
         android:text="@string/btn_salvar"
         app:layout_constraintBottom_toTopOf="@+id/btn_finalizar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_txt_telefone" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
     <Button
         android:id="@+id/btn_limpar"
@@ -97,7 +105,7 @@
         android:text="@string/btn_limpar"
         app:layout_constraintBottom_toTopOf="@+id/btn_finalizar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_txt_telefone" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
     <Button
         android:id="@+id/btn_finalizar"
@@ -110,4 +118,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
