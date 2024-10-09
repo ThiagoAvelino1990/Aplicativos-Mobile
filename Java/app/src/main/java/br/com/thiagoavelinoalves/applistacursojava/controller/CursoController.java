@@ -23,4 +23,18 @@ public class CursoController {
 
         return this.listaDeCursos;
     }
+
+    public ArrayList<String> retornarDadosSpinner(){
+
+        ArrayList<String> dadosSpinner = new ArrayList<>();
+
+        for(int i = 0; i< getListaDeCursos().size();i++){
+            Curso dadosCurso = (Curso) getListaDeCursos().get(i);
+
+            dadosSpinner.add(dadosCurso.getNomeCursoDesejado());
+        }
+
+        return dadosSpinner;
+    }
+
 }
