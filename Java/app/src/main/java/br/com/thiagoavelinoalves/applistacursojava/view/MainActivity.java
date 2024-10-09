@@ -2,8 +2,10 @@ package br.com.thiagoavelinoalves.applistacursojava.view;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnSalvar;
     Button btnLimpar;
     Button btnFinalizar;
+    Spinner spinner;
 
 
     @Override
@@ -46,10 +49,10 @@ public class MainActivity extends AppCompatActivity {
         PessoaControler pessoaControler = new PessoaControler(MainActivity.this);
         pessoaControler.buscar(pessoa);// Irá buscar os dados salvos no arquivo sharedpreferences
 
-        List<Curso> listaDeCursos;
+        List<String> listaDeCursos;
 
         CursoController cursoController = new CursoController();
-        listaDeCursos = cursoController.getListaDeCursos();
+        listaDeCursos = cursoController.retornarDadosSpinner();
 
 
 
@@ -60,6 +63,20 @@ public class MainActivity extends AppCompatActivity {
         btnSalvar = findViewById(R.id.btn_salvar);
         btnLimpar = findViewById(R.id.btn_limpar);
         btnFinalizar = findViewById(R.id.btn_finalizar);
+        spinner = findViewById(R.id.spinner);
+
+        // Adapter
+        // Layout
+        // Injetar o Adapter ao Spinner
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_list_item_1,
+                cursoController.retornarDadosSpinner());
+
+        adapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
+
+        spinner.setAdapter(adapter);
+
 
         btnSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
