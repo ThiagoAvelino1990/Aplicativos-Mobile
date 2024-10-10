@@ -13,6 +13,7 @@ public class CursoController {
 
         this.listaDeCursos = new ArrayList<Curso>();
 
+        listaDeCursos.add(new Curso(""));
         listaDeCursos.add(new Curso("Java"));
         listaDeCursos.add(new Curso("Kotlin"));
         listaDeCursos.add(new Curso("PL/SQL"));
