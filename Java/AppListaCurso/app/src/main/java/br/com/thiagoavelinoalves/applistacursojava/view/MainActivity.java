@@ -1,6 +1,7 @@
 package br.com.thiagoavelinoalves.applistacursojava.view;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -26,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
 
     EditText editTextNome;
     EditText editTextSobrenome;
-    EditText editTextCurso;
     EditText editTextTelefone;
     Button btnSalvar;
     Button btnLimpar;
@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
 
         editTextNome = findViewById(R.id.edit_txt_nome);
         editTextSobrenome = findViewById(R.id.edit_txt_sobrenome);
-        //ditTextCurso = findViewById(R.id.edit_txt_curso_desejado);
         editTextTelefone = findViewById(R.id.edit_txt_telefone);
         btnSalvar = findViewById(R.id.btn_salvar);
         btnLimpar = findViewById(R.id.btn_limpar);
@@ -83,12 +82,22 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 pessoa.setNome(editTextNome.getText().toString());
-                pessoa.setNome(editTextSobrenome.getText().toString());
-                pessoa.setNome(editTextTelefone.getText().toString());
+                pessoa.setSobrenome(editTextSobrenome.getText().toString());
+                pessoa.setTelefone(editTextTelefone.getText().toString());
+                
+                if (spinner.getSelectedItemPosition() == 0 ||
+                    editTextNome.getText().toString().isEmpty() ||
+                    editTextSobrenome.getText().toString().isEmpty()||
+                    editTextTelefone.getText().toString().isEmpty()){
 
-                pessoaControler.salvar(pessoa);
+                    Toast.makeText(MainActivity.this,"Preencha todos os campos",Toast.LENGTH_LONG).show();
 
-                Toast.makeText(MainActivity.this,"Dados Salvos Com sucesso",Toast.LENGTH_LONG).show();
+                }else{
+                    pessoaControler.salvar(pessoa);
+
+                    Toast.makeText(MainActivity.this,"Dados Salvos Com sucesso",Toast.LENGTH_LONG).show();
+                };
+
             }
         });
 
@@ -98,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
                 editTextNome.setText("");
                 editTextSobrenome.setText("");
                 editTextTelefone.setText("");
+                spinner.setSelection(0);
 
                 pessoaControler.limpar();
 

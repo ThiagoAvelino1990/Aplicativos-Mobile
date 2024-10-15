@@ -32,6 +32,7 @@ public class PessoaControler {
         listavip.putString("Sobrenome",pessoa.getSobrenome());
         listavip.putString("Telefone",pessoa.getTelefone());
         listavip.apply();
+
     }
 
     public void limpar(){
