@@ -16,6 +16,9 @@
             android:name=".view.MainActivity"
             android:exported="false" />
         <activity
+            android:name=".view.GasEtanolActivity"
+            android:exported="false"/>
+        <activity
             android:name=".view.SplashActivity"
             android:exported="true">
             <intent-filter>

@@ -1,12 +1,11 @@
 <resources>
     <string name="app_name">AppGasEtanol</string>
     <string name="app_gas_etanol">App Gasolina x Etanol</string>
-    <string name="edit_txt_nome">Primeiro Nome</string>
-    <string name="edit_txt_sobrenome">Sobrenome</string>
-    <string name="edit_txt_curso_desejado">Curso desejado</string>
-    <string name="edit_txt_telefone">Telefone para contato</string>
+    <string name="edit_txt_gasolina">R$ Gasolina</string>
+    <string name="edit_txt_etanol">R$ Etanol</string>
     <string name="btn_salvar">SALVAR</string>
+    <string name="btn_calcular">CALCULAR</string>
     <string name="btn_limpar">LIMPAR</string>
     <string name="btn_finalizar">FINALIZAR</string>
-    <string name="txt_view">Selecione o Curso Desejado...</string>
+    <string name="txt_resultado">RESULTADO</string>
 </resources>
