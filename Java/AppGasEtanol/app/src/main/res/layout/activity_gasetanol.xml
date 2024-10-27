@@ -51,7 +51,7 @@
                     android:layout_marginEnd="16dp"
                     android:ems="10"
                     android:hint="@string/edit_txt_gasolina"
-                    android:inputType="text" />
+                    android:inputType="numberDecimal" />
 
                 <EditText
                     android:id="@+id/edit_txt_etanol"
@@ -62,7 +62,7 @@
                     android:layout_marginEnd="8dp"
                     android:ems="10"
                     android:hint="@string/edit_txt_etanol"
-                    android:inputType="text" />
+                    android:inputType="numberDecimal" />
 
             </LinearLayout>
 
@@ -96,6 +96,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
+                android:enabled="false"
                 android:text="@string/btn_salvar" />
 
             <Button
@@ -105,6 +106,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
+                android:enabled="false"
                 android:text="@string/btn_limpar" />
 
 
