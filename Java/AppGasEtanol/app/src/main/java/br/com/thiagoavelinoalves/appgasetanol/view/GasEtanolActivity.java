@@ -13,6 +13,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import br.com.thiagoavelinoalves.appgasetanol.R;
+import br.com.thiagoavelinoalves.appgasetanol.controller.CombustivelController;
+import br.com.thiagoavelinoalves.appgasetanol.model.Combustivel;
 import br.com.thiagoavelinoalves.appgasetanol.util.UtilAppGasEtanol;
 
 public class GasEtanolActivity extends AppCompatActivity {
@@ -24,6 +26,8 @@ public class GasEtanolActivity extends AppCompatActivity {
     Button btnSalvar;
     Button btnLimpar;
     Button btnFinalizar;
+    Combustivel gasolina = new Combustivel();
+    Combustivel etanol = new Combustivel();
 
 
     @Override
@@ -32,6 +36,8 @@ public class GasEtanolActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_gasetanol);
 
+        CombustivelController combustivelController = new CombustivelController(GasEtanolActivity.this);
+
         editTextGasolina = findViewById(R.id.edit_txt_gasolina);
         editTextEtanol = findViewById(R.id.edit_txt_etanol);
         txtResultado = findViewById(R.id.txt_resultado);
@@ -39,6 +45,7 @@ public class GasEtanolActivity extends AppCompatActivity {
         btnSalvar = findViewById(R.id.btn_salvar);
         btnLimpar = findViewById(R.id.btn_limpar);
         btnFinalizar = findViewById(R.id.btn_finalizar);
+
 
         btnCalcular.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,10 +66,16 @@ public class GasEtanolActivity extends AppCompatActivity {
                 }
 
                 if (isDadosOk) {
-                    txtResultado.setText(UtilAppGasEtanol.CalcularMelhorOpcao(Double.parseDouble(editTextGasolina.getText().toString()),
-                            Double.parseDouble(editTextEtanol.getText().toString())));
+                    gasolina.setPrecoCombustivel(Double.parseDouble(editTextGasolina.getText().toString()));
+                    etanol.setPrecoCombustivel(Double.parseDouble(editTextEtanol.getText().toString()));
+
+                    txtResultado.setText(UtilAppGasEtanol.CalcularMelhorOpcao(gasolina.getPrecoCombustivel(),etanol.getPrecoCombustivel()));
+                    btnSalvar.setEnabled(true);
+                    btnLimpar.setEnabled(true);
                 } else {
                     Toast.makeText(GasEtanolActivity.this, "Por favor, verifice os dados informados", Toast.LENGTH_LONG).show();
+                    btnSalvar.setEnabled(false);
+                    btnLimpar.setEnabled(true);
                 }
             }
         });
@@ -70,6 +83,19 @@ public class GasEtanolActivity extends AppCompatActivity {
         btnSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                gasolina.setNomeCombustivel("GASOLINA");
+                etanol.setNomeCombustivel("ETANOL");
+
+                if (txtResultado.getText().toString().indexOf("ETANOL") < 0){
+                    gasolina.setRecomendacao(txtResultado.getText().toString());
+                    combustivelController.salvar(gasolina);
+                }else{
+                    etanol.setRecomendacao(txtResultado.getText().toString());
+                    combustivelController.salvar(etanol);
+                }
+
+
                 Toast.makeText(GasEtanolActivity.this, "Dados salvos com sucesso", Toast.LENGTH_LONG).show();
             }
         });
@@ -80,8 +106,11 @@ public class GasEtanolActivity extends AppCompatActivity {
                 editTextGasolina.setText("");
                 editTextEtanol.setText("");
                 txtResultado.setText("");
-
+                btnSalvar.setEnabled(false);
                 Toast.makeText(GasEtanolActivity.this, "Dados apagados com sucesso", Toast.LENGTH_LONG).show();
+                btnLimpar.setEnabled(false);
+
+                combustivelController.limpar();
             }
         });
 
