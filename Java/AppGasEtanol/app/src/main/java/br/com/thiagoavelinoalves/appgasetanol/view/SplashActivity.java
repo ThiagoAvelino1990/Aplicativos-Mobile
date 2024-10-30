@@ -10,6 +10,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import br.com.thiagoavelinoalves.appgasetanol.DataBase.GasEtanolDB;
 import br.com.thiagoavelinoalves.appgasetanol.R;
 
 
@@ -37,6 +38,8 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+
+                GasEtanolDB db = new GasEtanolDB(SplashActivity.this);
 
                 Intent telaPrincipal = new Intent(SplashActivity.this, GasEtanolActivity.class);
                 startActivity(telaPrincipal);
