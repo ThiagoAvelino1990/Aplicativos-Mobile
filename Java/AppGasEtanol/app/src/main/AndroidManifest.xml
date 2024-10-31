@@ -13,9 +13,6 @@
         android:theme="@style/Theme.AppListaCursoJava"
         tools:targetApi="31">
         <activity
-            android:name=".view.MainActivity"
-            android:exported="false" />
-        <activity
             android:name=".view.GasEtanolActivity"
             android:exported="false"/>
         <activity

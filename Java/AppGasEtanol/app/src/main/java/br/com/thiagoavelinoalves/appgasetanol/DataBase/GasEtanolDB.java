@@ -1,5 +1,6 @@
 package br.com.thiagoavelinoalves.appgasetanol.DataBase;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -9,8 +10,8 @@ import androidx.annotation.Nullable;
 
 public class GasEtanolDB extends SQLiteOpenHelper {
 
-    public static final String DB_NAME = "gasetanol.db";
-    public static final int DB_VERSION = 1;
+    private static final String DB_NAME = "gasetanol.db";
+    private static final int DB_VERSION = 1;
 
     Cursor cursor;
 
@@ -35,6 +36,12 @@ public class GasEtanolDB extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+
+    }
+
+    public void salvarDados(String nomeTabela, ContentValues dadosTabela){
+
+        db.insert(nomeTabela, null, dadosTabela);
 
     }
 }
