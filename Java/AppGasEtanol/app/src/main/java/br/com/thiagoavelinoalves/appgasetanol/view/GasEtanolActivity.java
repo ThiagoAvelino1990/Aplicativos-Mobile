@@ -12,6 +12,9 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.List;
+
+import br.com.thiagoavelinoalves.appgasetanol.DataBase.GasEtanolDB;
 import br.com.thiagoavelinoalves.appgasetanol.R;
 import br.com.thiagoavelinoalves.appgasetanol.controller.CombustivelController;
 import br.com.thiagoavelinoalves.appgasetanol.model.Combustivel;
@@ -28,6 +31,8 @@ public class GasEtanolActivity extends AppCompatActivity {
     Button btnFinalizar;
     Combustivel gasolina = new Combustivel();
     Combustivel etanol = new Combustivel();
+    List<Combustivel> listaDeDados;
+
 
 
     @Override
@@ -37,6 +42,8 @@ public class GasEtanolActivity extends AppCompatActivity {
         setContentView(R.layout.activity_gasetanol);
 
         CombustivelController combustivelController = new CombustivelController(GasEtanolActivity.this);
+        listaDeDados = combustivelController.getGerarDados();
+
 
         editTextGasolina = findViewById(R.id.edit_txt_gasolina);
         editTextEtanol = findViewById(R.id.edit_txt_etanol);

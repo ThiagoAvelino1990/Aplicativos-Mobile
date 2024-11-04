@@ -3,6 +3,8 @@ package br.com.thiagoavelinoalves.appgasetanol.controller;
 import android.content.ContentValues;
 import android.content.SharedPreferences;
 
+import java.util.List;
+
 import br.com.thiagoavelinoalves.appgasetanol.DataBase.GasEtanolDB;
 import br.com.thiagoavelinoalves.appgasetanol.model.Combustivel;
 import br.com.thiagoavelinoalves.appgasetanol.view.GasEtanolActivity;
@@ -40,6 +42,11 @@ public class CombustivelController extends GasEtanolDB {
     public void limpar(){
         combustivelRecomendado.clear();
         combustivelRecomendado.apply();
+    }
+
+    public List<Combustivel> getGerarDados(){
+
+        return gerarDados();
     }
 
 }
