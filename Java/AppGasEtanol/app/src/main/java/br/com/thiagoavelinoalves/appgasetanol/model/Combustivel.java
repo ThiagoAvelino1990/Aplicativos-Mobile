@@ -2,9 +2,17 @@ package br.com.thiagoavelinoalves.appgasetanol.model;
 
 public class Combustivel {
 
+    private int id;
     private double precoCombustivel;
     private String nomeCombustivel;
     private String recomendacao;
+
+    public int getId(){
+        return this.id;
+    }
+    public void setId (int id){
+        this.id = id;
+    }
 
     public double getPrecoCombustivel(){
         return this.precoCombustivel;

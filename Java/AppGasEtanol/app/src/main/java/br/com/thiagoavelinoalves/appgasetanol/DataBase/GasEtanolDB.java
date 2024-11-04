@@ -5,8 +5,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import br.com.thiagoavelinoalves.appgasetanol.model.Combustivel;
 
 public class GasEtanolDB extends SQLiteOpenHelper {
 
@@ -44,4 +50,33 @@ public class GasEtanolDB extends SQLiteOpenHelper {
         db.insert(nomeTabela, null, dadosTabela);
 
     }
+
+    public List<Combustivel> gerarDados(){
+
+        List<Combustivel> dadosCombustivel = new ArrayList<>();
+
+        String querySQL = "SELECT * FROM COMBUSTIVEL";
+
+        cursor = db.rawQuery(querySQL, null);
+
+        if(cursor.moveToFirst()){
+            do{
+                Combustivel dados = new Combustivel();
+
+                dados.setId(cursor.getInt(cursor.getColumnIndexOrThrow("ID")));
+                dados.setPrecoCombustivel(cursor.getDouble(cursor.getColumnIndexOrThrow("PRECO")));
+                dados.setNomeCombustivel(cursor.getString(cursor.getColumnIndexOrThrow("NOME")));
+                dados.setRecomendacao(cursor.getString(cursor.getColumnIndexOrThrow("RECOMENDACAO")));
+
+                dadosCombustivel.add(dados);
+
+            }while(cursor.moveToNext());
+
+        }else{
+            Log.i("ELSE", "gerarDados: Parou aqui");
+        }
+
+        return dadosCombustivel;
+    }
+
 }
