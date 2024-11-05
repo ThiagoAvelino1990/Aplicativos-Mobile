@@ -15,6 +15,8 @@ public class CombustivelController extends GasEtanolDB {
     SharedPreferences.Editor combustivelRecomendado;
     public static final String NOME_PREFERENCES = "pref_combustivel";
 
+    String nomeTabela = "COMBUSTIVEL";
+
     public CombustivelController(GasEtanolActivity gasEtanolActivity){
         super(gasEtanolActivity);
         sharedPreferences = gasEtanolActivity.getSharedPreferences(NOME_PREFERENCES,0);
@@ -35,7 +37,7 @@ public class CombustivelController extends GasEtanolDB {
         contentValues.put("RECOMENDACAO", combustivel.getRecomendacao());
 
 
-        salvarDados("COMBUSTIVEL", contentValues);
+        salvarDados(nomeTabela, contentValues);
 
     }
 
@@ -45,8 +47,25 @@ public class CombustivelController extends GasEtanolDB {
     }
 
     public List<Combustivel> getGerarDados(){
-
         return gerarDados();
+    }
+
+    public void setAlterarDados(Combustivel combustivel){
+
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put("ID", combustivel.getId());
+        contentValues.put("PRECO", combustivel.getPrecoCombustivel());
+        contentValues.put("NOME", combustivel.getNomeCombustivel());
+        contentValues.put("RECOMENDACAO", combustivel.getRecomendacao());
+
+        alterarDados(nomeTabela, contentValues);
+
+    }
+
+    public void setDeletarDados(int id){
+
+        deletarDados(nomeTabela, id);
     }
 
 }
