@@ -11,6 +11,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import br.com.thiagoavelinoalves.applistacursojava.R;
+import br.com.thiagoavelinoalves.applistacursojava.database.ListaCursoDB;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -36,6 +37,8 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+
+                ListaCursoDB db = new ListaCursoDB(SplashActivity.this);
 
                 Intent telaPrincipal = new Intent(SplashActivity.this, MainActivity.class);
                 startActivity(telaPrincipal);
