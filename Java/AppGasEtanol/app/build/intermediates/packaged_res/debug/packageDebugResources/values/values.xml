@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <string name="app_gas_etanol">App Gasolina x Etanol</string>
+    <string name="app_name">AppGasEtanol</string>
+    <string name="btn_calcular">CALCULAR</string>
+    <string name="btn_finalizar">FINALIZAR</string>
+    <string name="btn_limpar">LIMPAR</string>
+    <string name="btn_salvar">SALVAR</string>
+    <string name="edit_txt_etanol">R$ Etanol</string>
+    <string name="edit_txt_gasolina">R$ Gasolina</string>
+    <string name="txt_resultado">RESULTADO</string>
+    <style name="Base.Theme.AppListaCursoJava" parent="Theme.Material3.DayNight.NoActionBar">
+        
+        
+    </style>
+    <style name="Theme.AppListaCursoJava" parent="Base.Theme.AppListaCursoJava"/>
+</resources>

@@ -1,0 +1,5 @@
+br.com.thiagoavelinoalves.appgasetanol.test.app-core-1.6.1-0 C:\Users\thiag\.gradle\caches\transforms-4\6830a08a238b54d0dac17148d16fdb04\transformed\core-1.6.1\res
+br.com.thiagoavelinoalves.appgasetanol.test.app-androidTest-1 D:\Dev\GitHub-repositorios\Aplicativos-Mobile\Java\AppGasEtanol\app\build\generated\res\resValues\androidTest\debug
+br.com.thiagoavelinoalves.appgasetanol.test.app-mergeDebugAndroidTestResources-2 D:\Dev\GitHub-repositorios\Aplicativos-Mobile\Java\AppGasEtanol\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\merged.dir
+br.com.thiagoavelinoalves.appgasetanol.test.app-mergeDebugAndroidTestResources-3 D:\Dev\GitHub-repositorios\Aplicativos-Mobile\Java\AppGasEtanol\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\stripped.dir
+br.com.thiagoavelinoalves.appgasetanol.test.app-debugAndroidTest-4 D:\Dev\GitHub-repositorios\Aplicativos-Mobile\Java\AppGasEtanol\app\build\intermediates\merged_res\debugAndroidTest\mergeDebugAndroidTestResources
