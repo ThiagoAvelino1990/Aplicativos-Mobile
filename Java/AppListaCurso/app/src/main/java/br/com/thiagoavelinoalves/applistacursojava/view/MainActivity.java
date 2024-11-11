@@ -25,6 +25,7 @@ import br.com.thiagoavelinoalves.applistacursojava.model.Pessoa;
 
 public class MainActivity extends AppCompatActivity {
 
+    EditText editTextCpf;
     EditText editTextNome;
     EditText editTextSobrenome;
     EditText editTextTelefone;
@@ -51,11 +52,11 @@ public class MainActivity extends AppCompatActivity {
 
         List<String> listaDeCursos;
 
-        CursoController cursoController = new CursoController();
+        CursoController cursoController = new CursoController(MainActivity.this);
         listaDeCursos = cursoController.retornarDadosSpinner();
 
 
-
+        editTextCpf = findViewById(R.id.edit_txt_cpf);
         editTextNome = findViewById(R.id.edit_txt_nome);
         editTextSobrenome = findViewById(R.id.edit_txt_sobrenome);
         editTextTelefone = findViewById(R.id.edit_txt_telefone);
@@ -81,21 +82,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                pessoa.setCpf(Integer.parseInt(editTextCpf.getText().toString()));
                 pessoa.setNome(editTextNome.getText().toString());
                 pessoa.setSobrenome(editTextSobrenome.getText().toString());
                 pessoa.setTelefone(editTextTelefone.getText().toString());
-                
-                if (spinner.getSelectedItemPosition() == 0 ||
-                    editTextNome.getText().toString().isEmpty() ||
+                pessoa.setIdCursoPessoa(spinner.getSelectedItemPosition());
+                if (editTextNome.getText().toString().isEmpty() ||
                     editTextSobrenome.getText().toString().isEmpty()||
                     editTextTelefone.getText().toString().isEmpty()){
 
                     Toast.makeText(MainActivity.this,"Preencha todos os campos",Toast.LENGTH_LONG).show();
 
                 }else{
-                    pessoaControler.salvar(pessoa);
-
-                    Toast.makeText(MainActivity.this,"Dados Salvos Com sucesso",Toast.LENGTH_LONG).show();
+                    pessoaControler.salvar(pessoa, MainActivity.this);
                 };
 
             }
@@ -109,9 +108,10 @@ public class MainActivity extends AppCompatActivity {
                 editTextTelefone.setText("");
                 spinner.setSelection(0);
 
-                pessoaControler.limpar();
+                pessoaControler.limpar(MainActivity.this);
 
                 Toast.makeText(MainActivity.this,"Dados apagados com sucesso",Toast.LENGTH_LONG).show();
+
             }
         });
 
