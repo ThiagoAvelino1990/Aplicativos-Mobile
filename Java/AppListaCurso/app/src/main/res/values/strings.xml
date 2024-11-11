@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">AppListaCursoJava</string>
     <string name="app_lista_curso_vip">App Lista Curso Vip</string>
+    <string name="edit_txt_cpf">CPF</string>
     <string name="edit_txt_nome">Primeiro Nome</string>
     <string name="edit_txt_sobrenome">Sobrenome</string>
     <string name="edit_txt_curso_desejado">Curso desejado</string>
