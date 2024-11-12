@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#B1BEC6"
     tools:context=".view.MainActivity">
 
     <ScrollView
@@ -24,6 +25,7 @@
                 android:layout_marginTop="48dp"
                 android:gravity="center_horizontal"
                 android:text="@string/app_lista_curso_vip"
+                android:textColor="@color/black"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -36,6 +38,8 @@
                 android:layout_marginEnd="16dp"
                 android:ems="10"
                 android:hint="@string/edit_txt_cpf"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
                 android:inputType="number"
                 app:layout_wrapBehaviorInParent="horizontal_only" />
 
@@ -48,6 +52,8 @@
                 android:layout_marginEnd="16dp"
                 android:ems="10"
                 android:hint="@string/edit_txt_nome"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
                 android:inputType="text"
                 app:layout_wrapBehaviorInParent="horizontal_only" />
 
@@ -60,6 +66,8 @@
                 android:layout_marginEnd="16dp"
                 android:ems="10"
                 android:hint="@string/edit_txt_sobrenome"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
                 android:inputType="text"
                 app:layout_wrapBehaviorInParent="horizontal_only" />
 
@@ -72,6 +80,8 @@
                 android:layout_marginEnd="16dp"
                 android:ems="10"
                 android:hint="@string/edit_txt_telefone"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
                 android:inputType="phone"
                 app:layout_wrapBehaviorInParent="horizontal_only" />
 
@@ -84,6 +94,7 @@
                 android:layout_marginEnd="16dp"
                 android:gravity="center"
                 android:text="@string/txt_view"
+                android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintTop_toBottomOf="@+id/edit_txt_telefone" />
@@ -95,6 +106,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
+                android:outlineSpotShadowColor="@color/cardview_dark_background"
                 tools:ignore="MissingConstraints"
                 tools:layout_editor_absoluteX="1dp" />
 
