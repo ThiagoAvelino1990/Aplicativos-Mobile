@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#1A4C6A"
     tools:context=".view.GasEtanolActivity">
 
     <ScrollView
@@ -33,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="88dp"
                 android:layout_marginTop="40dp"
-                app:srcCompat="@android:drawable/stat_notify_sync" />
+                app:srcCompat="@mipmap/ic_launcher_round" />
 
             <LinearLayout
                 android:layout_width="match_parent"
