@@ -32,7 +32,6 @@ public class GasEtanolActivity extends AppCompatActivity {
     Combustivel gasolina = new Combustivel();
     Combustivel etanol = new Combustivel();
     List<Combustivel> listaDeDados;
-    int paradaDebug;
 
 
 
@@ -45,15 +44,6 @@ public class GasEtanolActivity extends AppCompatActivity {
         CombustivelController combustivelController = new CombustivelController(GasEtanolActivity.this);
         listaDeDados = combustivelController.getGerarDados();
 
-        Combustivel alterarDados = listaDeDados.get(1);
-        alterarDados.setRecomendacao("**COMBUSTIVEL ADULTERADO**");
-        alterarDados.setNomeCombustivel("**ETANOL ADULTERADO**");
-        alterarDados.setPrecoCombustivel(3.56);
-
-        combustivelController.setAlterarDados(alterarDados);
-        paradaDebug = 1;
-        combustivelController.setDeletarDados(alterarDados.getId());
-        paradaDebug = 2;
 
         editTextGasolina = findViewById(R.id.edit_txt_gasolina);
         editTextEtanol = findViewById(R.id.edit_txt_etanol);
