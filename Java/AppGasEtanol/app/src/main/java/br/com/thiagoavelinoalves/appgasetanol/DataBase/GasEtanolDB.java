@@ -45,8 +45,7 @@ public class GasEtanolDB extends SQLiteOpenHelper {
 
     }
 
-    public void salvarDados(String nomeTabela,
-                            ContentValues dadosTabela){
+    public void salvarDados(String nomeTabela, ContentValues dadosTabela){
 
         db.insert(nomeTabela, null, dadosTabela);
 
@@ -72,23 +71,12 @@ public class GasEtanolDB extends SQLiteOpenHelper {
                 dadosCombustivel.add(dados);
 
             }while(cursor.moveToNext());
+
+        }else{
+            Log.i("ELSE", "gerarDados: Parou aqui");
         }
 
         return dadosCombustivel;
-    }
-
-    public void alterarDados(String nomeTabela,
-                             ContentValues dadosTabela){
-
-        int id = dadosTabela.getAsInteger("ID");
-        db.update(nomeTabela, dadosTabela, "ID=?", new String[]{Integer.toString(id)});
-
-    }
-
-    public void deletarDados(String nomeTabela,
-                             int id){
-
-        db.delete(nomeTabela,"ID=?",new String[]{Integer.toString(id)});
     }
 
 }
