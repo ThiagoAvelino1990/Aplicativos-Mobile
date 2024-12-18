@@ -19,9 +19,9 @@ public class PessoaControler extends ListaCursoDB{
     SharedPreferences.Editor listavip;
     public static final String NOME_PREFERENCES = "pref_listavip";
 
-    public PessoaControler(MainActivity mainActivity){
-        super(mainActivity);
-        sharedPreferences = mainActivity.getSharedPreferences(NOME_PREFERENCES,0);
+    public PessoaControler(Context context){
+        super(context);
+        sharedPreferences = context.getSharedPreferences(NOME_PREFERENCES,0);
         listavip = sharedPreferences.edit();
     }
 
