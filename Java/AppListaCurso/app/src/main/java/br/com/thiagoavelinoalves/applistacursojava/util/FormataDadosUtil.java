@@ -1,18 +1,20 @@
 package br.com.thiagoavelinoalves.applistacursojava.util;
 
-// TODO: Finalizar classe
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class FormataDadosUtil {
 
-    public String formatarTelefone(String telefone){
+    public String validarTelefone(String telefone){
 
-        String padraoTelefone = "\\+?\\d{0,2}\\s?\\(?\\d{2}\\)?\\s?9?\\d{4}-\\d{4}";
-        String telefoneFormatado;
+        Pattern pattern = Pattern.compile("\\(\\d{2}\\)\\d{5}-\\d{4}");
+        Matcher matcher = pattern.matcher(telefone);
 
-        if(padraoTelefone.matches(telefone)){
+        if(matcher.find()){
             return telefone;
         }else{
             return null;
         }
     }
+
 }
