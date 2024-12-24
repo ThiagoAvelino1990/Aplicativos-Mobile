@@ -36,7 +36,8 @@ public class ListaCursoDB extends SQLiteOpenHelper {
         String sqlTabelaPessoa = "CREATE TABLE PESSOA(CPF INTEGER PRIMARY KEY, " +
                 "NOME TEXT, " +
                 "SOBRENOME TEXT, " +
-                "TELEFONE TEXT," +
+                "TELEFONE TEXT, " +
+                "EMAIL TEXT, " +
                 "ID_CURSO_PESSOA INTEGER, " +
                 "FOREIGN KEY(ID_CURSO_PESSOA) REFERENCES CURSO(ID_CURSO) )";
 
@@ -98,6 +99,7 @@ public class ListaCursoDB extends SQLiteOpenHelper {
                dados.setNome(cursor.getString(cursor.getColumnIndexOrThrow("NOME")));
                dados.setSobrenome(cursor.getString(cursor.getColumnIndexOrThrow("SOBRENOME")));
                dados.setTelefone(cursor.getString(cursor.getColumnIndexOrThrow("TELEFONE")));
+               dados.setEmail(cursor.getString(cursor.getColumnIndexOrThrow("EMAIL")));
                dados.setIdCursoPessoa(cursor.getInt(cursor.getColumnIndexOrThrow("ID_CURSO_PESSOA")));
 
                dadosPessoa.add(dados);

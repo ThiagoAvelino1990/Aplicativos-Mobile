@@ -22,6 +22,7 @@ import br.com.thiagoavelinoalves.applistacursojava.controller.CursoController;
 import br.com.thiagoavelinoalves.applistacursojava.controller.PessoaControler;
 import br.com.thiagoavelinoalves.applistacursojava.model.Curso;
 import br.com.thiagoavelinoalves.applistacursojava.model.Pessoa;
+import br.com.thiagoavelinoalves.applistacursojava.util.FormataDadosUtil;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,10 +30,12 @@ public class MainActivity extends AppCompatActivity {
     EditText editTextNome;
     EditText editTextSobrenome;
     EditText editTextTelefone;
+    EditText editTextEmail;
     Button btnSalvar;
     Button btnLimpar;
     Button btnFinalizar;
     Spinner spinner;
+    boolean dadosOk;
 
 
     @Override
@@ -55,11 +58,13 @@ public class MainActivity extends AppCompatActivity {
         CursoController cursoController = new CursoController(MainActivity.this);
         listaDeCursos = cursoController.retornarDadosSpinner();
 
+        FormataDadosUtil validador = new FormataDadosUtil();
 
         editTextCpf = findViewById(R.id.edit_txt_cpf);
         editTextNome = findViewById(R.id.edit_txt_nome);
         editTextSobrenome = findViewById(R.id.edit_txt_sobrenome);
         editTextTelefone = findViewById(R.id.edit_txt_telefone);
+        editTextEmail = findViewById(R.id.edit_txt_email);
         btnSalvar = findViewById(R.id.btn_salvar);
         btnLimpar = findViewById(R.id.btn_limpar);
         btnFinalizar = findViewById(R.id.btn_finalizar);
@@ -77,6 +82,16 @@ public class MainActivity extends AppCompatActivity {
 
         spinner.setAdapter(adapter);
 
+        //TODO :Verificar lógica implementada
+        btnSalvar.setEnabled(false);
+        dadosOk = false;
+        if (!editTextNome.getText().toString().isEmpty() ||
+            !editTextSobrenome.getText().toString().isEmpty()||
+            //!validador.validarTelefone(editTextTelefone.getText().toString()).isEmpty()||
+            !editTextEmail.getText().toString().isEmpty()){
+            btnSalvar.setEnabled(true);
+            dadosOk = true;
+        }
 
         btnSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,16 +101,18 @@ public class MainActivity extends AppCompatActivity {
                 pessoa.setNome(editTextNome.getText().toString());
                 pessoa.setSobrenome(editTextSobrenome.getText().toString());
                 pessoa.setTelefone(editTextTelefone.getText().toString());
+                pessoa.setEmail(editTextEmail.getText().toString());
                 pessoa.setIdCursoPessoa(spinner.getSelectedItemPosition());
-                if (editTextNome.getText().toString().isEmpty() ||
-                    editTextSobrenome.getText().toString().isEmpty()||
-                    editTextTelefone.getText().toString().isEmpty()){
 
-                    Toast.makeText(MainActivity.this,"Preencha todos os campos",Toast.LENGTH_LONG).show();
-
+                //TODO :Verificar lógica implementada
+                if(!dadosOk){
+                    Toast.makeText(MainActivity.this,"Favor verificar os campos",Toast.LENGTH_LONG).show();
                 }else{
                     pessoaControler.salvar(pessoa, MainActivity.this);
-                };
+
+                    Toast.makeText(MainActivity.this,"Dados salvos com sucesso",Toast.LENGTH_LONG).show();
+                }
+
 
             }
         });
@@ -106,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
                 editTextNome.setText("");
                 editTextSobrenome.setText("");
                 editTextTelefone.setText("");
+                editTextEmail.setText("");
                 spinner.setSelection(0);
 
                 pessoaControler.limpar(MainActivity.this);

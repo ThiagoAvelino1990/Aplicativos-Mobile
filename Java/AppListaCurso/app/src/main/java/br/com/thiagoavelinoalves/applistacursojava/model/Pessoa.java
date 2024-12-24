@@ -6,6 +6,7 @@ public class Pessoa {
     private String nome;
     private String sobrenome;
     private String telefone;
+    private String email;
     private int idCursoPessoa;
 
     public Pessoa() {
@@ -41,6 +42,13 @@ public class Pessoa {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public String getEmail(){
+        return this.email;
+    }
+    public void setEmail(String email){
+            this.email = email;
     }
 
     public int getIdCursoPessoa(){

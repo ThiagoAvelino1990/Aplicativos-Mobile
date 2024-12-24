@@ -30,6 +30,8 @@ public class PessoaControler extends ListaCursoDB{
         pessoa.setNome(sharedPreferences.getString("PrimeiroNome",""));
         pessoa.setSobrenome(sharedPreferences.getString("Sobrenome",""));
         pessoa.setTelefone(sharedPreferences.getString("Telefone",""));
+        pessoa.setEmail(sharedPreferences.getString("Email",""));
+        pessoa.setCpf(Integer.parseInt(sharedPreferences.getString("CPF","")));
 
         return buscarDadosPessoa(pessoa.getCpf());
     }
@@ -42,6 +44,7 @@ public class PessoaControler extends ListaCursoDB{
         listavip.putString("PrimeiroNome",pessoa.getNome());
         listavip.putString("Sobrenome",pessoa.getSobrenome());
         listavip.putString("Telefone",pessoa.getTelefone());
+        listavip.putString("Email", pessoa.getEmail());
         listavip.putString("idCurso", Integer.toString(pessoa.getIdCursoPessoa()));
         listavip.apply();
 
@@ -49,6 +52,7 @@ public class PessoaControler extends ListaCursoDB{
         contentValuesPessoa.put("NOME", pessoa.getNome());
         contentValuesPessoa.put("SOBRENOME", pessoa.getSobrenome());
         contentValuesPessoa.put("TELEFONE", pessoa.getTelefone());
+        contentValuesPessoa.put("EMAIL", pessoa.getEmail());
         contentValuesPessoa.put("ID_CURSO_PESSOA", pessoa.getIdCursoPessoa());
 
         salvarDadosPessoa(tabelaPessoa, contentValuesPessoa);

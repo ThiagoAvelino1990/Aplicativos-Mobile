@@ -85,6 +85,20 @@
                 android:inputType="phone"
                 app:layout_wrapBehaviorInParent="horizontal_only" />
 
+            <EditText
+                android:id="@+id/edit_txt_email"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:ems="10"
+                android:hint="@string/edit_txt_email"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:inputType="textEmailAddress"
+                app:layout_wrapBehaviorInParent="horizontal_only" />
+
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="match_parent"

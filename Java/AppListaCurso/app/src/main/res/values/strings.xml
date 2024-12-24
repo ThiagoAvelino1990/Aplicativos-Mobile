@@ -6,6 +6,7 @@
     <string name="edit_txt_sobrenome">Sobrenome</string>
     <string name="edit_txt_curso_desejado">Curso desejado</string>
     <string name="edit_txt_telefone">Telefone para contato</string>
+    <string name="edit_txt_email">Email</string>
     <string name="btn_salvar">SALVAR</string>
     <string name="btn_limpar">LIMPAR</string>
     <string name="btn_finalizar">FINALIZAR</string>
