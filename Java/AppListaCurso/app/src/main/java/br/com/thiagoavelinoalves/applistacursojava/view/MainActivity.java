@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnLimpar;
     Button btnFinalizar;
     Spinner spinner;
-    boolean dadosOk;
+    boolean dadosOk = true;
 
 
     @Override
@@ -82,32 +82,32 @@ public class MainActivity extends AppCompatActivity {
 
         spinner.setAdapter(adapter);
 
-        //TODO :Verificar lógica implementada
-        btnSalvar.setEnabled(false);
-        dadosOk = false;
-        if (!editTextNome.getText().toString().isEmpty() ||
-            !editTextSobrenome.getText().toString().isEmpty()||
-            //!validador.validarTelefone(editTextTelefone.getText().toString()).isEmpty()||
-            !editTextEmail.getText().toString().isEmpty()){
-            btnSalvar.setEnabled(true);
-            dadosOk = true;
-        }
-
         btnSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                pessoa.setCpf(Integer.parseInt(editTextCpf.getText().toString()));
-                pessoa.setNome(editTextNome.getText().toString());
-                pessoa.setSobrenome(editTextSobrenome.getText().toString());
-                pessoa.setTelefone(editTextTelefone.getText().toString());
-                pessoa.setEmail(editTextEmail.getText().toString());
-                pessoa.setIdCursoPessoa(spinner.getSelectedItemPosition());
+                if (editTextNome.getText().toString().isEmpty() ||
+                    editTextSobrenome.getText().toString().isEmpty()||
+                    (!FormataDadosUtil.validarTelefone(editTextTelefone.getText().toString()))||
+                    (!FormataDadosUtil.validarEmail(editTextEmail.getText().toString()))||
+                    editTextCpf.getText().toString().isEmpty()){
 
-                //TODO :Verificar lógica implementada
+                    dadosOk = false;
+                }
+
+
+
                 if(!dadosOk){
                     Toast.makeText(MainActivity.this,"Favor verificar os campos",Toast.LENGTH_LONG).show();
                 }else{
+
+                    pessoa.setCpf(Long.parseLong(editTextCpf.getText().toString()));
+                    pessoa.setNome(editTextNome.getText().toString());
+                    pessoa.setSobrenome(editTextSobrenome.getText().toString());
+                    pessoa.setTelefone(editTextTelefone.getText().toString());
+                    pessoa.setEmail(editTextEmail.getText().toString());
+                    pessoa.setIdCursoPessoa(spinner.getSelectedItemPosition());
+
                     pessoaControler.salvar(pessoa, MainActivity.this);
 
                     Toast.makeText(MainActivity.this,"Dados salvos com sucesso",Toast.LENGTH_LONG).show();
@@ -124,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
                 editTextSobrenome.setText("");
                 editTextTelefone.setText("");
                 editTextEmail.setText("");
+                editTextCpf.setText("");
                 spinner.setSelection(0);
 
                 pessoaControler.limpar(MainActivity.this);

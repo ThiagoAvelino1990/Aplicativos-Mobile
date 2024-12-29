@@ -2,7 +2,7 @@ package br.com.thiagoavelinoalves.applistacursojava.model;
 
 public class Pessoa {
 
-    private int cpf;
+    private Long cpf;
     private String nome;
     private String sobrenome;
     private String telefone;
@@ -13,10 +13,10 @@ public class Pessoa {
 
     }
 
-    public int getCpf(){
+    public Long getCpf(){
         return this.cpf;
     }
-    public void setCpf(int cpf){
+    public void setCpf(Long cpf){
         this.cpf = cpf;
     }
 

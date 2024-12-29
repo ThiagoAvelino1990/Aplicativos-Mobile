@@ -5,15 +5,26 @@ import java.util.regex.Pattern;
 
 public class FormataDadosUtil {
 
-    public String validarTelefone(String telefone){
+    public static boolean validarTelefone(String telefone){
 
         Pattern pattern = Pattern.compile("\\(\\d{2}\\)\\d{5}-\\d{4}");
         Matcher matcher = pattern.matcher(telefone);
 
         if(matcher.find()){
-            return telefone;
+            return true;
         }else{
-            return null;
+            return false;
+        }
+    }
+
+
+    public static boolean validarEmail(String email){
+        int indice = email.indexOf("@");
+
+        if( indice > -1 ){
+            return true;
+        }else{
+            return false;
         }
     }
 
