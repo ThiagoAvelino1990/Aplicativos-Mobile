@@ -1,6 +1,7 @@
 package br.com.thiagoavelinoalves.applistacursojava.view;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnLimpar;
     Button btnFinalizar;
     Spinner spinner;
-    boolean dadosOk = true;
+
 
 
     @Override
@@ -86,21 +87,44 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (editTextNome.getText().toString().isEmpty() ||
-                    editTextSobrenome.getText().toString().isEmpty()||
-                    (!FormataDadosUtil.validarTelefone(editTextTelefone.getText().toString()))||
-                    (!FormataDadosUtil.validarEmail(editTextEmail.getText().toString()))||
-                    editTextCpf.getText().toString().isEmpty()){
+                boolean dadosOk = true;
 
+                if(TextUtils.isEmpty(editTextNome.getText())){
+                    editTextNome.setError(" * Campo obrigatório");
+                    editTextNome.requestFocus();
                     dadosOk = false;
                 }
 
+                if(TextUtils.isEmpty(editTextSobrenome.getText())){
+                    editTextSobrenome.setError(" * Campo obrigatório");
+                    editTextSobrenome.requestFocus();
+                    dadosOk = false;
+                }
 
+                if(!FormataDadosUtil.validarTelefone(editTextTelefone.getText().toString())){
+                    editTextTelefone.setError(" * Campo fora do formato (xx)xxxxx-xxxx");
+                    editTextTelefone.requestFocus();
+                    dadosOk = false;
+                }
 
-                if(!dadosOk){
-                    Toast.makeText(MainActivity.this,"Favor verificar os campos",Toast.LENGTH_LONG).show();
-                }else{
+                if(!FormataDadosUtil.validarEmail(editTextEmail.getText().toString())){
+                    editTextEmail.setError(" * Email no formato inválido");
+                    editTextEmail.requestFocus();
+                    dadosOk = false;
+                }
 
+                if(TextUtils.isEmpty(editTextCpf.getText())){
+                    editTextCpf.setError(" * Campo obrigatório");
+                    editTextCpf.requestFocus();
+                    dadosOk = false;
+                }
+
+                if( spinner.getSelectedItemPosition() == 0){
+                    Toast.makeText(MainActivity.this, "Favor selecionar um curso",Toast.LENGTH_LONG).show();
+                    dadosOk = false;
+                }
+
+                if(dadosOk){
                     pessoa.setCpf(Long.parseLong(editTextCpf.getText().toString()));
                     pessoa.setNome(editTextNome.getText().toString());
                     pessoa.setSobrenome(editTextSobrenome.getText().toString());
@@ -110,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
 
                     pessoaControler.salvar(pessoa, MainActivity.this);
 
-                    Toast.makeText(MainActivity.this,"Dados salvos com sucesso",Toast.LENGTH_LONG).show();
+                    //Toast.makeText(MainActivity.this,"Dados salvos com sucesso",Toast.LENGTH_LONG).show();
                 }
 
 
@@ -129,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
 
                 pessoaControler.limpar(MainActivity.this);
 
-                Toast.makeText(MainActivity.this,"Dados apagados com sucesso",Toast.LENGTH_LONG).show();
+                //Toast.makeText(MainActivity.this,"Dados apagados com sucesso",Toast.LENGTH_LONG).show();
 
             }
         });

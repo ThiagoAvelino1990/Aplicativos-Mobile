@@ -5,6 +5,8 @@ import java.util.regex.Pattern;
 
 public class FormataDadosUtil {
 
+    public static String TAG = "APPLISTACURSO";
+
     public static boolean validarTelefone(String telefone){
 
         Pattern pattern = Pattern.compile("\\(\\d{2}\\)\\d{5}-\\d{4}");

@@ -3,12 +3,14 @@ package br.com.thiagoavelinoalves.applistacursojava.controller;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.util.List;
 
 import br.com.thiagoavelinoalves.applistacursojava.database.ListaCursoDB;
 import br.com.thiagoavelinoalves.applistacursojava.model.Pessoa;
+import br.com.thiagoavelinoalves.applistacursojava.util.FormataDadosUtil;
 import br.com.thiagoavelinoalves.applistacursojava.view.MainActivity;
 
 public class PessoaControler extends ListaCursoDB{
@@ -33,6 +35,7 @@ public class PessoaControler extends ListaCursoDB{
         pessoa.setEmail(sharedPreferences.getString("Email",""));
         pessoa.setCpf(Long.parseLong(sharedPreferences.getString("CPF",String.valueOf(0))));
 
+        Log.d(FormataDadosUtil.TAG," PessoaControler - Método buscar()");
         return buscarDadosPessoa(pessoa.getCpf());
     }
 
@@ -57,6 +60,7 @@ public class PessoaControler extends ListaCursoDB{
 
         salvarDadosPessoa(tabelaPessoa, contentValuesPessoa);
 
+        Log.d(FormataDadosUtil.TAG," PessoaControler - Método salvar()");
         Toast.makeText(context,"Dados Salvos Com sucesso",Toast.LENGTH_LONG).show();
 
     }
@@ -67,6 +71,7 @@ public class PessoaControler extends ListaCursoDB{
         listavip.clear();
         listavip.apply();
 
+        Log.d(FormataDadosUtil.TAG," PessoaControler - Método limpar()");
         Toast.makeText(context,"Dados apagados com sucesso",Toast.LENGTH_LONG).show();
 
     }
