@@ -13,7 +13,7 @@ import br.com.thiagoavelinoalves.applistacursojava.model.Pessoa;
 import br.com.thiagoavelinoalves.applistacursojava.util.FormataDadosUtil;
 import br.com.thiagoavelinoalves.applistacursojava.view.MainActivity;
 
-public class PessoaControler extends ListaCursoDB{
+public class PessoaControler extends ListaCursoDB implements CRUDInterface{
 
     public static final String tabelaPessoa = "PESSOA";
 
@@ -76,4 +76,23 @@ public class PessoaControler extends ListaCursoDB{
 
     }
 
+    @Override
+    public void createObject(Object obj) {
+
+    }
+
+    @Override
+    public void deleteObject(Object obj) {
+
+    }
+
+    @Override
+    public void updateObject(Object obj) {
+
+    }
+
+    @Override
+    public void readObject(Object obj) {
+
+    }
 }
