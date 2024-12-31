@@ -8,7 +8,7 @@ import java.util.List;
 import br.com.thiagoavelinoalves.applistacursojava.database.ListaCursoDB;
 import br.com.thiagoavelinoalves.applistacursojava.model.Curso;
 
-public class CursoController extends ListaCursoDB {
+public class CursoController extends ListaCursoDB implements CRUDInterface{
 
     private List listaDeCursos;
 
@@ -48,4 +48,23 @@ public class CursoController extends ListaCursoDB {
         return dadosSpinner;
     }
 
+    @Override
+    public void createObject(Object obj) {
+        
+    }
+
+    @Override
+    public void deleteObject(Object obj) {
+
+    }
+
+    @Override
+    public void updateObject(Object obj) {
+
+    }
+
+    @Override
+    public void readObject(Object obj) {
+
+    }
 }
