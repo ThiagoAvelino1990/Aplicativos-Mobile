@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.util.Collections;
 import java.util.List;
 
 import br.com.thiagoavelinoalves.applistacursojava.database.ListaCursoDB;
@@ -13,9 +14,11 @@ import br.com.thiagoavelinoalves.applistacursojava.model.Pessoa;
 import br.com.thiagoavelinoalves.applistacursojava.util.FormataDadosUtil;
 import br.com.thiagoavelinoalves.applistacursojava.view.MainActivity;
 
-public class PessoaControler extends ListaCursoDB implements CRUDInterface{
+public class PessoaControler extends ListaCursoDB implements CRUDInterface<Pessoa>{
 
     public static final String tabelaPessoa = "PESSOA";
+
+    ContentValues dadosObjetoPessoa;
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor listavip;
@@ -76,23 +79,48 @@ public class PessoaControler extends ListaCursoDB implements CRUDInterface{
 
     }
 
-    @Override
-    public void createObject(Object obj) {
 
+    @Override
+    public boolean createObject(Pessoa pessoa) {
+
+        dadosObjetoPessoa = new ContentValues();
+
+        dadosObjetoPessoa.put("CPF", pessoa.getCpf());
+        dadosObjetoPessoa.put("NOME", pessoa.getNome());
+        dadosObjetoPessoa.put("SOBRENOME", pessoa.getSobrenome());
+        dadosObjetoPessoa.put("TELEFONE", pessoa.getTelefone());
+        dadosObjetoPessoa.put("EMAIL", pessoa.getEmail());
+        dadosObjetoPessoa.put("IDCURSOPESSOA", pessoa.getIdCursoPessoa());
+
+        return insert(tabelaPessoa, dadosObjetoPessoa);
     }
 
     @Override
-    public void deleteObject(Object obj) {
+    public boolean deleteObject(Pessoa pessoa) {
 
+        dadosObjetoPessoa = new ContentValues();
+
+        dadosObjetoPessoa.put("CPF", pessoa.getCpf());
+        return false;
     }
 
     @Override
-    public void updateObject(Object obj) {
+    public boolean updateObject(Pessoa pessoa) {
 
+        dadosObjetoPessoa = new ContentValues();
+
+        dadosObjetoPessoa.put("CPF", pessoa.getCpf());
+        dadosObjetoPessoa.put("NOME", pessoa.getNome());
+        dadosObjetoPessoa.put("SOBRENOME", pessoa.getSobrenome());
+        dadosObjetoPessoa.put("TELEFONE", pessoa.getTelefone());
+        dadosObjetoPessoa.put("EMAIL", pessoa.getEmail());
+        dadosObjetoPessoa.put("IDCURSOPESSOA", pessoa.getIdCursoPessoa());
+
+        return false;
     }
 
     @Override
-    public void readObject(Object obj) {
-
+    public List<Pessoa> readObject() {
+        return null;
     }
 }

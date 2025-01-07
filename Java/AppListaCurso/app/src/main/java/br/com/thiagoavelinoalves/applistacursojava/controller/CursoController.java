@@ -1,5 +1,6 @@
 package br.com.thiagoavelinoalves.applistacursojava.controller;
 
+import android.content.ContentValues;
 import android.content.Context;
 
 import java.util.ArrayList;
@@ -8,9 +9,13 @@ import java.util.List;
 import br.com.thiagoavelinoalves.applistacursojava.database.ListaCursoDB;
 import br.com.thiagoavelinoalves.applistacursojava.model.Curso;
 
-public class CursoController extends ListaCursoDB implements CRUDInterface{
+public class CursoController extends ListaCursoDB implements CRUDInterface<Curso>{
 
     private List listaDeCursos;
+
+    ContentValues dadosCurso;
+
+    public static final String TABELA_CURSO = "CURSO";
 
     public CursoController(Context context){
         super(context);
@@ -49,22 +54,42 @@ public class CursoController extends ListaCursoDB implements CRUDInterface{
     }
 
     @Override
-    public void createObject(Object obj) {
-        
+    public boolean createObject(Curso curso) {
+        dadosCurso = new ContentValues();
+
+        dadosCurso.put("NOME_CURSO", curso.getNomeCursoDesejado());
+
+        return insert(TABELA_CURSO, dadosCurso);
     }
 
     @Override
-    public void deleteObject(Object obj) {
+    public boolean deleteObject(Curso curso) {
+
+        dadosCurso = new ContentValues();
+
+        dadosCurso.put("ID_CURSO",curso.getIdCurso());
+
+
+        return true;
 
     }
 
     @Override
-    public void updateObject(Object obj) {
+    public boolean updateObject(Curso curso) {
 
+        dadosCurso = new ContentValues();
+
+        dadosCurso.put("ID_CURSO", curso.getIdCurso());
+        dadosCurso.put("NOME_CURSO", curso.getNomeCursoDesejado());
+
+        return true;
     }
 
     @Override
-    public void readObject(Object obj) {
+    public List<Curso> readObject() {
 
+        List<Curso> listaCurso = new ArrayList<>();
+
+        return listaCurso;
     }
 }

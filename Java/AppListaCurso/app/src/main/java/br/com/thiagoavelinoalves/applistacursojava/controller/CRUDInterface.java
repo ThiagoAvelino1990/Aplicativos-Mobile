@@ -1,13 +1,15 @@
 package br.com.thiagoavelinoalves.applistacursojava.controller;
 
+import java.util.List;
+
 public interface CRUDInterface <T>{
 
-    public void createObject(T obj);
+    public boolean createObject(T obj);
 
-    public void deleteObject(T obj);
+    public boolean deleteObject(T obj);
 
-    public void updateObject(T obj);
+    public boolean updateObject(T obj);
 
-    public void readObject(T obj);
+    public List<T> readObject();
 
 }

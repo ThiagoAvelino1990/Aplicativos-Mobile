@@ -5,12 +5,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.thiagoavelinoalves.applistacursojava.model.Curso;
 import br.com.thiagoavelinoalves.applistacursojava.model.Pessoa;
+import br.com.thiagoavelinoalves.applistacursojava.util.FormataDadosUtil;
 
 public class ListaCursoDB extends SQLiteOpenHelper {
 
@@ -124,4 +126,19 @@ public class ListaCursoDB extends SQLiteOpenHelper {
 
         db.delete(nomeTabela,"CPF=?",new String[]{Integer.toString(cpfPessoa)});
     }
+
+
+    public boolean insert(String nomeTabela, ContentValues objeto){
+
+        db = getWritableDatabase();
+        boolean retorno = false;
+
+        try{
+            retorno = db.insert(nomeTabela, null, objeto) > 0;
+        }catch(Exception err){
+            Log.d(FormataDadosUtil.TAG, "Erro ao inserir os dados " + err.getMessage());
+        }
+        return retorno;
+    }
+
 }
