@@ -9,6 +9,10 @@ public class Curso {
         this.nomeCursoDesejado = nomeCursoDesejado;
     }*/
 
+    public Curso(){
+
+    }
+
     public int getIdCurso(){
         return this.idCurso;
     }

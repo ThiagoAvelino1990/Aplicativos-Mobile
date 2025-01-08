@@ -46,15 +46,6 @@ public class ListaCursoDB extends SQLiteOpenHelper {
         db.execSQL(sqlTabelaCurso);
 
         db.execSQL(sqlTabelaPessoa);
-
-        /*INSERT INTO CURSO VALUES (0, '');
-        INSERT INTO CURSO VALUES (1, 'Java');
-        INSERT INTO CURSO VALUES (2, 'Kotlin');
-        INSERT INTO CURSO VALUES (3, 'PL/SQL');
-        INSERT INTO CURSO VALUES (4, 'SQL SERVER');
-        INSERT INTO CURSO VALUES (5, 'GO Lang');
-        INSERT INTO CURSO VALUES (6, 'C#');
-        INSERT INTO CURSO VALUES (7, 'Front End');*/
     }
 
     @Override
@@ -138,6 +129,29 @@ public class ListaCursoDB extends SQLiteOpenHelper {
         }catch(Exception err){
             Log.d(FormataDadosUtil.TAG, "Erro ao inserir os dados " + err.getMessage());
         }
+        return retorno;
+    }
+
+    public boolean deleteById(String nomeTabela, Long id){
+
+        db = getWritableDatabase();
+
+        boolean retorno = false;
+
+        if(nomeTabela == "PESSOA"){
+            try{
+                retorno = db.delete(nomeTabela, "CPF = ? ", new String[]{String.valueOf(id)}) > 0;
+            }catch (Exception err){
+                Log.d(FormataDadosUtil.TAG, "Erro ao deletar os dados da tabela "+ nomeTabela + err.getMessage());
+            }
+        }else{
+            try{
+                retorno = db.delete(nomeTabela, "ID = ? ", new String[]{String.valueOf(id)}) > 0;
+            }catch (Exception err){
+                Log.d(FormataDadosUtil.TAG, "Erro ao deletar os dados da tabela "+ nomeTabela + err.getMessage());
+            }
+        }
+
         return retorno;
     }
 

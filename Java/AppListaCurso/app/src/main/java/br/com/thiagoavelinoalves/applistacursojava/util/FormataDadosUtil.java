@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 public class FormataDadosUtil {
 
-    public static String TAG = "APPLISTACURSO";
+    public static String TAG = "APP_LISTACURSO";
 
     public static boolean validarTelefone(String telefone){
 

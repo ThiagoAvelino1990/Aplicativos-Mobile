@@ -90,7 +90,7 @@ public class PessoaControler extends ListaCursoDB implements CRUDInterface<Pesso
         dadosObjetoPessoa.put("SOBRENOME", pessoa.getSobrenome());
         dadosObjetoPessoa.put("TELEFONE", pessoa.getTelefone());
         dadosObjetoPessoa.put("EMAIL", pessoa.getEmail());
-        dadosObjetoPessoa.put("IDCURSOPESSOA", pessoa.getIdCursoPessoa());
+        dadosObjetoPessoa.put("ID_CURSO_PESSOA", pessoa.getIdCursoPessoa());
 
         return insert(tabelaPessoa, dadosObjetoPessoa);
     }
@@ -101,7 +101,8 @@ public class PessoaControler extends ListaCursoDB implements CRUDInterface<Pesso
         dadosObjetoPessoa = new ContentValues();
 
         dadosObjetoPessoa.put("CPF", pessoa.getCpf());
-        return false;
+
+        return deleteById(tabelaPessoa, pessoa.getCpf());
     }
 
     @Override

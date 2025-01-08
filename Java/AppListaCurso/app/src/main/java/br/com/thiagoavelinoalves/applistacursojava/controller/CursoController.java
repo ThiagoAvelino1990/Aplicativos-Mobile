@@ -2,12 +2,14 @@ package br.com.thiagoavelinoalves.applistacursojava.controller;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.thiagoavelinoalves.applistacursojava.database.ListaCursoDB;
 import br.com.thiagoavelinoalves.applistacursojava.model.Curso;
+import br.com.thiagoavelinoalves.applistacursojava.util.FormataDadosUtil;
 
 public class CursoController extends ListaCursoDB implements CRUDInterface<Curso>{
 
@@ -24,15 +26,6 @@ public class CursoController extends ListaCursoDB implements CRUDInterface<Curso
     public List getListaDeCursos() {
 
         this.listaDeCursos = new ArrayList<Curso>();
-
-       /* listaDeCursos.add(new Curso(""));
-        listaDeCursos.add(new Curso("Java"));
-        listaDeCursos.add(new Curso("Kotlin"));
-        listaDeCursos.add(new Curso("PL/SQL"));
-        listaDeCursos.add(new Curso("SQL SERVER"));
-        listaDeCursos.add(new Curso("GO Lang"));
-        listaDeCursos.add(new Curso("C#"));
-        listaDeCursos.add(new Curso("Front End"));*/
 
         listaDeCursos = buscaDadosCurso();
 
@@ -53,11 +46,33 @@ public class CursoController extends ListaCursoDB implements CRUDInterface<Curso
         return dadosSpinner;
     }
 
+    public void salvarDadosCurso(){
+        Curso curso = new Curso();
+        List<String> listaCursosCadastrados = new ArrayList<>();
+
+        listaCursosCadastrados.add("");
+        listaCursosCadastrados.add("Java");
+        listaCursosCadastrados.add("Kotlin");
+        listaCursosCadastrados.add("PL/SQL");
+        listaCursosCadastrados.add("SQL SERVER");
+        listaCursosCadastrados.add("GO Lang");
+        listaCursosCadastrados.add("C#");
+        listaCursosCadastrados.add("Front End");
+
+        for (String listaCurso: listaCursosCadastrados) {
+            curso.setNomeCursoDesejado(listaCurso);
+            createObject(curso);
+        }
+
+    }
+
     @Override
     public boolean createObject(Curso curso) {
         dadosCurso = new ContentValues();
 
         dadosCurso.put("NOME_CURSO", curso.getNomeCursoDesejado());
+
+        Log.d(FormataDadosUtil.TAG,"CursoController - createObject()");
 
         return insert(TABELA_CURSO, dadosCurso);
     }
@@ -70,7 +85,7 @@ public class CursoController extends ListaCursoDB implements CRUDInterface<Curso
         dadosCurso.put("ID_CURSO",curso.getIdCurso());
 
 
-        return true;
+        return deleteById(TABELA_CURSO, Long.parseLong(String.valueOf(curso.getIdCurso())));
 
     }
 

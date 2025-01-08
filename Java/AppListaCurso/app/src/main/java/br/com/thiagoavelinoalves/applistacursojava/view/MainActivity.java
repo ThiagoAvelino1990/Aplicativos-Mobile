@@ -57,6 +57,12 @@ public class MainActivity extends AppCompatActivity {
         List<String> listaDeCursos;
 
         CursoController cursoController = new CursoController(MainActivity.this);
+
+
+        if(!cursoController.readObject().equals(cursoController)){
+            cursoController.salvarDadosCurso();
+        }
+
         listaDeCursos = cursoController.retornarDadosSpinner();
 
         FormataDadosUtil validador = new FormataDadosUtil();
@@ -82,6 +88,13 @@ public class MainActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
 
         spinner.setAdapter(adapter);
+
+        /**
+         * Teste exclusão de registro
+         */
+        Curso curso = new Curso();
+        curso.setIdCurso(34);
+        cursoController.deleteObject(curso);
 
         btnSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,9 +145,16 @@ public class MainActivity extends AppCompatActivity {
                     pessoa.setEmail(editTextEmail.getText().toString());
                     pessoa.setIdCursoPessoa(spinner.getSelectedItemPosition());
 
-                    pessoaControler.salvar(pessoa, MainActivity.this);
+                    //pessoaControler.salvar(pessoa, MainActivity.this);
+                    if(pessoaControler.createObject(pessoa)){
+                        Toast.makeText(MainActivity.this,"Dados salvos com sucesso",Toast.LENGTH_LONG).show();
+                        Log.d(FormataDadosUtil.TAG,"Dados salvos com sucesso");
+                    }else{
+                        Toast.makeText(MainActivity.this,"Dados não foram salvos",Toast.LENGTH_LONG).show();
+                        Log.d(FormataDadosUtil.TAG,"Dados não foram salvos");
+                    }
 
-                    //Toast.makeText(MainActivity.this,"Dados salvos com sucesso",Toast.LENGTH_LONG).show();
+                    //
                 }
 
 
