@@ -115,9 +115,9 @@ public class PessoaControler extends ListaCursoDB implements CRUDInterface<Pesso
         dadosObjetoPessoa.put("SOBRENOME", pessoa.getSobrenome());
         dadosObjetoPessoa.put("TELEFONE", pessoa.getTelefone());
         dadosObjetoPessoa.put("EMAIL", pessoa.getEmail());
-        dadosObjetoPessoa.put("IDCURSOPESSOA", pessoa.getIdCursoPessoa());
+        dadosObjetoPessoa.put("ID_CURSO_PESSOA", pessoa.getIdCursoPessoa());
 
-        return false;
+        return update(tabelaPessoa,dadosObjetoPessoa);
     }
 
     @Override

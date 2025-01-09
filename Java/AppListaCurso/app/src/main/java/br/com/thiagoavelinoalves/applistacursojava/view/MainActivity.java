@@ -90,11 +90,20 @@ public class MainActivity extends AppCompatActivity {
         spinner.setAdapter(adapter);
 
         /**
-         * Teste exclusão de registro
+         * Teste exclusão de registro da tabela curso
          */
         Curso curso = new Curso();
         curso.setIdCurso(34);
         cursoController.deleteObject(curso);
+
+        /**
+         * Teste alteração de dados da tabela pessoa
+         */
+        pessoa.setCpf(12345678910l);
+        pessoa.setNome("*****JUCA");
+        pessoa.setSobrenome("*****JONAS");
+        pessoa.setTelefone("(55)555-5555");
+        pessoaControler.updateObject(pessoa);
 
         btnSalvar.setOnClickListener(new View.OnClickListener() {
             @Override

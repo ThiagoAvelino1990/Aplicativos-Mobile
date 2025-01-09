@@ -142,13 +142,36 @@ public class ListaCursoDB extends SQLiteOpenHelper {
             try{
                 retorno = db.delete(nomeTabela, "CPF = ? ", new String[]{String.valueOf(id)}) > 0;
             }catch (Exception err){
-                Log.d(FormataDadosUtil.TAG, "Erro ao deletar os dados da tabela "+ nomeTabela + err.getMessage());
+                Log.e(FormataDadosUtil.TAG, "Erro ao deletar os dados da tabela "+ nomeTabela + err.getMessage());
             }
         }else{
             try{
-                retorno = db.delete(nomeTabela, "ID = ? ", new String[]{String.valueOf(id)}) > 0;
+                retorno = db.delete(nomeTabela, "ID_CURSO = ? ", new String[]{String.valueOf(id)}) > 0;
             }catch (Exception err){
-                Log.d(FormataDadosUtil.TAG, "Erro ao deletar os dados da tabela "+ nomeTabela + err.getMessage());
+                Log.e(FormataDadosUtil.TAG, "Erro ao deletar os dados da tabela "+ nomeTabela + err.getMessage());
+            }
+        }
+
+        return retorno;
+    }
+
+    public boolean update(String nomeTabela, ContentValues dadosObjeto){
+
+        db = getWritableDatabase();
+
+        boolean retorno = false;
+
+        if(nomeTabela == "PESSOA"){
+            try{
+                retorno = db.update(nomeTabela,dadosObjeto,"CPF = ?", new String[]{String.valueOf(dadosObjeto.get("CPF"))}) > 0;
+            }catch (Exception err){
+                Log.e(FormataDadosUtil.TAG, "Erro ao deletar os dados da tabela "+ nomeTabela + err.getMessage());
+            }
+        }else{
+            try{
+                retorno = db.update(nomeTabela, dadosObjeto,"ID_CURSO = ?", new String[]{String.valueOf(dadosObjeto.get("ID_CURSO"))}) > 0;
+            }catch (Exception err){
+                Log.e(FormataDadosUtil.TAG, "Erro ao deletar os dados da tabela "+ nomeTabela + err.getMessage());
             }
         }
 
