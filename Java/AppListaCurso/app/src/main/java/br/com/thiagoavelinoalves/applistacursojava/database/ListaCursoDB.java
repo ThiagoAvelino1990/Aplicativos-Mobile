@@ -9,6 +9,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import br.com.thiagoavelinoalves.applistacursojava.model.Curso;
 import br.com.thiagoavelinoalves.applistacursojava.model.Pessoa;
@@ -176,6 +177,32 @@ public class ListaCursoDB extends SQLiteOpenHelper {
         }
 
         return retorno;
+    }
+
+    public List<Curso> readCurso(String nomeTabela){
+
+        db = getWritableDatabase();
+
+        Cursor cursor;
+
+        List<Curso> cursos = new ArrayList<>();
+
+        cursor = db.rawQuery("SELECT * FROM "+ nomeTabela, null);
+        if(cursor.moveToFirst()){
+            do{
+                Curso curso = new Curso();
+
+                curso.setIdCurso(cursor.getInt(cursor.getColumnIndexOrThrow("ID_CURSO")));
+                curso.setNomeCursoDesejado(cursor.getString(cursor.getColumnIndexOrThrow("NOME_CURSO")));
+
+                cursos.add(curso);
+
+            }while(cursor.moveToNext());
+        }
+
+
+    return cursos;
+
     }
 
 }

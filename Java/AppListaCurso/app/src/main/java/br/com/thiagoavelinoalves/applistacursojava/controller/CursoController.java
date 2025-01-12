@@ -103,8 +103,6 @@ public class CursoController extends ListaCursoDB implements CRUDInterface<Curso
     @Override
     public List<Curso> readObject() {
 
-        List<Curso> listaCurso = new ArrayList<>();
-
-        return listaCurso;
+        return readCurso(TABELA_CURSO);
     }
 }

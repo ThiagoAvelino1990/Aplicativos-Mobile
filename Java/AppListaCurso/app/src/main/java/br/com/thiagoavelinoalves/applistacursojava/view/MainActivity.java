@@ -58,8 +58,10 @@ public class MainActivity extends AppCompatActivity {
 
         CursoController cursoController = new CursoController(MainActivity.this);
 
-
-        if(!cursoController.readObject().equals(cursoController)){
+        /**
+         * Validação para verificar se já possui curso cadastrado
+         */
+        if(cursoController.readObject().isEmpty()){
             cursoController.salvarDadosCurso();
         }
 
