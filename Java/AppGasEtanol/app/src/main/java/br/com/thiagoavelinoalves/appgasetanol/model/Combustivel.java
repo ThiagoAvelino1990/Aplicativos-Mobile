@@ -1,5 +1,7 @@
 package br.com.thiagoavelinoalves.appgasetanol.model;
 
+import androidx.annotation.NonNull;
+
 public class Combustivel {
 
     private int id;
@@ -35,4 +37,13 @@ public class Combustivel {
         this.recomendacao = recomendacao;
     }
 
+    @Override
+    public String toString() {
+        return "Combustivel{" +
+                "id=" + id +
+                ", precoCombustivel=" + precoCombustivel +
+                ", nomeCombustivel='" + nomeCombustivel + '\'' +
+                ", recomendacao='" + recomendacao + '\'' +
+                '}';
+    }
 }

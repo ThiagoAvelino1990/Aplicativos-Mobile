@@ -4,8 +4,16 @@
         "source": "br.com.thiagoavelinoalves.appgasetanol.app-main-33:/mipmap-anydpi-v26/ic_launcher.xml"
     },
     {
+        "merged": "br.com.thiagoavelinoalves.appgasetanol.app-debug-31:/mipmap-xxhdpi_ic_launcher_foreground.webp.flat",
+        "source": "br.com.thiagoavelinoalves.appgasetanol.app-main-33:/mipmap-xxhdpi/ic_launcher_foreground.webp"
+    },
+    {
         "merged": "br.com.thiagoavelinoalves.appgasetanol.app-debug-31:/drawable_ic_launcher_background.xml.flat",
         "source": "br.com.thiagoavelinoalves.appgasetanol.app-main-33:/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "br.com.thiagoavelinoalves.appgasetanol.app-debug-31:/mipmap-xhdpi_ic_launcher_foreground.webp.flat",
+        "source": "br.com.thiagoavelinoalves.appgasetanol.app-main-33:/mipmap-xhdpi/ic_launcher_foreground.webp"
     },
     {
         "merged": "br.com.thiagoavelinoalves.appgasetanol.app-debug-31:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
@@ -22,6 +30,10 @@
     {
         "merged": "br.com.thiagoavelinoalves.appgasetanol.app-debug-31:/xml_backup_rules.xml.flat",
         "source": "br.com.thiagoavelinoalves.appgasetanol.app-main-33:/xml/backup_rules.xml"
+    },
+    {
+        "merged": "br.com.thiagoavelinoalves.appgasetanol.app-debug-31:/mipmap-mdpi_ic_launcher_foreground.webp.flat",
+        "source": "br.com.thiagoavelinoalves.appgasetanol.app-main-33:/mipmap-mdpi/ic_launcher_foreground.webp"
     },
     {
         "merged": "br.com.thiagoavelinoalves.appgasetanol.app-debug-31:/mipmap-mdpi_ic_launcher_round.webp.flat",
@@ -60,8 +72,16 @@
         "source": "br.com.thiagoavelinoalves.appgasetanol.app-main-33:/mipmap-xhdpi/ic_launcher_round.webp"
     },
     {
+        "merged": "br.com.thiagoavelinoalves.appgasetanol.app-debug-31:/mipmap-hdpi_ic_launcher_foreground.webp.flat",
+        "source": "br.com.thiagoavelinoalves.appgasetanol.app-main-33:/mipmap-hdpi/ic_launcher_foreground.webp"
+    },
+    {
         "merged": "br.com.thiagoavelinoalves.appgasetanol.app-debug-31:/layout_activity_gasetanol.xml.flat",
         "source": "br.com.thiagoavelinoalves.appgasetanol.app-main-33:/layout/activity_gasetanol.xml"
+    },
+    {
+        "merged": "br.com.thiagoavelinoalves.appgasetanol.app-debug-31:/mipmap-xxxhdpi_ic_launcher_foreground.webp.flat",
+        "source": "br.com.thiagoavelinoalves.appgasetanol.app-main-33:/mipmap-xxxhdpi/ic_launcher_foreground.webp"
     },
     {
         "merged": "br.com.thiagoavelinoalves.appgasetanol.app-debug-31:/mipmap-xxxhdpi_ic_launcher.webp.flat",

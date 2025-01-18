@@ -1,6 +1,7 @@
 R_DEF: Internal format may change without notice
 local
 color black
+color ic_launcher_background
 color white
 drawable ic_launcher_background
 drawable ic_launcher_foreground
@@ -11,13 +12,13 @@ id btn_salvar
 id edit_txt_etanol
 id edit_txt_gasolina
 id imageView
-id imageView2
 id main
 id txt_app_lista_curso_vip
 id txt_resultado
 layout activity_gasetanol
 layout activity_splash
 mipmap ic_launcher
+mipmap ic_launcher_foreground
 mipmap ic_launcher_round
 string app_gas_etanol
 string app_name

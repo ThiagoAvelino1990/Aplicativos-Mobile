@@ -3,6 +3,7 @@ package br.com.thiagoavelinoalves.appgasetanol.view;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.thiagoavelinoalves.appgasetanol.DataBase.GasEtanolDB;
@@ -52,6 +54,29 @@ public class GasEtanolActivity extends AppCompatActivity {
         btnSalvar = findViewById(R.id.btn_salvar);
         btnLimpar = findViewById(R.id.btn_limpar);
         btnFinalizar = findViewById(R.id.btn_finalizar);
+
+        /**Testes**/
+        Combustivel combustivel = new Combustivel();
+        /*Teste de exclusão
+        */
+        combustivel.setId(13);
+        combustivelController.deleteObject(combustivel);
+
+        /*Teste de Update
+        */
+        combustivel.setId(11);
+        combustivel.setPrecoCombustivel(100.00);
+        combustivel.setNomeCombustivel("COMBUSTIVEL BRABO");
+        combustivel.setRecomendacao("RECOMENDADO POR NINGUÉM");
+        combustivelController.updateObject(combustivel);
+
+        /*Teste de Listar
+        */
+         List<Combustivel> listaDados = new ArrayList<>();
+        listaDados = combustivelController.readObject(16);
+        for (Combustivel retorno: listaDados) {
+            Log.i(UtilAppGasEtanol.TAG,retorno.toString());
+        }
 
 
         btnCalcular.setOnClickListener(new View.OnClickListener() {
@@ -96,10 +121,12 @@ public class GasEtanolActivity extends AppCompatActivity {
 
                 if (txtResultado.getText().toString().indexOf("ETANOL") < 0){
                     gasolina.setRecomendacao(txtResultado.getText().toString());
-                    combustivelController.salvar(gasolina);
+                    combustivelController.createObject(gasolina);
+                    //combustivelController.salvar(gasolina);
                 }else{
                     etanol.setRecomendacao(txtResultado.getText().toString());
-                    combustivelController.salvar(etanol);
+                    combustivelController.createObject(etanol);
+                    //combustivelController.salvar(etanol);
                 }
 
 

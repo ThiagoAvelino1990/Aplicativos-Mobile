@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
+    <color name="ic_launcher_background">#1A4C6A</color>
     <color name="white">#FFFFFFFF</color>
     <string name="app_gas_etanol">App Gasolina x Etanol</string>
     <string name="app_name">AppGasEtanol</string>
