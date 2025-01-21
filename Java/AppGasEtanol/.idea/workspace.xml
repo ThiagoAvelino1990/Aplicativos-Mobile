@@ -22,22 +22,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="78e0f19e-6265-4ce6-bdb8-4d9bb3fac022" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/br/com/thiagoavelinoalves/appgasetanol/controller/ICRUD.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_11_2024_5_43_PM_[Changes]/file-system.probe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_11_2024_5_43_PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_11_2024_5_43_PM__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/compile_and_runtime_not_namespaced_r_class_jar/debug/processDebugResources/R.jar" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/compile_and_runtime_not_namespaced_r_class_jar/debug/processDebugResources/R.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/br/com/thiagoavelinoalves/appgasetanol/DataBase/GasEtanolDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/br/com/thiagoavelinoalves/appgasetanol/DataBase/GasEtanolDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/br/com/thiagoavelinoalves/appgasetanol/controller/CombustivelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/br/com/thiagoavelinoalves/appgasetanol/controller/CombustivelController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/br/com/thiagoavelinoalves/appgasetanol/model/Combustivel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/br/com/thiagoavelinoalves/appgasetanol/model/Combustivel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/br/com/thiagoavelinoalves/appgasetanol/util/UtilAppGasEtanol.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/br/com/thiagoavelinoalves/appgasetanol/util/UtilAppGasEtanol.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/br/com/thiagoavelinoalves/appgasetanol/view/GasEtanolActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/br/com/thiagoavelinoalves/appgasetanol/view/GasEtanolActivity.java" afterDir="false" />
-    </list>
+    <list default="true" id="78e0f19e-6265-4ce6-bdb8-4d9bb3fac022" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -121,7 +106,7 @@
     "RunOnceActivity.readMode.enableVisualFormatting": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "feature/interface__crud__appgaseta",
+    "git-widget-placeholder": "feature/novo__appClientes",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/Dev/GitHub-repositorios/Aplicativos-Mobile/Java/AppGasEtanol"
   },
