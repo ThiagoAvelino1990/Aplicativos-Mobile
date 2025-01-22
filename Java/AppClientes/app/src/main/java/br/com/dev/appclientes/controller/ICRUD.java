@@ -4,11 +4,11 @@ import java.util.List;
 
 public interface ICRUD <T>{
 
-    public boolean insertObject();
+    public boolean insertObject(T obj);
 
-    public boolean deleteObject();
+    public boolean deleteObject(T obj);
 
-    public boolean updateObject();
+    public boolean updateObject(T obj);
 
     public List<T> readObject();
 

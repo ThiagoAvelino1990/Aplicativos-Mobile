@@ -10,23 +10,24 @@ import br.com.dev.appclientes.model.Cliente;
 
 public class ClienteController extends AppDataBase implements ICRUD<Cliente> {
 
+    
+
     public ClienteController(Context context){
         super(context);
-
     }
 
     @Override
-    public boolean insertObject() {
+    public boolean insertObject(Cliente obj) {
         return false;
     }
 
     @Override
-    public boolean deleteObject() {
+    public boolean deleteObject(Cliente obj) {
         return false;
     }
 
     @Override
-    public boolean updateObject() {
+    public boolean updateObject(Cliente obj) {
         return false;
     }
 
