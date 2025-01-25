@@ -169,6 +169,10 @@ public class MainActivity extends AppCompatActivity
 
             fragmentManager.beginTransaction().replace(R.id.content_fragment, new ModeloAzulFragment()).commit();
 
+        }else if(id == R.id.adicionar_cliente_nav){
+
+            fragmentManager.beginTransaction().replace(R.id.content_fragment, new AdicionarClientelFragment()).commit();
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

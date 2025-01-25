@@ -10,10 +10,15 @@
     <string name="modelo_fragment">Cliente VIP DEMO</string>
 
     <!-- Opções do Menu Lateral Drawer -->
+    <string name="adicionar_cliente">Adicionar Cliente</string>
+    <string name="titulo_cliente">Cliente</string>
+    
     <string name="fragmento_preto">Fragmento Preto</string>
     <string name="titulo_preto">Preto</string>
+
     <string name="fragmento_vermelho">Fragmento Vermelho</string>
     <string name="titulo_vermelho">Vermelho</string>
+
     <string name="fragmento_azul">Fragmento Azul</string>
     <string name="titulo_azul">Azul</string>
 
