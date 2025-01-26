@@ -3,6 +3,7 @@ package br.com.dev.appclientes.view;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +11,15 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import org.w3c.dom.Text;
 
 import br.com.dev.appclientes.R;
+import br.com.dev.appclientes.controller.ClienteController;
+import br.com.dev.appclientes.model.Cliente;
 
 public class AdicionarClientelFragment extends Fragment {
 
@@ -28,6 +32,9 @@ public class AdicionarClientelFragment extends Fragment {
     CheckBox chkTermosDeUso;
 
     Button btnCancelar, btnSalvar;
+
+    Cliente cliente;
+    ClienteController clienteController;
 
 
     public AdicionarClientelFragment() {
@@ -73,6 +80,14 @@ public class AdicionarClientelFragment extends Fragment {
         editEstado = view.findViewById(R.id.editEstado);
         editPais = view.findViewById(R.id.editPais);
 
+        btnSalvar = view.findViewById(R.id.btnSalvar);
+        btnCancelar = view.findViewById(R.id.bntCancelar);
+
+        chkTermosDeUso = view.findViewById(R.id.chkTermosDeUso);
+
+        cliente = new Cliente();
+        clienteController = new ClienteController(getContext());
+
     }
 
     public void eventoButton(){
@@ -80,6 +95,98 @@ public class AdicionarClientelFragment extends Fragment {
         btnSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                boolean isDadosOK = true;
+
+                if(TextUtils.isEmpty(editNomeCompleto.getText().toString())){
+                    isDadosOK = false;
+                    editNomeCompleto.setError("*");
+                    editNomeCompleto.requestFocus();
+                }
+
+                if(TextUtils.isEmpty(editTelefone.getText().toString())){
+                    isDadosOK = false;
+                    editTelefone.setError("*");
+                    editTelefone.requestFocus();
+                }
+
+                if(TextUtils.isEmpty(editEmail.getText().toString())){
+                    isDadosOK = false;
+                    editEmail.setError("*");
+                    editEmail.requestFocus();
+                }
+
+                if(TextUtils.isEmpty(editCep.getText().toString())){
+                    isDadosOK = false;
+                    editCep.setError("*");
+                    editCep.requestFocus();
+                }
+
+                if(TextUtils.isEmpty(editLogradouro.getText().toString())){
+                    isDadosOK = false;
+                    editLogradouro.setError("*");
+                    editLogradouro.requestFocus();
+                }
+
+                if(TextUtils.isEmpty(editComplemento.getText().toString())){
+                    isDadosOK = false;
+                    editComplemento.setError("*");
+                    editComplemento.requestFocus();
+                }
+
+                if(TextUtils.isEmpty(editNumero.getText().toString())){
+                    isDadosOK = false;
+                    editNumero.setError("*");
+                    editNumero.requestFocus();
+                }
+
+                if(TextUtils.isEmpty(editBairro.getText().toString())){
+                    isDadosOK = false;
+                    editBairro.setError("*");
+                    editBairro.requestFocus();
+                }
+
+                if(TextUtils.isEmpty(editCidade.getText().toString())){
+                    isDadosOK = false;
+                    editCidade.setError("*");
+                    editCidade.requestFocus();
+                }
+
+                if(TextUtils.isEmpty(editEstado.getText().toString())){
+                    isDadosOK = false;
+                    editEstado.setError("*");
+                    editEstado.requestFocus();
+                }
+
+                if(TextUtils.isEmpty(editPais.getText().toString())){
+                    isDadosOK = false;
+                    editPais.setError("*");
+                    editPais.requestFocus();
+                }
+
+
+
+                if(isDadosOK){
+
+                    cliente.setNome(editNomeCompleto.getText().toString());
+                    cliente.setTelefone(editTelefone.getText().toString());
+                    cliente.setEmail(editEmail.getText().toString());
+                    cliente.setCep(Integer.parseInt(editCep.getText().toString()));
+                    cliente.setLogradouro(editLogradouro.getText().toString());
+                    cliente.setComplemento(editComplemento.getText().toString());
+                    cliente.setNumero(editNumero.getText().toString());
+                    cliente.setBairro(editBairro.getText().toString());
+                    cliente.setCidade(editCidade.getText().toString());
+                    cliente.setEstado(editEstado.getText().toString());
+                    cliente.setPais(editPais.getText().toString());
+                    cliente.setTermosDeUso(chkTermosDeUso.isChecked());
+
+
+                    clienteController.insertObject(cliente);
+                    Toast.makeText(getContext(),"Dados salvos com sucesso...", Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(getContext(),"Verifique os campos...", Toast.LENGTH_LONG).show();
+                }
 
             }
         });
