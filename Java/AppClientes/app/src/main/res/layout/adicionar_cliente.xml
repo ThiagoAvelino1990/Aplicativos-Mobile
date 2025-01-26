@@ -170,13 +170,13 @@
             android:layout_height="wrap_content">
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/bntCancelar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="CANCELAR" />
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/btnSalvar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="SALVAR" />
