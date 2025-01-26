@@ -12,7 +12,8 @@
     <!-- Opções do Menu Lateral Drawer -->
     <string name="adicionar_cliente">Adicionar Cliente</string>
     <string name="titulo_cliente">Cliente</string>
-    
+    <string name="novo_cliente">Adicionar Novo Cliente</string>
+
     <string name="fragmento_preto">Fragmento Preto</string>
     <string name="titulo_preto">Preto</string>
 

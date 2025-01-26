@@ -10,12 +10,16 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import org.w3c.dom.Text;
+
 import br.com.dev.appclientes.R;
 
 public class AdicionarClientelFragment extends Fragment {
 
     // Fragment - Classe responsável pela camada de VISÃO (Layout)
     View view;
+    TextView textView;
+
 
     public AdicionarClientelFragment() {
     }
@@ -32,7 +36,19 @@ public class AdicionarClientelFragment extends Fragment {
 
         view =  inflater.inflate(R.layout.adicionar_cliente, container, false);
 
+        inicializarComponentesDeLayout();
+
         return view;
+    }
+
+    /**
+     *
+     */
+    public void inicializarComponentesDeLayout(){
+
+        textView = view.findViewById(R.id.txtAdicionarCliente);
+        textView.setText(R.string.novo_cliente);
+
     }
 
 
