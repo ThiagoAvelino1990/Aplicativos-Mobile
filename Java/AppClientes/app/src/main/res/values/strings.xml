@@ -10,6 +10,10 @@
     <string name="modelo_fragment">Cliente VIP DEMO</string>
 
     <!-- Opções do Menu Lateral Drawer -->
+    <string name="listar_clientes_fragment">Lista de Clientes</string>
+    <string name="lista_de_clientes">Lista de Clientes</string>
+
+
     <string name="adicionar_cliente">Adicionar Cliente</string>
     <string name="titulo_cliente">Cliente</string>
     <string name="novo_cliente">Adicionar Novo Cliente</string>

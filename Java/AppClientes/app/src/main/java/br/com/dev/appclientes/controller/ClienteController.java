@@ -51,6 +51,6 @@ public class ClienteController extends AppDataBase implements ICRUD<Cliente> {
 
     @Override
     public List<Cliente> readObject() {
-        return Collections.emptyList();
+        return readDados(ClienteDataModel.TABELA);
     }
 }

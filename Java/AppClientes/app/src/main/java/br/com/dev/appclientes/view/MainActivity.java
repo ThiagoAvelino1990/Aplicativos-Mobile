@@ -71,7 +71,8 @@ public class MainActivity extends AppCompatActivity
         fragmentManager = getSupportFragmentManager();
 
         // content_fragment usado para receber os layouts dos fragmentos
-        fragmentManager.beginTransaction().replace(R.id.content_fragment, new ModeloVermelhoFragment()).commit();
+        // tela principal do aplicativo
+        fragmentManager.beginTransaction().replace(R.id.content_fragment, new ListarClientesFragment()).commit();
 
 
         ClienteController clienteController = new ClienteController(getBaseContext());
@@ -171,7 +172,11 @@ public class MainActivity extends AppCompatActivity
 
         }else if(id == R.id.adicionar_cliente_nav){
 
-            fragmentManager.beginTransaction().replace(R.id.content_fragment, new AdicionarClientelFragment()).commit();
+            fragmentManager.beginTransaction().replace(R.id.content_fragment, new AdicionarClienteFragment()).commit();
+
+        }else if(id == R.id.listar_clientes_nav){
+
+            fragmentManager.beginTransaction().replace(R.id.content_fragment, new ListarClientesFragment()).commit();
 
         }
 

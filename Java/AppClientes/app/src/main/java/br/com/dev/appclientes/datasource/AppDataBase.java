@@ -90,21 +90,25 @@ public class AppDataBase extends SQLiteOpenHelper {
     }
 
 
-    public List<Cliente> readDados(String nomeTabela, int id){
+    public List<Cliente> readDados(String nomeTabela){
 
         db = getWritableDatabase();
 
         Cursor cursor;
 
+        Cliente cliente;
+
         List<Cliente> dadosTabela = new ArrayList<>();
 
-        cursor = db.rawQuery("SELECT * FROM "+nomeTabela+" WHERE ID = ?", new String[]{String.valueOf(id)});
+        String sql = "SELECT * FROM " + nomeTabela;
+
+        cursor = db.rawQuery(sql,null);
 
         if(cursor.moveToFirst()){
 
-            Cliente cliente = new Cliente();
-
             do{
+
+                cliente = new Cliente();
 
                 cliente.setId(cursor.getInt(cursor.getColumnIndexOrThrow("ID")));
                 cliente.setNome(cursor.getString(cursor.getColumnIndexOrThrow("NOME")));

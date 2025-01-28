@@ -1,7 +1,5 @@
 package br.com.dev.appclientes.view;
 
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -15,13 +13,11 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import org.w3c.dom.Text;
-
 import br.com.dev.appclientes.R;
 import br.com.dev.appclientes.controller.ClienteController;
 import br.com.dev.appclientes.model.Cliente;
 
-public class AdicionarClientelFragment extends Fragment {
+public class AdicionarClienteFragment extends Fragment {
 
     // Fragment - Classe responsável pela camada de VISÃO (Layout)
     View view;
@@ -37,7 +33,7 @@ public class AdicionarClientelFragment extends Fragment {
     ClienteController clienteController;
 
 
-    public AdicionarClientelFragment() {
+    public AdicionarClienteFragment() {
     }
 
     @Override
@@ -50,7 +46,7 @@ public class AdicionarClientelFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        view =  inflater.inflate(R.layout.adicionar_cliente, container, false);
+        view =  inflater.inflate(R.layout.fragment_adicionar_cliente, container, false);
 
         inicializarComponentesDeLayout();
 
