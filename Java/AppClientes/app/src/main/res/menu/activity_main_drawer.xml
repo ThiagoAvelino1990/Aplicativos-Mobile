@@ -7,11 +7,11 @@
 
         <item android:id="@+id/listar_clientes_nav"
             android:icon="@drawable/ic_item_menu_padrao"
-            android:title="@string/lista_de_clientes" />
+            android:title="@string/listar_de_clientes_main" />
 
         <item android:id="@+id/adicionar_cliente_nav"
             android:icon="@drawable/ic_item_menu_padrao"
-            android:title="@string/adicionar_cliente" />
+            android:title="@string/adicionar_cliente_main" />
 
         <item android:id="@+id/nav_preto"
             android:icon="@drawable/ic_item_menu_padrao"

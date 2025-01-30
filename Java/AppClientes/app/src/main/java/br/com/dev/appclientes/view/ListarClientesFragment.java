@@ -3,6 +3,9 @@ package br.com.dev.appclientes.view;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import br.com.dev.appclientes.R;
+import br.com.dev.appclientes.api.AppUtil;
 import br.com.dev.appclientes.controller.ClienteController;
 import br.com.dev.appclientes.model.Cliente;
 
@@ -59,30 +63,47 @@ public class ListarClientesFragment extends Fragment {
 
         TextView txtTitulo = view.findViewById(R.id.txtViewCliente);
 
-        //txtTitulo.setText(R.string.listar_clientes_fragment);
+        txtTitulo.setText(R.string.listar_clientes_fragment);
 
         // Trocar a cor da propriedade texto (setTextColor)
         txtTitulo.setTextColor(ColorStateList.valueOf(Color.CYAN));
-        clienteController = new ClienteController(getContext());
 
         //Casting de ListView
         listViewCliente = (ListView) view.findViewById(R.id.listViewCliente);
 
         editPesquisarCliente = view.findViewById(R.id.editPesquisarCliente);
 
+        clienteController = new ClienteController(getContext());
         clienteList = clienteController.readObject();
+        clienteListString = clienteController.getAllClientesListView();
 
-        clienteListString = new ArrayList<>();
-
-        //TODO: Implementar regra de negócio na controladora
-        for (Cliente objCliente: clienteList) {
-            clienteListString.add(objCliente.getId()+" "+objCliente.getNome());
-        }
-
+        /*configurar o adpter*/
         clienteAdapter = new ArrayAdapter<>(getContext(), R.layout.fragment_listar_cliente_item, R.id.txtViewItemCliente, clienteListString);
 
+        /*Injetar o adpter no listView*/
         listViewCliente.setAdapter(clienteAdapter);
 
+
+        editPesquisarCliente.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                ListarClientesFragment.this.clienteAdapter.getFilter().filter(charSequence);
+
+                Log.i(AppUtil.TAG,"Valor pesquisado: "+charSequence);
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
         return view;
     }

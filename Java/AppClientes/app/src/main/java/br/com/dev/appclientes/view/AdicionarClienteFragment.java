@@ -124,11 +124,14 @@ public class AdicionarClienteFragment extends Fragment {
                     editLogradouro.requestFocus();
                 }
 
+                /** Removido. Complemento não deve ser um campo obrigatório
+                 *
+
                 if(TextUtils.isEmpty(editComplemento.getText().toString())){
                     isDadosOK = false;
                     editComplemento.setError("*");
                     editComplemento.requestFocus();
-                }
+                }*/
 
                 if(TextUtils.isEmpty(editNumero.getText().toString())){
                     isDadosOK = false;

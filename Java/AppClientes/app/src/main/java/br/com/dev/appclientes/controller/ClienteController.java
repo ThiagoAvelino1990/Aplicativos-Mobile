@@ -3,7 +3,7 @@ package br.com.dev.appclientes.controller;
 import android.content.ContentValues;
 import android.content.Context;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.dev.appclientes.datamodel.ClienteDataModel;
@@ -51,6 +51,19 @@ public class ClienteController extends AppDataBase implements ICRUD<Cliente> {
 
     @Override
     public List<Cliente> readObject() {
-        return readDados(ClienteDataModel.TABELA);
+        return getAllClientes(ClienteDataModel.TABELA);
+    }
+
+
+    public List<String> getAllClientesListView() {
+
+        List<String> clientList = new ArrayList<>();
+
+        for (Cliente objCliente: readObject()) {
+
+            clientList.add(objCliente.getId()+" "+objCliente.getNome());
+        }
+
+        return clientList;
     }
 }

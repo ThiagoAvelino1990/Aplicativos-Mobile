@@ -90,7 +90,7 @@ public class AppDataBase extends SQLiteOpenHelper {
     }
 
 
-    public List<Cliente> readDados(String nomeTabela){
+    public List<Cliente> getAllClientes(String nomeTabela){
 
         db = getWritableDatabase();
 
