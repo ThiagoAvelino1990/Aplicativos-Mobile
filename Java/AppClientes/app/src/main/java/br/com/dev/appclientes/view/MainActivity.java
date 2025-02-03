@@ -21,7 +21,6 @@ import com.google.android.material.snackbar.Snackbar;
 import br.com.dev.appclientes.R;
 import br.com.dev.appclientes.controller.ClienteController;
 
-// TODO - Criar o novo Layout para suporte aos CARDS
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -182,6 +181,10 @@ public class MainActivity extends AppCompatActivity
         }else if(id == R.id.listar_clientes_cards_nav){
 
             fragmentManager.beginTransaction().replace(R.id.content_fragment, new ListarClientesCardsFragment()).commit();
+
+        }else if(id == R.id.adicionar_cliente_cards_nav){
+
+            fragmentManager.beginTransaction().replace(R.id.content_fragment, new AdicionarClienteCardsFragment()).commit();
 
         }
 

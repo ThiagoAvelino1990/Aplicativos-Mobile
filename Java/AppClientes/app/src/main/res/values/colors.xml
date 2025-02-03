@@ -13,4 +13,7 @@
 
     <!-- Cor para os campos do layout-->
     <color name="orange">#D9BDA8</color>
+
+    <!-- Cor para botões -->
+    <color name="gray">#c9c9c9</color>
 </resources>

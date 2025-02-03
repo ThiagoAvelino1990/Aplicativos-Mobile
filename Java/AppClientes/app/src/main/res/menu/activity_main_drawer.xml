@@ -17,6 +17,10 @@
             android:icon="@drawable/ic_item_menu_padrao"
             android:title="@string/adicionar_cliente_main" />
 
+        <item android:id="@+id/adicionar_cliente_cards_nav"
+            android:icon="@drawable/ic_item_menu_padrao"
+            android:title="@string/adicionar_cliente_cards" />
+
         <item android:id="@+id/nav_preto"
             android:icon="@drawable/ic_item_menu_padrao"
             android:title="@string/fragmento_preto" />
