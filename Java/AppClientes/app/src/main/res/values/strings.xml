@@ -11,7 +11,8 @@
 
     <!-- Opções do Menu Lateral Drawer -->
     <string name="listar_clientes_fragment">Lista de Clientes</string>
-    <string name="listar_de_clientes_main">Listar de Clientes</string>
+    <string name="listar_de_clientes_main">Lista de Clientes</string>
+    <string name="lista_de_clientes_cards">Lista de Clientes(CARDS)</string>
 
 
     <string name="adicionar_cliente_main">Adicionar Cliente</string>

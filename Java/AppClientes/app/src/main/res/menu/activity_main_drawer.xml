@@ -9,6 +9,10 @@
             android:icon="@drawable/ic_item_menu_padrao"
             android:title="@string/listar_de_clientes_main" />
 
+        <item android:id="@+id/listar_clientes_cards_nav"
+            android:icon="@drawable/ic_item_menu_padrao"
+            android:title="@string/lista_de_clientes_cards" />
+
         <item android:id="@+id/adicionar_cliente_nav"
             android:icon="@drawable/ic_item_menu_padrao"
             android:title="@string/adicionar_cliente_main" />

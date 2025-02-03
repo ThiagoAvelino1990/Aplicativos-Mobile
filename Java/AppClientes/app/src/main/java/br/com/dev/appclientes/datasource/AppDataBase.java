@@ -142,4 +142,54 @@ public class AppDataBase extends SQLiteOpenHelper {
     }
 
 
+    public List<Cliente> getClienteById(String nomeTabela, int id){
+
+        db = getWritableDatabase();
+
+        Cursor cursor;
+
+        Cliente cliente;
+
+        List<Cliente> dadosTabela = new ArrayList<>();
+
+        cursor = db.rawQuery("SELECT * FROM "+nomeTabela+"WHERE ID = ?",new String[]{String.valueOf(id)});
+
+        if(cursor.moveToFirst()){
+
+            do{
+
+                cliente = new Cliente();
+
+                cliente.setId(cursor.getInt(cursor.getColumnIndexOrThrow("ID")));
+                cliente.setNome(cursor.getString(cursor.getColumnIndexOrThrow("NOME")));
+                cliente.setTelefone(cursor.getString(cursor.getColumnIndexOrThrow("TELEFONE")));
+                cliente.setEmail(cursor.getString(cursor.getColumnIndexOrThrow("EMAIL")));
+                cliente.setCep(cursor.getInt(cursor.getColumnIndexOrThrow("CEP")));
+                cliente.setLogradouro(cursor.getString(cursor.getColumnIndexOrThrow("LOGRADOURO")));
+                cliente.setComplemento(cursor.getString(cursor.getColumnIndexOrThrow("COMPLEMENTO")));
+                cliente.setNumero(cursor.getString(cursor.getColumnIndexOrThrow("NUMERO")));
+                cliente.setBairro(cursor.getString(cursor.getColumnIndexOrThrow("BAIRRO")));
+                cliente.setCidade(cursor.getString(cursor.getColumnIndexOrThrow("CIDADE")));
+                cliente.setEstado(cursor.getString(cursor.getColumnIndexOrThrow("ESTADO")));
+                cliente.setPais(cursor.getString(cursor.getColumnIndexOrThrow("PAIS")));
+
+                if(cursor.getColumnIndexOrThrow("TERMOS_DE_USO") > 0){
+                    cliente.setTermosDeUso(false);
+                }else{
+                    cliente.setTermosDeUso(true);
+                }
+
+
+                dadosTabela.add(cliente);
+
+            }while(cursor.moveToNext());
+
+
+        }
+
+
+        return dadosTabela;
+    }
+
+
 }
