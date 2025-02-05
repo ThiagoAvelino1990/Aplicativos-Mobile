@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">AppQRCode</string>
+
+    <!-- txtview -->
+    <string name="geradorDeQRCode">Gerador de QR Code</string>
+
+    <!-- EditText (hint)-->
+    <string name="conteudoQRCode">Digite o conteúdo do QR code</string>
+
+    <!-- button -->
+    <string name="gerarQRCode"> Gerar QR Code</string>
+</resources>
