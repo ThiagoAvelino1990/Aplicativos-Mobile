@@ -8,5 +8,6 @@
     <string name="conteudoQRCode">Digite o conteúdo do QR code</string>
 
     <!-- button -->
-    <string name="gerarQRCode"> Gerar QR Code</string>
+    <string name="gerarQRCode"> Gerar QRCode</string>
+    <string name="limparQRCode">Limpar QRCode</string>
 </resources>
