@@ -31,7 +31,7 @@
             android:id="@+id/txtLatitude"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="64dp"
             android:text="@string/txt_latitude"
             android:textColor="@color/texto_destaque"
             android:textSize="18sp"
@@ -83,17 +83,17 @@
 
         <ImageView
             android:id="@+id/imgPinGPS"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="136dp"
+            android:layout_height="129dp"
             android:layout_marginTop="80dp"
             android:contentDescription="@string/content_pin_gps_no_mapa"
+            android:src="@drawable/direction_google_gps_location_map_icon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/txtCoordenasGPS"
-            app:layout_constraintVertical_bias="0.029"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:layout_constraintVertical_bias="0.029" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
