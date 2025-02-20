@@ -7,4 +7,5 @@
     <string name="txt_longitude">Longitude</string>
     <string name="txt_valor_latitude_longitude">0.00</string>
     <string name="content_pin_gps_no_mapa">Pin GPS no Mapa</string>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>

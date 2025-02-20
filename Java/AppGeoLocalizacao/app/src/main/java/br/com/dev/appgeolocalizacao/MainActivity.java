@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -19,11 +20,21 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
+
+    GoogleMap mMap;
 
     TextView txtValorLatitude, txtValorLongitude;
 
@@ -52,6 +63,11 @@ public class MainActivity extends AppCompatActivity {
 
         txtValorLatitude = findViewById(R.id.txtValorLatitude);
         txtValorLongitude = findViewById(R.id.txtValorLongitude);
+
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 
         //Conferir serviços disponíveis via LocationManager
         locationManager = (LocationManager) getApplication().getSystemService(Context.LOCATION_SERVICE);
@@ -137,5 +153,16 @@ public class MainActivity extends AppCompatActivity {
 
         return decimalFormat.format(valor);
 
+    }
+
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+
+        mMap = googleMap;
+
+        LatLng localizacaoCeluar = new LatLng(latitude, longitude);
+
+        mMap.addMarker(new MarkerOptions().position(localizacaoCeluar).title("Seu celular está aqui !"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(localizacaoCeluar));
     }
 }
