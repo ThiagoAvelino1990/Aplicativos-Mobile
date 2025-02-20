@@ -19,6 +19,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -112,19 +113,29 @@ public class MainActivity extends AppCompatActivity {
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
         if(location != null){
+            //GeoPoint
             latitude = location.getLatitude();
             longitude = location.getLongitude();
+
+            Toast.makeText(MainActivity.this,"Coordenadas obtidas com sucesso",Toast.LENGTH_LONG).show();
+
         }else{
             latitude = 0.00;
             longitude = 0.00;
 
-            Toast.makeText(MainActivity.this,"Deu ruim",Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this,"Não foi possível obter as coordenadas",Toast.LENGTH_LONG).show();
         }
 
-        txtValorLatitude.setText(String.valueOf(latitude));
-        txtValorLongitude.setText(String.valueOf(longitude));
+        txtValorLatitude.setText(formatarGeoPoint(latitude));
+        txtValorLongitude.setText(formatarGeoPoint(longitude));
 
-        Toast.makeText(MainActivity.this,"Coordenadas obtidas com sucesso",Toast.LENGTH_LONG).show();
+    }
+
+    private String formatarGeoPoint(double valor){
+
+        DecimalFormat decimalFormat = new DecimalFormat("#.#####");
+
+        return decimalFormat.format(valor);
 
     }
 }
