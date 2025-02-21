@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     LocationManager locationManager;
 
-    boolean gpsAtivo = false;
 
     //Buscar Manifest android
     //Criando um vetor com as permissoes
@@ -71,10 +70,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         //Conferir serviços disponíveis via LocationManager
         locationManager = (LocationManager) getApplication().getSystemService(Context.LOCATION_SERVICE);
-        //Verificar se o serviço GPS_PROVIDER está ativado
-        gpsAtivo = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
 
-        if(gpsAtivo){
+        //Verificar se o serviço GPS_PROVIDER está ativado
+        if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
             obterCoordenadas();
         }else{
             latitude = 0.00;
@@ -90,10 +88,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void obterCoordenadas() {
 
-        boolean permissaoAtiva = requestPermissaoLocalizacao();
-
-        if(permissaoAtiva){
+        if(requestPermissaoLocalizacao()){
             getUltimaLocalizacao();
+        }else{
+            Toast.makeText(MainActivity.this,"Não foi possível obter as coordenadas",Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -128,17 +126,19 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         @SuppressLint("MissingPermission")
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
+        boolean coordenadasOK;
+
         if(location != null){
             //GeoPoint
             latitude = location.getLatitude();
             longitude = location.getLongitude();
-
+            coordenadasOK = true;
             Toast.makeText(MainActivity.this,"Coordenadas obtidas com sucesso",Toast.LENGTH_LONG).show();
 
         }else{
             latitude = 0.00;
             longitude = 0.00;
-
+            coordenadasOK = false;
             Toast.makeText(MainActivity.this,"Não foi possível obter as coordenadas",Toast.LENGTH_LONG).show();
         }
 
