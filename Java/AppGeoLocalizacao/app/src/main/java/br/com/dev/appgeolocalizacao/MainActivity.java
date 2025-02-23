@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void obterCoordenadas() {
 
         if(requestPermissaoLocalizacao()){
-            getUltimaLocalizacao();
+            Toast.makeText(MainActivity.this,"Coordenadas obtidas com sucesso",Toast.LENGTH_LONG).show();
         }else{
             Toast.makeText(MainActivity.this,"Não foi possível obter as coordenadas",Toast.LENGTH_SHORT).show();
         }
@@ -114,14 +114,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             ActivityCompat.requestPermissions(MainActivity.this, permissoesNegadas.toArray(new String[permissoesNegadas.size()]), APP_PERMISSOES_ID);
 
-            return false;
+            return getUltimaLocalizacao();
         }else{
-            return true;
+            return getUltimaLocalizacao();
         }
 
     }
 
-    private void getUltimaLocalizacao() {
+    private boolean getUltimaLocalizacao() {
 
         @SuppressLint("MissingPermission")
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -133,17 +133,17 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             latitude = location.getLatitude();
             longitude = location.getLongitude();
             coordenadasOK = true;
-            Toast.makeText(MainActivity.this,"Coordenadas obtidas com sucesso",Toast.LENGTH_LONG).show();
 
         }else{
             latitude = 0.00;
             longitude = 0.00;
             coordenadasOK = false;
-            Toast.makeText(MainActivity.this,"Não foi possível obter as coordenadas",Toast.LENGTH_LONG).show();
         }
 
         txtValorLatitude.setText(formatarGeoPoint(latitude));
         txtValorLongitude.setText(formatarGeoPoint(longitude));
+
+        return coordenadasOK;
 
     }
 
