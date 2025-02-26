@@ -1,6 +1,8 @@
 package br.com.dev.appgeolocalizacao
 
 import android.Manifest
+import android.annotation.SuppressLint
+import android.content.pm.PackageManager
 import android.icu.text.DecimalFormat
 import android.location.LocationManager
 import android.os.Bundle
@@ -8,6 +10,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -31,7 +35,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
     //Buscar Manifest android
     //Criando um vetor com as permissoes
-    var permissoesRequeridas = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
+    var permissoesRequeridas = arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION)
 
     val APP_PERMISSOES_ID : Int = 2025;
 
@@ -44,31 +48,88 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        txtValorLatitute = findViewById(R.id.txtValorLatitude)
+        txtValorLongitute = findViewById(R.id.txtValorLongitude)
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
+        mapFragment.getMapAsync(this@MainActivity)
+
+        //Conferir serviços disponíveis via LocationManager
+        locationManager = application.getSystemService(LOCATION_SERVICE) as LocationManager
+
+        if(locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            obterCoordenadas()
+        }else{
+            latitude = 0.00
+            longitute = 0.00
+
+            txtValorLatitute!!.setText(latitude.toString())
+            txtValorLongitute!!.setText(longitute.toString())
+
+            Toast.makeText(this@MainActivity,"GPS Não ativado",Toast.LENGTH_SHORT).show();
+
+        }
+
 
     }
 
     private fun obterCoordenadas(){
 
         if(requestPermissaoLocalizacao())
-            Toast.makeText(this, "Coordenadas obtidas com sucesso", Toast.LENGTH_LONG).show()
+            Toast.makeText(this@MainActivity, "Coordenadas obtidas com sucesso", Toast.LENGTH_LONG).show()
         else
-            Toast.makeText(this, "Não foi possível obter as coordenadas", Toast.LENGTH_LONG).show()
+            Toast.makeText(this@MainActivity, "Não foi possível obter as coordenadas", Toast.LENGTH_LONG).show()
 
     }
 
     private fun requestPermissaoLocalizacao() : Boolean{
 
         var permissoesNegadas : MutableList<String> = ArrayList()
+        var verificarPermissoes : Int
 
-        return true
+        for(permissoes in permissoesRequeridas){
+            verificarPermissoes = ContextCompat.checkSelfPermission(this@MainActivity,permissoes)
+
+            if(verificarPermissoes != PackageManager.PERMISSION_GRANTED){
+                permissoesNegadas.add(permissoes)
+            }
+
+        }
+
+        return if(!permissoesNegadas.isEmpty()){
+            ActivityCompat.requestPermissions(this@MainActivity, permissoesNegadas.toTypedArray(), APP_PERMISSOES_ID)
+            getUltimaLocalizacao()
+        }else{
+            getUltimaLocalizacao()
+        }
+
+
     }
 
     private fun getUltimaLocalizacao() : Boolean{
-        return true
+
+        @SuppressLint("MissingPermission")
+        val location = locationManager!!.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+
+        var coordenadasOk : Boolean
+
+        if(location != null){
+            latitude = location.latitude
+            longitute = location.longitude
+            coordenadasOk = true
+        }else{
+            latitude = 0.00
+            longitute = 0.00
+            coordenadasOk = false
+        }
+
+        txtValorLatitute!!.setText(formatarGeoPoint(latitude))
+        txtValorLongitute!!.setText(formatarGeoPoint(longitute))
+
+        return coordenadasOk
     }
 
     private fun formatarGeoPoint(valor: Double) : String?{
@@ -82,9 +143,9 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        val localizacaoCelular = LatLng(latitude, longitute)
+        mMap.addMarker(MarkerOptions().position(localizacaoCelular).title("Seu celular está aqui"))
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(localizacaoCelular))
         mMap.uiSettings.setZoomControlsEnabled(true)
         mMap.setMinZoomPreference(5.5f)
     }
