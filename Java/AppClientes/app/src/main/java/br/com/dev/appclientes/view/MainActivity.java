@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity
     MenuItem nav_vermelho;
     MenuItem nav_azul;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
