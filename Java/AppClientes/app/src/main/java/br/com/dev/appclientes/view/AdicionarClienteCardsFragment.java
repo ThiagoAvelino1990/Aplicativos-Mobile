@@ -15,7 +15,9 @@ import androidx.fragment.app.Fragment;
 
 import br.com.dev.appclientes.R;
 import br.com.dev.appclientes.controller.ClienteController;
+import br.com.dev.appclientes.controller.ClienteORMController;
 import br.com.dev.appclientes.model.Cliente;
+import br.com.dev.appclientes.model.ClienteORM;
 
 public class AdicionarClienteCardsFragment extends Fragment {
 
@@ -31,6 +33,9 @@ public class AdicionarClienteCardsFragment extends Fragment {
 
     Cliente cliente;
     ClienteController clienteController;
+
+    ClienteORM clienteORM;
+    ClienteORMController clienteORMController;
 
 
     public AdicionarClienteCardsFragment() {
@@ -83,6 +88,9 @@ public class AdicionarClienteCardsFragment extends Fragment {
 
         cliente = new Cliente();
         clienteController = new ClienteController(getContext());
+
+        clienteORM = new ClienteORM();
+        clienteORMController = new ClienteORMController();
 
     }
 
@@ -180,8 +188,28 @@ public class AdicionarClienteCardsFragment extends Fragment {
                     cliente.setPais(editPais.getText().toString());
                     cliente.setTermosDeUso(chkTermosDeUso.isChecked());
 
-
                     clienteController.insertObject(cliente);
+
+
+                    /*Inclusão de dados ORM*/
+                    clienteORM.setNome(editNomeCompleto.getText().toString());
+                    clienteORM.setTelefone(editTelefone.getText().toString());
+                    clienteORM.setEmail(editEmail.getText().toString());
+                    clienteORM.setCep(Integer.parseInt(editCep.getText().toString()));
+                    clienteORM.setLogradouro(editLogradouro.getText().toString());
+                    clienteORM.setComplemento(editComplemento.getText().toString());
+                    clienteORM.setNumero(editNumero.getText().toString());
+                    clienteORM.setBairro(editBairro.getText().toString());
+                    clienteORM.setCidade(editCidade.getText().toString());
+                    clienteORM.setEstado(editEstado.getText().toString());
+                    clienteORM.setPais(editPais.getText().toString());
+                    clienteORM.setTermosDeUso(chkTermosDeUso.isChecked());
+
+                    clienteORM.toString();
+                    /** Verificar Erro ao salvar os dados
+                    clienteORMController.insertORM(clienteORM);
+                    */
+
                     Toast.makeText(getContext(),"Dados salvos com sucesso...", Toast.LENGTH_LONG).show();
                 }else{
                     Toast.makeText(getContext(),"Verifique os campos...", Toast.LENGTH_LONG).show();
