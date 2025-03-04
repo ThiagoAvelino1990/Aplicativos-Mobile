@@ -39,8 +39,8 @@ public class ProdutoController implements ICRUD<Produto>{
             return false;
         } finally{
             realm.close();
-            return true;
         }
+        return true;
     }
 
     @Override
@@ -52,9 +52,9 @@ public class ProdutoController implements ICRUD<Produto>{
 
         try{
             realm = Realm.getDefaultInstance();
+            realm.beginTransaction();
 
             results = realm.where(Produto.class).findAll();
-
             listaProduto = realm.copyFromRealm(results);
 
             realm.commitTransaction();
@@ -67,8 +67,8 @@ public class ProdutoController implements ICRUD<Produto>{
             return null;
         } finally{
             realm.close();
-            return listaProduto;
         }
+        return listaProduto;
     }
 
     @Override
@@ -102,8 +102,8 @@ public class ProdutoController implements ICRUD<Produto>{
             return false;
         } finally{
             realm.close();
-            return true;
         }
+        return true;
     }
 
     @Override
@@ -113,9 +113,9 @@ public class ProdutoController implements ICRUD<Produto>{
 
         try{
             realm = Realm.getDefaultInstance();
+            realm.beginTransaction();
 
             results = realm.where(Produto.class).equalTo("id",obj.getId()).findAll();
-
             results.deleteAllFromRealm();
 
             realm.commitTransaction();
@@ -128,8 +128,8 @@ public class ProdutoController implements ICRUD<Produto>{
             return false;
         } finally{
             realm.close();
-            return true;
         }
+        return true;
     }
 
     @Override
@@ -139,9 +139,9 @@ public class ProdutoController implements ICRUD<Produto>{
 
         try{
             realm = Realm.getDefaultInstance();
+            realm.beginTransaction();
 
             results = realm.where(Produto.class).equalTo("id",id).findAll();
-
             results.deleteAllFromRealm();
 
             realm.commitTransaction();
@@ -154,7 +154,7 @@ public class ProdutoController implements ICRUD<Produto>{
             return false;
         } finally{
             realm.close();
-            return true;
         }
+        return true;
     }
 }

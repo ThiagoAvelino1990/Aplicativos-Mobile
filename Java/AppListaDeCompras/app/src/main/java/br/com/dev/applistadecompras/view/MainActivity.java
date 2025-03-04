@@ -20,11 +20,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.Date;
 import java.util.List;
 
 import br.com.dev.applistadecompras.R;
 import br.com.dev.applistadecompras.controller.CategoriaController;
+import br.com.dev.applistadecompras.controller.ProdutoController;
 import br.com.dev.applistadecompras.model.Categoria;
+import br.com.dev.applistadecompras.model.Produto;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -75,6 +78,66 @@ public class MainActivity extends AppCompatActivity
         //Testes em categoria com o banco realm
         manterCategorias();
 
+        //Testes em produto com banco realm
+        manterPordutos();
+
+    }
+
+    private void manterPordutos() {
+        ProdutoController produtoController=  new ProdutoController();
+        Produto produto = new Produto();
+
+        /**
+         * Inclusão de registros
+         */
+        /*for(int i =0;i<11;i++){
+
+            produto.setDescricao("DESC PRODUTO "+i);
+            produto.setUn("KG");
+            produto.setQuantidade(30+i);
+            produto.setDataDeInclusao(new Date());
+            produto.setPreco(22.2 + i);
+            produto.setCodigoDeBarra("0123456789"+i);
+
+            if(produtoController.insert(produto)){
+                Log.i("db_log", "manterCategorias: "+produto.toString());
+            };
+        }*/
+
+        /**
+         *Exclusão de registro por ID
+         */
+        /*if(produtoController.deleteByID(2)){
+            Log.i("db_log", "Exclusão dos dados");
+        };*/
+
+        /**
+         *Exclusão de todos os registros
+         */
+        /*List<Produto> listaDeProdutos = produtoController.read();
+        for (Produto obj: listaDeProdutos) {
+            produtoController.delete(obj);
+        }*/
+
+
+        /**
+         * Alteração dos registros
+         */
+        /*produto.setId(6);
+        produto.setDescricao("ALTERAÇÃO PRODUTO DESC");
+        produto.setDataDeInclusao(new Date());
+        produto.setUn("CX");
+        produtoController.update(produto);*/
+
+        /**
+         * Listar objetos
+         */
+        /*List<Produto> listaDeProdutos = produtoController.read();
+        for (Produto obj: listaDeProdutos) {
+            Log.i("db_log",obj.toString());
+        }*/
+
+
     }
 
     private void manterCategorias() {
@@ -84,14 +147,14 @@ public class MainActivity extends AppCompatActivity
         /**
          * Inclusão de registros
          */
-        for(int i =0;i<8;i++){
+        /*for(int i =0;i<8;i++){
 
             categoria.setNome("TESTE CATEGORIA: "+i);
 
             if(categoriaController.insert(categoria)){
                 Log.i("db_log", "manterCategorias: "+categoria.toString());
             };
-        }
+        }*/
 
         /**
          *Exclusão de registro por ID
@@ -123,9 +186,6 @@ public class MainActivity extends AppCompatActivity
         for (Categoria obj: listaDeCategorias) {
             Log.i("db_log",obj.toString());
         }*/
-
-
-
 
     }
 
