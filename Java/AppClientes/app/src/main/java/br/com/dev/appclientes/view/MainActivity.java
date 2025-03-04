@@ -21,6 +21,7 @@ import com.google.android.material.snackbar.Snackbar;
 import br.com.dev.appclientes.R;
 import br.com.dev.appclientes.controller.ClienteController;
 import br.com.dev.appclientes.controller.ClienteORMController;
+import br.com.dev.appclientes.model.Cliente;
 import br.com.dev.appclientes.model.ClienteORM;
 
 
@@ -77,9 +78,28 @@ public class MainActivity extends AppCompatActivity
         // tela principal do aplicativo
         fragmentManager.beginTransaction().replace(R.id.content_fragment, new ListarClientesFragment()).commit();
 
+        //Teste de inclusao dos dados
+        incluirClienteTeste();
+    }
 
-        ClienteController clienteController = new ClienteController(getBaseContext());
+    private void incluirClienteTeste() {
 
+        ClienteORM obj = new ClienteORM();
+        ClienteORMController controller = new ClienteORMController();
+
+        obj.setNome("TESTE");
+        obj.setTelefone("123456478");
+        obj.setEmail("teste@teste.com.br");
+        obj.setLogradouro("Rua dos testes");
+        obj.setNumero("32");
+        obj.setComplemento("Testeira");
+        obj.setBairro("Local de teste");
+        obj.setCidade("Testolandia");
+        obj.setEstado("Estado do Para");
+        obj.setPais("Testouros");
+        obj.setCep(444444);
+
+        controller.insertORM(obj);
     }
 
     @Override

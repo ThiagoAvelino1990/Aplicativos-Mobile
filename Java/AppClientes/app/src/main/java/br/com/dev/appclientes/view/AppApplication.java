@@ -8,7 +8,7 @@ import io.realm.RealmConfiguration;
 
 public class AppApplication extends Application {
 
-    public static final String DB_NAME = "CLIENTES.realm";
+    public static final String DB_NAME = "clientes.realm";
     public static final int DB_VERSION = 1;
 
     @Override
