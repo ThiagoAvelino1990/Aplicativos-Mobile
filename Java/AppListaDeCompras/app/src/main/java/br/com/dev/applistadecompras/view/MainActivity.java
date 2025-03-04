@@ -1,8 +1,9 @@
-package br.com.dev.applistadecompras;
+package br.com.dev.applistadecompras.view;
 
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +19,12 @@ import androidx.fragment.app.FragmentManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.List;
+
+import br.com.dev.applistadecompras.R;
+import br.com.dev.applistadecompras.controller.CategoriaController;
+import br.com.dev.applistadecompras.model.Categoria;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -64,6 +71,61 @@ public class MainActivity extends AppCompatActivity
         fragmentManager = getSupportFragmentManager();
 
         fragmentManager.beginTransaction().replace(R.id.content_fragment, new ModeloVermelhoFragment()).commit();
+
+        //Testes em categoria com o banco realm
+        manterCategorias();
+
+    }
+
+    private void manterCategorias() {
+        CategoriaController categoriaController = new CategoriaController();
+        Categoria categoria = new Categoria();
+
+        /**
+         * Inclusão de registros
+         */
+        for(int i =0;i<8;i++){
+
+            categoria.setNome("TESTE CATEGORIA: "+i);
+
+            if(categoriaController.insert(categoria)){
+                Log.i("db_log", "manterCategorias: "+categoria.toString());
+            };
+        }
+
+        /**
+         *Exclusão de registro por ID
+         */
+        /*if(categoriaController.deleteByID(2)){
+            Log.i("db_log", "Exclusão dos dados");
+        };*/
+
+        /**
+         *Exclusão de todos os registros
+         */
+        /*List<Categoria> listaDeCategorias = categoriaController.read();
+        for (Categoria obj: listaDeCategorias) {
+            categoriaController.delete(obj);
+        }*/
+
+
+        /**
+         * Alteração dos registros
+         */
+        /*categoria.setId(6);
+        categoria.setNome("ALTERAÇÃO CATIGURIA");
+        categoriaController.update(categoria);*/
+
+        /**
+         * Listar objetos
+         */
+        /*List<Categoria> listaDeCategorias = categoriaController.read();
+        for (Categoria obj: listaDeCategorias) {
+            Log.i("db_log",obj.toString());
+        }*/
+
+
+
 
     }
 
