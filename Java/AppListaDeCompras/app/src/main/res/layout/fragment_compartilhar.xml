@@ -3,13 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0C0C0C"
-    tools:context="br.com.dev.applistadecompras.view.ModeloPretoFragment">
+    tools:context="br.com.dev.applistadecompras.view.CompartilharFragment">
 
 
     <!-- Terceiro Passo -->
 
     <TextView
-        android:id="@+id/txtTitulo"
+        android:id="@+id/txtCompartilhar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
@@ -17,6 +17,6 @@
         android:textSize="18sp"
         android:textStyle="bold"
         android:textColor="@color/colorPrimary"
-        android:text="@string/modelo_fragment" />
+        android:text="@string/txtCompartilhar" />
 
 </FrameLayout>

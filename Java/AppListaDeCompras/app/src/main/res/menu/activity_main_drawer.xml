@@ -5,17 +5,21 @@
 
     <group android:checkableBehavior="single">
 
-        <item android:id="@+id/nav_preto"
+        <item android:id="@+id/nav_meus_produtos"
             android:icon="@drawable/ic_item_menu_padrao"
-            android:title="Fragmento Preto" />
+            android:title="@string/txtMeusProdutos" />
 
-        <item android:id="@+id/nav_vermelho"
+        <item android:id="@+id/nav_minhas_compras"
             android:icon="@drawable/ic_item_menu_padrao"
-            android:title="Fragmento Vermelho" />
+            android:title="@string/txtMinhasCompras" />
 
-        <item android:id="@+id/nav_azul"
+        <item android:id="@+id/nav_compartilhar"
             android:icon="@drawable/ic_item_menu_padrao"
-            android:title="Fragmento Azul" />
+            android:title="@string/txtCompartilhar" />
+
+        <item android:id="@+id/nav_sair"
+            android:icon="@drawable/ic_item_menu_padrao"
+            android:title="@string/txtSairDoApp" />
 
     </group>
 
