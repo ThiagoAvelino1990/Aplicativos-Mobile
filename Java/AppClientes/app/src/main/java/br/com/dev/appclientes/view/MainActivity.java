@@ -80,7 +80,12 @@ public class MainActivity extends AppCompatActivity
         fragmentManager.beginTransaction().replace(R.id.content_fragment, new ListarClientesFragment()).commit();
 
         //Teste de inclusao dos dados
-        incluirClienteTeste();
+        //TODO: Excluir este método
+        //incluirClienteTeste();
+        
+        //Teste de alteração dos dados
+        //TODO: Excluir este método
+        alterarClienteTeste();
     }
 
     private void incluirClienteTeste() {
@@ -99,7 +104,18 @@ public class MainActivity extends AppCompatActivity
         obj.setEstado("Estado do Para");
         obj.setPais("Testouros");
         obj.setCep(444444);
-        obj.setDataDeInclusao(AppUtil.getDataFormat());
+        obj.setDataDeInclusao(AppUtil.getDataFormat()); //Teste da função de data
+
+        controller.insertORM(obj);
+    }
+
+    private void alterarClienteTeste() {
+        ClienteORM obj = new ClienteORM();
+        ClienteORMController controller = new ClienteORMController();
+
+        obj.setId(1);
+        obj.setNome("TESTE ALTERADO"); //Campo marcado como @Required
+        obj.setDataDeAtualizacao(AppUtil.getDataFormat()); //Teste de outra função de data
 
         controller.insertORM(obj);
     }
