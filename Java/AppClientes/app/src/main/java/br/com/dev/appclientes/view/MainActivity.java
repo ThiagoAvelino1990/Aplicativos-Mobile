@@ -19,6 +19,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
 import br.com.dev.appclientes.R;
+import br.com.dev.appclientes.api.AppUtil;
 import br.com.dev.appclientes.controller.ClienteController;
 import br.com.dev.appclientes.controller.ClienteORMController;
 import br.com.dev.appclientes.model.Cliente;
@@ -98,6 +99,7 @@ public class MainActivity extends AppCompatActivity
         obj.setEstado("Estado do Para");
         obj.setPais("Testouros");
         obj.setCep(444444);
+        obj.setDataDeInclusao(AppUtil.getDataFormat());
 
         controller.insertORM(obj);
     }

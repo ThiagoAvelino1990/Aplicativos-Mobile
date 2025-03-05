@@ -11,6 +11,7 @@ public class ClienteORM extends RealmObject {
 
     @Required
     private String nome;
+
     private String telefone;
     private String email;
     private int cep;
@@ -22,6 +23,8 @@ public class ClienteORM extends RealmObject {
     private String estado;
     private String pais;
     private boolean termosDeUso;
+    private String dataDeInclusao;
+    private String dataDeAtualizacao;
 
     public int getId() {
         return id;
@@ -127,9 +130,25 @@ public class ClienteORM extends RealmObject {
         this.termosDeUso = termosDeUso;
     }
 
+    public String getDataDeInclusao() {
+        return dataDeInclusao;
+    }
+
+    public void setDataDeInclusao(String dataDeInclusao) {
+        this.dataDeInclusao = dataDeInclusao;
+    }
+
+    public String getDataDeAtualizacao() {
+        return dataDeAtualizacao;
+    }
+
+    public void setDataDeAtualizacao(String dataDeAtualizacao) {
+        this.dataDeAtualizacao = dataDeAtualizacao;
+    }
+
     @Override
     public String toString() {
-        return "Cliente{" +
+        return "ClienteORM{" +
                 "id=" + id +
                 ", nome='" + nome + '\'' +
                 ", telefone='" + telefone + '\'' +
@@ -143,6 +162,8 @@ public class ClienteORM extends RealmObject {
                 ", estado='" + estado + '\'' +
                 ", pais='" + pais + '\'' +
                 ", termosDeUso=" + termosDeUso +
+                ", dataDeInclusao='" + dataDeInclusao + '\'' +
+                ", dataDeAtualizacao='" + dataDeAtualizacao + '\'' +
                 '}';
     }
 }

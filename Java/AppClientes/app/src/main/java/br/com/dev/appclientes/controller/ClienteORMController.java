@@ -62,6 +62,7 @@ public class ClienteORMController {
             clienteORM.setEstado(obj.getEstado());
             clienteORM.setPais(obj.getPais());
             clienteORM.setTermosDeUso(obj.isTermosDeUso());
+            clienteORM.setDataDeAtualizacao(obj.getDataDeAtualizacao());
 
         }catch(RealmException err){
             Log.e("db_log","updateORM: "+err.getMessage());
