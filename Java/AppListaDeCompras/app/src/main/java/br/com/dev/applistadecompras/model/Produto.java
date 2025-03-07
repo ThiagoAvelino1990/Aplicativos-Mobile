@@ -31,6 +31,8 @@ public class Produto extends RealmObject {
     @Ignore
     private List<Produto> produtos;
 
+    private String dataAltecao;
+
     public int getId() {
         return id;
     }
@@ -103,6 +105,14 @@ public class Produto extends RealmObject {
         this.produtos = produtos;
     }
 
+    public String getDataAltecao(){
+        return this.dataAltecao;
+    }
+
+    public void setDataAltecao(String dataAltecao){
+        this.dataAltecao = dataAltecao;
+    }
+
     @Override
     public String toString() {
         return "Produto{" +
@@ -115,6 +125,7 @@ public class Produto extends RealmObject {
                 ", codigoDeBarra='" + codigoDeBarra + '\'' +
                 ", imagem=" + Arrays.toString(imagem) +
                 ", produtos=" + produtos +
+                ", dataAltecao='" + dataAltecao + '\'' +
                 '}';
     }
 }

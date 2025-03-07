@@ -3,6 +3,7 @@ package br.com.dev.applistadecompras.view;
 import android.app.Application;
 import android.util.Log;
 
+import br.com.dev.applistadecompras.util.AppUtil;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
@@ -25,7 +26,7 @@ public class AppApplication extends Application {
 
         Realm realm = Realm.getInstance(config);
 
-        Log.d("db_log", "onCreate: Realm com sucesso: "+DB_VERSION+" versão "+DB_VERSION);
+        Log.d(AppUtil.TAG, "onCreate: Realm com sucesso: "+DB_VERSION+" versão "+DB_VERSION);
 
 
     }

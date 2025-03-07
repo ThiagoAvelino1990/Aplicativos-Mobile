@@ -3,6 +3,7 @@ package br.com.dev.applistadecompras.view;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,11 +20,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.Date;
+
 import br.com.dev.applistadecompras.R;
 import br.com.dev.applistadecompras.controller.CategoriaController;
 import br.com.dev.applistadecompras.controller.ProdutoController;
 import br.com.dev.applistadecompras.model.Categoria;
 import br.com.dev.applistadecompras.model.Produto;
+import br.com.dev.applistadecompras.util.AppUtil;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -98,8 +102,9 @@ public class MainActivity extends AppCompatActivity
             produto.setPreco(22.2 + i);
             produto.setCodigoDeBarra("0123456789"+i);
 
+
             if(produtoController.insert(produto)){
-                Log.i("db_log", "manterCategorias: "+produto.toString());
+                Log.i(AppUtil.TAG, "manterCategorias: "+produto.toString());
             };
         }*/
 
@@ -126,6 +131,7 @@ public class MainActivity extends AppCompatActivity
         produto.setDescricao("ALTERAÇÃO PRODUTO DESC");
         produto.setDataDeInclusao(new Date());
         produto.setUn("CX");
+        produto.setDataAlteracao(Apputil.getDataAtual());
         produtoController.update(produto);*/
 
         /**

@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 import br.com.dev.applistadecompras.model.Categoria;
+import br.com.dev.applistadecompras.util.AppUtil;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.exceptions.RealmException;
@@ -33,10 +34,10 @@ public class CategoriaController implements ICRUD<Categoria>{
             realm.commitTransaction();
 
         }catch(RealmException err){
-            Log.e("db_log","Erro ao incluir Categoria - [CategoriaController.insert(Categoria obj)] "+err.getMessage());
+            Log.e(AppUtil.TAG,"Erro ao incluir Categoria - [CategoriaController.insert(Categoria obj)] "+err.getMessage());
             return false;
         }catch(Exception err){
-            Log.e("db_log","Erro genérico - [CategoriaController.insert(Categoria obj)] "+err.getMessage());
+            Log.e(AppUtil.TAG,"Erro genérico - [CategoriaController.insert(Categoria obj)] "+err.getMessage());
             return false;
         } finally{
             realm.close();
@@ -62,10 +63,10 @@ public class CategoriaController implements ICRUD<Categoria>{
             realm.commitTransaction();
 
         }catch(RealmException err){
-            Log.e("db_log","Erro ao deletar Categoria - [CategoriaController.delete(Categoria obj)] "+err.getMessage());
+            Log.e(AppUtil.TAG,"Erro ao deletar Categoria - [CategoriaController.delete(Categoria obj)] "+err.getMessage());
             return null;
         }catch(Exception err){
-            Log.e("db_log","Erro genérico - [CategoriaController.delete(Categoria obj)] "+err.getMessage());
+            Log.e(AppUtil.TAG,"Erro genérico - [CategoriaController.delete(Categoria obj)] "+err.getMessage());
             return null;
         } finally{
             realm.close();
@@ -88,15 +89,16 @@ public class CategoriaController implements ICRUD<Categoria>{
                 realm.beginTransaction();
                 categoria.setNome(obj.getNome());
                 categoria.setImagem(obj.getImagem());
+                categoria.setDataAlteracao(obj.getDataAlteracao());
                 realm.commitTransaction();
             }
 
 
         }catch(RealmException err){
-            Log.e("db_log","Erro ao atualizar Categoria - [CategoriaController.update(Categoria obj)] "+err.getMessage());
+            Log.e(AppUtil.TAG,"Erro ao atualizar Categoria - [CategoriaController.update(Categoria obj)] "+err.getMessage());
             return false;
         }catch(Exception err){
-            Log.e("db_log","Erro genérico - [CategoriaController.update(Categoria obj)] "+err.getMessage());
+            Log.e(AppUtil.TAG,"Erro genérico - [CategoriaController.update(Categoria obj)] "+err.getMessage());
             return false;
         } finally{
             realm.close();
@@ -119,10 +121,10 @@ public class CategoriaController implements ICRUD<Categoria>{
             realm.commitTransaction();
 
         }catch(RealmException err){
-            Log.e("db_log","Erro ao deletar Categoria - [CategoriaController.delete(Categoria obj)] "+err.getMessage());
+            Log.e(AppUtil.TAG,"Erro ao deletar Categoria - [CategoriaController.delete(Categoria obj)] "+err.getMessage());
             return false;
         }catch(Exception err){
-            Log.e("db_log","Erro genérico - [CategoriaController.delete(Categoria obj)] "+err.getMessage());
+            Log.e(AppUtil.TAG,"Erro genérico - [CategoriaController.delete(Categoria obj)] "+err.getMessage());
             return false;
         } finally{
             realm.close();
@@ -145,10 +147,10 @@ public class CategoriaController implements ICRUD<Categoria>{
             realm.commitTransaction();
 
         }catch(RealmException err){
-            Log.e("db_log","Erro ao deletar Categoria por id - [CategoriaController.deleteByID(int id)] "+err.getMessage());
+            Log.e(AppUtil.TAG,"Erro ao deletar Categoria por id - [CategoriaController.deleteByID(int id)] "+err.getMessage());
             return false;
         }catch(Exception err){
-            Log.e("db_log","Erro genérico - [CategoriaController.deleteByID(int id)] "+err.getMessage());
+            Log.e(AppUtil.TAG,"Erro genérico - [CategoriaController.deleteByID(int id)] "+err.getMessage());
             return false;
         } finally{
             realm.close();

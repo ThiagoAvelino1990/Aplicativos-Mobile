@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 import br.com.dev.applistadecompras.model.Produto;
+import br.com.dev.applistadecompras.util.AppUtil;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.exceptions.RealmException;
@@ -32,10 +33,10 @@ public class ProdutoController implements ICRUD<Produto>{
             realm.commitTransaction();
 
         }catch(RealmException err){
-            Log.e("db_log","Erro ao incluir Produto - [ProdutoController.insert(Produto obj)] "+err.getMessage());
+            Log.e(AppUtil.TAG,"Erro ao incluir Produto - [ProdutoController.insert(Produto obj)] "+err.getMessage());
             return false;
         }catch(Exception err){
-            Log.e("db_log","Erro genérico - [ProdutoController.insert(Produto obj)] "+err.getMessage());
+            Log.e(AppUtil.TAG,"Erro genérico - [ProdutoController.insert(Produto obj)] "+err.getMessage());
             return false;
         } finally{
             realm.close();
@@ -60,10 +61,10 @@ public class ProdutoController implements ICRUD<Produto>{
             realm.commitTransaction();
 
         }catch(RealmException err){
-            Log.e("db_log","Erro ao deletar Produto - [ProdutoController.delete(Produto obj)] "+err.getMessage());
+            Log.e(AppUtil.TAG,"Erro ao deletar Produto - [ProdutoController.delete(Produto obj)] "+err.getMessage());
             return null;
         }catch(Exception err){
-            Log.e("db_log","Erro genérico - [ProdutoController.delete(Produto obj)] "+err.getMessage());
+            Log.e(AppUtil.TAG,"Erro genérico - [ProdutoController.delete(Produto obj)] "+err.getMessage());
             return null;
         } finally{
             realm.close();
@@ -90,15 +91,16 @@ public class ProdutoController implements ICRUD<Produto>{
                 produto.setQuantidade(obj.getQuantidade());
                 produto.setUn(obj.getUn());
                 produto.setImagem(obj.getImagem());
+                produto.setDataAltecao(obj.getDataAltecao());
                 realm.commitTransaction();
             }
 
 
         }catch(RealmException err){
-            Log.e("db_log","Erro ao atualizar Produto - [ProdutoController.update(Produto obj)] "+err.getMessage());
+            Log.e(AppUtil.TAG,"Erro ao atualizar Produto - [ProdutoController.update(Produto obj)] "+err.getMessage());
             return false;
         }catch(Exception err){
-            Log.e("db_log","Erro genérico - [ProdutoController.update(Produto obj)] "+err.getMessage());
+            Log.e(AppUtil.TAG,"Erro genérico - [ProdutoController.update(Produto obj)] "+err.getMessage());
             return false;
         } finally{
             realm.close();
@@ -121,10 +123,10 @@ public class ProdutoController implements ICRUD<Produto>{
             realm.commitTransaction();
 
         }catch(RealmException err){
-            Log.e("db_log","Erro ao deletar Produto - [ProdutoController.delete(Produto obj)] "+err.getMessage());
+            Log.e(AppUtil.TAG,"Erro ao deletar Produto - [ProdutoController.delete(Produto obj)] "+err.getMessage());
             return false;
         }catch(Exception err){
-            Log.e("db_log","Erro genérico - [ProdutoController.delete(Produto obj)] "+err.getMessage());
+            Log.e(AppUtil.TAG,"Erro genérico - [ProdutoController.delete(Produto obj)] "+err.getMessage());
             return false;
         } finally{
             realm.close();
@@ -147,10 +149,10 @@ public class ProdutoController implements ICRUD<Produto>{
             realm.commitTransaction();
 
         }catch(RealmException err){
-            Log.e("db_log","Erro ao deletar Produto por id - [ProdutoController.deleteByID(int id)] "+err.getMessage());
+            Log.e(AppUtil.TAG,"Erro ao deletar Produto por id - [ProdutoController.deleteByID(int id)] "+err.getMessage());
             return false;
         }catch(Exception err){
-            Log.e("db_log","Erro genérico - [ProdutoController.deleteByID(int id)] "+err.getMessage());
+            Log.e(AppUtil.TAG,"Erro genérico - [ProdutoController.deleteByID(int id)] "+err.getMessage());
             return false;
         } finally{
             realm.close();

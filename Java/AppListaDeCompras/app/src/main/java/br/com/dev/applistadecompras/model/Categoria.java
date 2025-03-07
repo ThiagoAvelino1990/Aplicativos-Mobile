@@ -24,6 +24,9 @@ public class Categoria extends RealmObject {
     @Ignore
     private List<Categoria> categoria;
 
+    private String dataInclusao;
+    private String dataAlteracao;
+
     public int getId() {
         return id;
     }
@@ -72,6 +75,21 @@ public class Categoria extends RealmObject {
         this.categoria = categoria;
     }
 
+    public String getDataInclusao(){
+        return this.dataInclusao;
+    }
+
+    public void setDataInclusao(String dataInclusao){
+        this.dataInclusao = dataInclusao;
+    }
+
+    public String getDataAlteracao(){
+        return this.dataAlteracao;
+    }
+
+    public void setDataAlteracao(String dataAlteracao){
+        this.dataAlteracao = dataAlteracao;
+    }
 
     @Override
     public String toString() {
@@ -82,6 +100,8 @@ public class Categoria extends RealmObject {
                 ", imagem=" + Arrays.toString(imagem) +
                 ", tiutoCategoriaSpinner=" + tiutoCategoriaSpinner +
                 ", categoria=" + categoria +
+                ", dataInclusao='" + dataInclusao + '\'' +
+                ", dataAlteracao='" + dataAlteracao + '\'' +
                 '}';
     }
 }
