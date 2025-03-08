@@ -16,4 +16,7 @@
 
     <!-- Cor para botões -->
     <color name="gray">#c9c9c9</color>
+
+    <!-- Cor de fundo da tela Splash-->
+    <color name="splash_bgr">#FA6D50</color>
 </resources>

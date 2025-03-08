@@ -3,7 +3,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Cliente</string>
-    <string name="nav_header_subtitle">Profº Marco Maddo</string>
+    <string name="nav_header_subtitle">Cliente</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Sair</string>
 
@@ -33,5 +33,7 @@
     <string name="meu_perfil">Meu Perfil</string>
     <string name="txtPerfilContato">Perfil e Contato</string>
     <string name="txtEndereco">Endereço</string>
+    <string name="txt_app_cliente">APP CLIENTE</string>
+    <string name="txt_versao">v0.0.0</string>
 
 </resources>
