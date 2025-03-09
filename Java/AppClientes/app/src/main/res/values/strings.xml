@@ -35,5 +35,14 @@
     <string name="txtEndereco">Endereço</string>
     <string name="txt_app_cliente">APP CLIENTE</string>
     <string name="txt_versao">v0.0.0</string>
+    <string name="txt_btnLogin">LOGIN</string>
+    <string name="txtLogin">Login</string>
+    <string name="txt_LoginInformeEmail">Informe Email</string>
+    <string name="txt_InformeSenha">Informe a Senha</string>
+    <string name="txtLembrar">Lembrar</string>
+    <string name="txtVerificarDados">* Verifique os dados e tente novamente</string>
+    <string name="txtEsqueciSenha">Esqueci a senha</string>
+    <string name="txtExemploEmail">email@email.com.br</string>
+    <string name="txtSenhaCriptografada">********</string>
 
 </resources>
