@@ -34,7 +34,11 @@
     <string name="txtPerfilContato">Perfil e Contato</string>
     <string name="txtEndereco">Endereço</string>
     <string name="txt_app_cliente">APP CLIENTE</string>
+
+    <!-- Tela Splahs -->
     <string name="txt_versao">v0.0.0</string>
+
+    <!-- Tela de Login -->
     <string name="txt_btnLogin">LOGIN</string>
     <string name="txtLogin">Login</string>
     <string name="txt_LoginInformeEmail">Informe Email</string>
@@ -44,5 +48,16 @@
     <string name="txtEsqueciSenha">Esqueci a senha</string>
     <string name="txtExemploEmail">email@email.com.br</string>
     <string name="txtSenhaCriptografada">********</string>
+    <string name="txtBtnCadastre_se">Cadastre-se</string>
+    <string name="txtViewCadastro">Cadastro</string>
+    <string name="txtViewNovoUsuarioCadastro">Novo usuário</string>
+    <string name="editNomeCompleto_Cadastro">Nome Completo</string>
+    <string name="editEmail_Cadastro">Email</string>
+    <string name="editSenhaCadastro">Senha</string>
+    <string name="editConfirmarSenhaCadastro">Confirmar Senha</string>
+    <string name="bntConfirmar_Cadastro">confirmar</string>
+    <string name="btnVoltar_Cadastro">Voltar</string>
+
+    <!-- tela de Cadastro -->
 
 </resources>

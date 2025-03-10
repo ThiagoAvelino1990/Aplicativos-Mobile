@@ -6,120 +6,140 @@
     tools:context=".view.LoginActivity">
 
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:orientation="vertical">
+            android:layout_gravity="left"
+            android:layout_margin="16dp"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="8dp">
 
-            <androidx.cardview.widget.CardView
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:layout_gravity="left"
-                app:cardCornerRadius="4dp"
-                app:cardElevation="8dp">
+                android:orientation="vertical">
 
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/txtLogin"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="16dp"
-                        android:gravity="center"
-                        android:text="@string/txtLogin"
-                        android:textSize="24sp"
-                        android:textStyle="bold" />
-                    <TextView
-                        android:id="@+id/txtLoginEmail"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/txt_LoginInformeEmail"
-                        android:textStyle="bold"
-                        android:layout_marginStart="8dp"/>
-                    <EditText
-                        android:id="@+id/editLoginEmail"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:hint="@string/txtExemploEmail"
-                        android:inputType="textEmailAddress"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-                    <TextView
-                        android:id="@+id/txtLoginSenha"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/txt_InformeSenha"
-                        android:textStyle="bold"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"/>
-
-                    <EditText
-                        android:id="@+id/editLoginSenha"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:hint="@string/txtSenhaCriptografada"
-                        android:inputType="textPassword"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <CheckBox
-                        android:id="@+id/chkLembrarDados"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/txtLembrar"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"/>
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-            </androidx.cardview.widget.CardView>
-
-
-                <androidx.appcompat.widget.LinearLayoutCompat
+                <TextView
+                    android:id="@+id/txtLogin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
-                    android:orientation="vertical">
+                    android:gravity="center"
+                    android:text="@string/txtLogin"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/txtVerificarDados"
-                        android:visibility="invisible"
-                        android:padding="8dp"/>
+                <TextView
+                    android:id="@+id/txtLoginEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/txt_LoginInformeEmail"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/editLoginEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:hint="@string/txtExemploEmail"
+                    android:inputType="textEmailAddress"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtLoginSenha"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/txt_InformeSenha"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/editLoginSenha"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:hint="@string/txtSenhaCriptografada"
+                    android:inputType="textPassword"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <CheckBox
+                    android:id="@+id/chkLembrarDados"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="@string/txtLembrar" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.cardview.widget.CardView>
 
 
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btnLogin"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        style="@style/CustomizeButton"
-                        android:text="@string/txt_btnLogin"
-                        android:padding="8dp"/>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:orientation="vertical">
 
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btnEsqueceuSenha"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        style="@style/CustomizeButton"
-                        android:visibility="invisible"
-                        android:text="@string/txtEsqueciSenha" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/txtVerificarDados"
+                android:visibility="invisible" />
 
-                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnLogin"
+                style="@style/CustomizeButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/txt_btnLogin" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnEsqueceuSenha"
+                style="@style/CustomizeButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/txtEsqueciSenha"
+                android:visibility="invisible" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnCadastrar"
+                style="@style/CustomizeButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/txtBtnCadastre_se" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 
 </FrameLayout>
