@@ -43,7 +43,7 @@
     <string name="txtLogin">Login</string>
     <string name="txt_LoginInformeEmail">Informe Email</string>
     <string name="txt_InformeSenha">Informe a Senha</string>
-    <string name="txtLembrar">Lembrar</string>
+    <string name="txtLembrar">Lembrar credenciais</string>
     <string name="txtVerificarDados">* Verifique os dados e tente novamente</string>
     <string name="txtEsqueciSenha">Esqueci a senha</string>
     <string name="txtExemploEmail">email@email.com.br</string>

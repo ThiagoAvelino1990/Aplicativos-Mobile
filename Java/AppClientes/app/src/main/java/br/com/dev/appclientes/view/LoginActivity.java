@@ -31,8 +31,11 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
+
+                if(validarDadosFormulario()) {
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }
 
             }
         });
@@ -40,11 +43,35 @@ public class LoginActivity extends AppCompatActivity {
         btnCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, CadastroActivity.class);
-                startActivity(intent);
+
+                    Intent intent = new Intent(LoginActivity.this, CadastroActivity.class);
+                    startActivity(intent);
             }
         });
 
+    }
+
+    private boolean validarDadosFormulario() {
+
+        boolean isDadosOK = true;
+
+        if(editLoginEmail.getText().toString().isEmpty()){
+            editLoginEmail.setError("*");
+            editLoginEmail.requestFocus();
+            txtVerifiqueDados.setVisibility(View.VISIBLE);
+            btnEsqueceuSenha.setVisibility(View.VISIBLE);
+            isDadosOK = false;
+        }
+
+        if(editLoginSenha.getText().toString().isEmpty()){
+            editLoginSenha.setError("*");
+            editLoginSenha.requestFocus();
+            txtVerifiqueDados.setVisibility(View.VISIBLE);
+            btnEsqueceuSenha.setVisibility(View.VISIBLE);
+            isDadosOK = false;
+        }
+
+        return isDadosOK;
     }
 
     private void initComponentesLayout() {
