@@ -1,6 +1,7 @@
 package br.com.dev.appclientes.view;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.TextView;
@@ -17,7 +18,10 @@ import br.com.dev.appclientes.api.AppUtil;
 
 public class SplashActivity extends AppCompatActivity {
 
+    SharedPreferences sharedPreferences;
+
     TextView txtVersao;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,16 +39,33 @@ public class SplashActivity extends AppCompatActivity {
         txtVersao.setText(AppUtil.VERSION);
 
         inicializarAplicativo();
+
+        getDadosPref();
+    }
+
+    private boolean getDadosPref() {
+
+        sharedPreferences = getSharedPreferences(AppUtil.PREF_APP,MODE_PRIVATE);
+
+        return sharedPreferences.getBoolean("chklembrardados",false);
     }
 
     private void inicializarAplicativo() {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashActivity.this,LoginActivity.class);
+                Intent intent;
 
-                startActivity(intent);
-                finish();
+                if(getDadosPref()){
+                    intent = new Intent(SplashActivity.this,MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }else{
+                    intent = new Intent(SplashActivity.this,LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+
 
             }
         }, AppUtil.TIME_SPLASH);

@@ -1,6 +1,7 @@
 package br.com.dev.appclientes.view;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +13,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import br.com.dev.appclientes.R;
+import br.com.dev.appclientes.api.AppUtil;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -19,6 +21,8 @@ public class LoginActivity extends AppCompatActivity {
     EditText editLoginEmail, editLoginSenha;
     CheckBox chkLembrarDados;
     Button btnLogin, btnEsqueceuSenha, btnCadastrar;
+
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +35,27 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent;
+                /**
+                 * TODO implementar validações de email e senha
+                 */
+                /*getDataSharedPreferences();
 
-                if(validarDadosFormulario()) {
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
-                }
+                if(chkLembrarDados.isChecked()){
+                    if(validarDadosFormulario()) {
+                        saveDataSharedPreferences();
 
+                        intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
+                }else{*/
+                    if(validarDadosFormulario()) {
+                        saveDataSharedPreferences();
+
+                        intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
+                /*}*/
             }
         });
 
@@ -49,6 +68,27 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void getDataSharedPreferences() {
+        sharedPreferences = getSharedPreferences(AppUtil.PREF_APP, MODE_PRIVATE);
+
+        editLoginEmail.setText(sharedPreferences.getString("email",""));
+        editLoginSenha.setText(sharedPreferences.getString("senha",""));
+        chkLembrarDados.setChecked(sharedPreferences.getBoolean("chklembrardados",false));
+
+    }
+
+    private void saveDataSharedPreferences() {
+
+        sharedPreferences = getSharedPreferences(AppUtil.PREF_APP, MODE_PRIVATE);
+        SharedPreferences.Editor dadosSalvos = sharedPreferences.edit();
+
+        dadosSalvos.putString("email",editLoginEmail.getText().toString());
+        dadosSalvos.putString("senha",editLoginSenha.getText().toString());
+        dadosSalvos.putBoolean("chklembrardados",chkLembrarDados.isChecked());
+
+        dadosSalvos.apply();
     }
 
     private boolean validarDadosFormulario() {
