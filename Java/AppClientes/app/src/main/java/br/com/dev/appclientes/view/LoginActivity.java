@@ -36,26 +36,13 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent;
-                /**
-                 * TODO implementar validações de email e senha
-                 */
-                /*getDataSharedPreferences();
 
-                if(chkLembrarDados.isChecked()){
-                    if(validarDadosFormulario()) {
-                        saveDataSharedPreferences();
+                if(validarDadosFormulario()) {
 
-                        intent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent);
-                    }
-                }else{*/
-                    if(validarDadosFormulario()) {
-                        saveDataSharedPreferences();
+                    intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }
 
-                        intent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent);
-                    }
-                /*}*/
             }
         });
 
@@ -84,8 +71,6 @@ public class LoginActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences(AppUtil.PREF_APP, MODE_PRIVATE);
         SharedPreferences.Editor dadosSalvos = sharedPreferences.edit();
 
-        dadosSalvos.putString("email",editLoginEmail.getText().toString());
-        dadosSalvos.putString("senha",editLoginSenha.getText().toString());
         dadosSalvos.putBoolean("chklembrardados",chkLembrarDados.isChecked());
 
         dadosSalvos.apply();
@@ -93,22 +78,24 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean validarDadosFormulario() {
 
+        sharedPreferences = getSharedPreferences(AppUtil.PREF_APP, MODE_PRIVATE);
+
         boolean isDadosOK = true;
 
-        if(editLoginEmail.getText().toString().isEmpty()){
+        if(editLoginEmail.getText().toString().isEmpty() || !editLoginEmail.getText().toString().equals(sharedPreferences.getString("email",""))){
             editLoginEmail.setError("*");
             editLoginEmail.requestFocus();
             txtVerifiqueDados.setVisibility(View.VISIBLE);
             btnEsqueceuSenha.setVisibility(View.VISIBLE);
             isDadosOK = false;
-        }
-
-        if(editLoginSenha.getText().toString().isEmpty()){
+        }else if (editLoginSenha.getText().toString().isEmpty() || !editLoginSenha.getText().toString().equals(sharedPreferences.getString("senha",""))){
             editLoginSenha.setError("*");
             editLoginSenha.requestFocus();
             txtVerifiqueDados.setVisibility(View.VISIBLE);
             btnEsqueceuSenha.setVisibility(View.VISIBLE);
             isDadosOK = false;
+        }else{
+            saveDataSharedPreferences();
         }
 
         return isDadosOK;

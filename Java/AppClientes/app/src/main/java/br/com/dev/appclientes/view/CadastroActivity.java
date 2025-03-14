@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.Image;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -47,12 +48,18 @@ public class CadastroActivity extends AppCompatActivity {
         btnConfirmarCadastro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent;
 
                 if(validarDados()){
                     setDataPreferences();
-                    intent = new Intent(CadastroActivity.this, LoginActivity.class);
-                    startActivity(intent);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(CadastroActivity.this,"Usuário cadastrado com sucesso !",Toast.LENGTH_LONG).show();
+                            Intent intent;
+                            intent = new Intent(CadastroActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                        }
+                    },AppUtil.TIME_SPLASH);
                 }
             }
         });
@@ -63,25 +70,25 @@ public class CadastroActivity extends AppCompatActivity {
 
         boolean isDadosOK = true;
 
-        if(editNomeCompleto.getText().toString().isEmpty() || editCadastroEmail.getText().toString().isEmpty()){
+        if(editNomeCompleto.getText().toString().isEmpty()){
             isDadosOK = false;
             editNomeCompleto.requestFocus();
             editNomeCompleto.setError("*");
+            Toast.makeText(CadastroActivity.this,"* Nome não pode ser vazio",Toast.LENGTH_LONG).show();
+        }else if(editCadastroEmail.getText().toString().isEmpty()){
+            isDadosOK = false;
             editCadastroEmail.requestFocus();
             editCadastroEmail.setError("*");
-
-        }
-
-        if((editSenha.getText().toString().isEmpty()) || (!editSenha.getText().toString().equals(editConfirmarSenha.getText().toString()))){
+            Toast.makeText(CadastroActivity.this,"* Email não pode ser vazio",Toast.LENGTH_LONG).show();
+        }else if((editSenha.getText().toString().isEmpty()) || (!editSenha.getText().toString().equals(editConfirmarSenha.getText().toString()))){
+            isDadosOK = false;
             editSenha.requestFocus();
             editSenha.setError("*");
+            editSenha.setText(null);
             editConfirmarSenha.requestFocus();
             editConfirmarSenha.setError("*");
-            isDadosOK = false;
-        }
-
-        if(!isDadosOK){
-            Toast.makeText(CadastroActivity.this,"* Favor verificar os dados",Toast.LENGTH_LONG).show();
+            editConfirmarSenha.setText(null);
+            Toast.makeText(CadastroActivity.this,"* Senhas não coeincidem",Toast.LENGTH_LONG).show();
         }
 
     return isDadosOK;
@@ -96,6 +103,8 @@ public class CadastroActivity extends AppCompatActivity {
         data.putString("nome",editNomeCompleto.getText().toString());
         data.putString("email",editCadastroEmail.getText().toString());
         data.putString("senha",editSenha.getText().toString());
+
+        data.apply();
 
     }
 
