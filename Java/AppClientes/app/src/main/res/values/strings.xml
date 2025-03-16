@@ -59,6 +59,7 @@
     <string name="btnVoltar_Cadastro">Voltar</string>
     <string name="txt_recuperar_senha">Recuperar Senha</string>
     <string name="txtVoltar">Voltar</string>
+    <string name="txtCancelar">cancelar</string>
 
     <!-- tela de Cadastro -->
 

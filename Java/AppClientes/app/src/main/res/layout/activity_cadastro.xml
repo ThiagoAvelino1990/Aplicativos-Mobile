@@ -141,6 +141,13 @@
                         android:layout_height="wrap_content"
                         android:text="@string/btnVoltar_Cadastro" />
 
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnCancelar"
+                        style="@style/CustomizeButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/txtCancelar" />
+
                 </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.cardview.widget.CardView>
 

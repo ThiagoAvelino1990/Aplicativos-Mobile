@@ -2,6 +2,7 @@ package br.com.dev.appclientes.view;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -14,6 +15,10 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+
+import com.shashank.sony.fancydialoglib.Animation;
+import com.shashank.sony.fancydialoglib.FancyAlertDialog;
+
 import br.com.dev.appclientes.R;
 import br.com.dev.appclientes.api.AppUtil;
 import br.com.dev.appclientes.controller.UsuarioController;
@@ -24,7 +29,7 @@ public class CadastroActivity extends AppCompatActivity {
     ImageView imgAppClienteCadastro;
     TextView txtViewCadastro, txtCadastroNovoUsuario;
     EditText editNomeCompleto, editCadastroEmail, editSenha, editConfirmarSenha;
-    Button btnConfirmarCadastro, btnVoltarCadastro;
+    Button btnConfirmarCadastro, btnVoltarCadastro, btnCancelar;
 
     SharedPreferences preferencesCadastro;
 
@@ -75,6 +80,29 @@ public class CadastroActivity extends AppCompatActivity {
                 }
             }
         });
+
+        btnCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FancyAlertDialog.Builder
+                        .with(CadastroActivity.this)
+                        .setTitle("Cancelar Operação")
+                        .setBackgroundColor(Color.parseColor("#FA6D50"))  // for @ColorRes use setBackgroundColorRes(R.color.colorvalue)
+                        .setMessage("Deseja cancelar a operação ?")
+                        .setNegativeBtnText("Não")
+                        .setPositiveBtnBackground(Color.parseColor("#FA6D50"))  // for @ColorRes use setPositiveBtnBackgroundRes(R.color.colorvalue)
+                        .setPositiveBtnText("Sim")
+                        .setNegativeBtnBackground(Color.parseColor("#FA6D50"))  // for @ColorRes use setNegativeBtnBackgroundRes(R.color.colorvalue)
+                        .setAnimation(Animation.POP)
+                        .isCancellable(true)
+                        .setIcon(R.mipmap.ic_launcher_round, View.VISIBLE)
+                        .onPositiveClicked(dialog -> Toast.makeText(CadastroActivity.this, "Operação Cancelada", Toast.LENGTH_SHORT).show())
+                        .onNegativeClicked(dialog -> Toast.makeText(CadastroActivity.this, "OK", Toast.LENGTH_SHORT).show())
+                        .build()
+                        .show();
+            }
+        });
+
 
     }
 
@@ -138,6 +166,7 @@ public class CadastroActivity extends AppCompatActivity {
 
         btnConfirmarCadastro = findViewById(R.id.btnConfirmarCadastro);
         btnVoltarCadastro = findViewById(R.id.btnVoltarCadastro);
+        btnCancelar = findViewById(R.id.btnCancelar);
 
     }
 }

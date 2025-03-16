@@ -37,9 +37,10 @@ android {
 
 dependencies {
     //implementation("fileTree(dir: \'libs\', include: [\'+.jar\'])")
-    implementation ("androidx.appcompat:appcompat:1.7.0")
-    implementation ("com.google.android.material:material:1.12.0")
-    implementation ("androidx.constraintlayout:constraintlayout:2.2.1")
+    implementation("androidx.appcompat:appcompat:1.7.0")
+    implementation("com.google.android.material:material:1.12.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.2.1")
+    implementation("com.github.Shashank02051997:FancyAlertDialog-Android:0.3")
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
