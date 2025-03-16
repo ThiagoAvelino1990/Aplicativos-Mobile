@@ -9,11 +9,13 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import br.com.dev.appclientes.api.AppUtil;
 import br.com.dev.appclientes.datamodel.ClienteDataModel;
 import br.com.dev.appclientes.datamodel.UsuarioDataModel;
 import br.com.dev.appclientes.model.Cliente;
+import br.com.dev.appclientes.model.Usuario;
 
 public class AppDataBase extends SQLiteOpenHelper {
 
@@ -191,6 +193,46 @@ public class AppDataBase extends SQLiteOpenHelper {
 
 
         return dadosTabela;
+    }
+
+    public List<Usuario> getUsuarioByEmail(String nomeTabela, String email){
+        db = getWritableDatabase();
+
+        Cursor cursor;
+
+        Usuario usuario;
+
+        List<Usuario> usuarioList = new ArrayList<>();
+
+        cursor = db.rawQuery("SELECT * FROM "+nomeTabela+" WHERE EMAIL = ?",new String[]{email});
+
+        if(cursor.moveToFirst()){
+
+            do{
+
+                usuario = new Usuario();
+
+                usuario.setId(cursor.getInt(cursor.getColumnIndexOrThrow("ID")));
+                usuario.setEmail(cursor.getString(cursor.getColumnIndexOrThrow("EMAIL")));
+                usuario.setNome(cursor.getString(cursor.getColumnIndexOrThrow("NOME")));
+                usuario.setSenha(cursor.getString(cursor.getColumnIndexOrThrow("SENHA")));
+
+                if(cursor.getColumnIndexOrThrow("LEMBRAR_SENHA") > 0){
+                    usuario.setChkLembrarSenha(false);
+                }else{
+                    usuario.setChkLembrarSenha(true);
+                }
+
+
+                usuarioList.add(usuario);
+
+            }while(cursor.moveToNext());
+
+
+        }
+
+
+        return usuarioList;
     }
 
 
