@@ -12,6 +12,7 @@ import java.util.List;
 
 import br.com.dev.appclientes.api.AppUtil;
 import br.com.dev.appclientes.datamodel.ClienteDataModel;
+import br.com.dev.appclientes.datamodel.UsuarioDataModel;
 import br.com.dev.appclientes.model.Cliente;
 
 public class AppDataBase extends SQLiteOpenHelper {
@@ -31,6 +32,7 @@ public class AppDataBase extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(ClienteDataModel.criarTabela());
+        db.execSQL(UsuarioDataModel.criarTabela());
     }
 
     @Override

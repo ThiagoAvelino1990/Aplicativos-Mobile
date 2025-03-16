@@ -2,7 +2,6 @@ package br.com.dev.appclientes.view;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -17,6 +16,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import br.com.dev.appclientes.R;
 import br.com.dev.appclientes.api.AppUtil;
+import br.com.dev.appclientes.controller.UsuarioController;
+import br.com.dev.appclientes.model.Usuario;
 
 public class CadastroActivity extends AppCompatActivity {
 
@@ -27,6 +28,9 @@ public class CadastroActivity extends AppCompatActivity {
 
     SharedPreferences preferencesCadastro;
 
+    Usuario usuario;
+    UsuarioController controller;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +38,11 @@ public class CadastroActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cadastro);
 
         initComponentesLayout();
+
+        usuario = new Usuario();
+        controller = new UsuarioController(getApplicationContext());
+
+
 
         btnVoltarCadastro.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +60,9 @@ public class CadastroActivity extends AppCompatActivity {
 
                 if(validarDados()){
                     setDataPreferences();
+
+                    controller.insertObject(usuario);
+
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -59,7 +71,7 @@ public class CadastroActivity extends AppCompatActivity {
                             intent = new Intent(CadastroActivity.this, LoginActivity.class);
                             startActivity(intent);
                         }
-                    },AppUtil.TIME_SPLASH);
+                    },AppUtil.TIME_CADASTRO);
                 }
             }
         });
@@ -105,6 +117,10 @@ public class CadastroActivity extends AppCompatActivity {
         data.putString("senha",editSenha.getText().toString());
 
         data.apply();
+
+        usuario.setNome(preferencesCadastro.getString("nome",null));
+        usuario.setEmail(preferencesCadastro.getString("email",null));
+        usuario.setSenha(preferencesCadastro.getString("senha", null));
 
     }
 

@@ -2,6 +2,7 @@ package br.com.dev.appclientes.view;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.TextView;
@@ -15,12 +16,15 @@ import androidx.core.view.WindowInsetsCompat;
 
 import br.com.dev.appclientes.R;
 import br.com.dev.appclientes.api.AppUtil;
+import br.com.dev.appclientes.datasource.AppDataBase;
 
 public class SplashActivity extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
 
     TextView txtVersao;
+
+    AppDataBase db;
 
 
     @Override
@@ -55,6 +59,8 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Intent intent;
+
+                db = new AppDataBase(getApplicationContext());
 
                 if(getDadosPref()){
                     intent = new Intent(SplashActivity.this,MainActivity.class);
