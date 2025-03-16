@@ -1,11 +1,15 @@
 package br.com.dev.appclientes.view;
 
+import android.content.ClipData;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,9 +24,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import br.com.dev.appclientes.R;
 import br.com.dev.appclientes.api.AppUtil;
-import br.com.dev.appclientes.controller.ClienteController;
 import br.com.dev.appclientes.controller.ClienteORMController;
-import br.com.dev.appclientes.model.Cliente;
 import br.com.dev.appclientes.model.ClienteORM;
 
 
@@ -43,6 +45,11 @@ public class MainActivity extends AppCompatActivity
     MenuItem nav_vermelho;
     MenuItem nav_azul;
 
+    //Componentes do nav_header_main.xml
+    TextView txtViewClienteNav, txtClienteNav;
+
+    //SharedPreferences
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +68,8 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
+
+        initComponentesDeLayout();
 
         // drawer_Layout é o layout padrão do aplicativo
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -86,6 +95,21 @@ public class MainActivity extends AppCompatActivity
         //Teste de alteração dos dados
         //TODO: Excluir este método
         alterarClienteTeste();
+
+    }
+
+    private void initComponentesDeLayout() {
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View viewNavHeaderMain = inflater.inflate(R.layout.nav_header_main, null);
+
+        sharedPreferences = getSharedPreferences(AppUtil.PREF_APP, MODE_PRIVATE);
+
+        txtViewClienteNav = viewNavHeaderMain.findViewById(R.id.txtViewClienteNav);
+        txtClienteNav = viewNavHeaderMain.findViewById(R.id.txtClienteNav);
+
+        txtViewClienteNav.setText(sharedPreferences.getString("nome",null));
+        txtClienteNav.setText(sharedPreferences.getString("email",null));
+
     }
 
     private void incluirClienteTeste() {
@@ -133,7 +157,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
 
@@ -233,4 +257,5 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }
