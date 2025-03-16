@@ -19,4 +19,7 @@
 
     <!-- Cor de fundo da tela Splash-->
     <color name="splash_bgr">#FA6D50</color>
+
+    <!-- Cor de Estilo para botões-->
+    <color name ="bg_color_dark_theme">#1E1F22</color>
 </resources>

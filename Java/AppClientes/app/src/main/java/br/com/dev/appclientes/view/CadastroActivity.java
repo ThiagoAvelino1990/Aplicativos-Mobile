@@ -14,10 +14,12 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 
 import com.shashank.sony.fancydialoglib.Animation;
 import com.shashank.sony.fancydialoglib.FancyAlertDialog;
+import com.shashank.sony.fancydialoglib.FancyAlertDialogListener;
 
 import br.com.dev.appclientes.R;
 import br.com.dev.appclientes.api.AppUtil;
@@ -55,7 +57,7 @@ public class CadastroActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(CadastroActivity.this, LoginActivity.class);
                 startActivity(intent);
-
+                finish();
             }
         });
 
@@ -75,6 +77,7 @@ public class CadastroActivity extends AppCompatActivity {
                             Intent intent;
                             intent = new Intent(CadastroActivity.this, LoginActivity.class);
                             startActivity(intent);
+                            finish();
                         }
                     },AppUtil.TIME_CADASTRO);
                 }
@@ -82,22 +85,26 @@ public class CadastroActivity extends AppCompatActivity {
         });
 
         btnCancelar.setOnClickListener(new View.OnClickListener() {
+            Intent intent;
             @Override
             public void onClick(View v) {
                 FancyAlertDialog.Builder
                         .with(CadastroActivity.this)
                         .setTitle("Cancelar Operação")
-                        .setBackgroundColor(Color.parseColor("#FA6D50"))  // for @ColorRes use setBackgroundColorRes(R.color.colorvalue)
+                        .setBackgroundColorRes(R.color.splash_bgr)
                         .setMessage("Deseja cancelar a operação ?")
                         .setNegativeBtnText("Não")
-                        .setPositiveBtnBackground(Color.parseColor("#FA6D50"))  // for @ColorRes use setPositiveBtnBackgroundRes(R.color.colorvalue)
+                        .setPositiveBtnBackgroundRes(R.color.splash_bgr)
                         .setPositiveBtnText("Sim")
-                        .setNegativeBtnBackground(Color.parseColor("#FA6D50"))  // for @ColorRes use setNegativeBtnBackgroundRes(R.color.colorvalue)
+                        .setNegativeBtnBackgroundRes(R.color.splash_bgr)
                         .setAnimation(Animation.POP)
                         .isCancellable(true)
                         .setIcon(R.mipmap.ic_launcher_round, View.VISIBLE)
-                        .onPositiveClicked(dialog -> Toast.makeText(CadastroActivity.this, "Operação Cancelada", Toast.LENGTH_SHORT).show())
-                        .onNegativeClicked(dialog -> Toast.makeText(CadastroActivity.this, "OK", Toast.LENGTH_SHORT).show())
+                        .onPositiveClicked(dialog -> {Toast.makeText(CadastroActivity.this, "Operação Cancelada", Toast.LENGTH_SHORT).show();
+                            intent = new Intent(CadastroActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                            finish();})
+                        .onNegativeClicked(dialog -> closeContextMenu())
                         .build()
                         .show();
             }
