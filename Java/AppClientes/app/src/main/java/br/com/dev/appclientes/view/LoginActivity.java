@@ -32,6 +32,8 @@ public class LoginActivity extends AppCompatActivity {
 
         initComponentesLayout();
 
+        btnEsqueceuSenha.setVisibility(View.VISIBLE);
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,6 +56,15 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(intent);
             }
         });
+
+        btnEsqueceuSenha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, RecuperarSenhaActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
     }
 

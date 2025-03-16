@@ -57,6 +57,8 @@
     <string name="editConfirmarSenhaCadastro">Confirmar Senha</string>
     <string name="bntConfirmar_Cadastro">confirmar</string>
     <string name="btnVoltar_Cadastro">Voltar</string>
+    <string name="txt_recuperar_senha">Recuperar Senha</string>
+    <string name="txtVoltar">Voltar</string>
 
     <!-- tela de Cadastro -->
 
