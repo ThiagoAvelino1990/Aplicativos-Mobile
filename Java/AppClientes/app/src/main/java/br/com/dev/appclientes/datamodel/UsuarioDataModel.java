@@ -19,6 +19,11 @@ public class UsuarioDataModel {
                 EMAIL + " TEXT, " +
                 SENHA + " TEXT, " +
                 LEMBRARSENHA + " INTEGER)";
+
+        /**
+         * Exemplo de com criar FOREIGN KEY
+         * FOREIGN KEY(fk_coluna) REFERENCES tabela(coluna)
+         */
     }
 
 }

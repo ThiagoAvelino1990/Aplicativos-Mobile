@@ -51,6 +51,11 @@ public class UsuarioController extends AppDataBase implements ICRUD<Usuario> {
         return Collections.emptyList();
     }
 
+    @Override
+    public List<Usuario> readObjectById(int id) {
+        return Collections.emptyList();
+    }
+
     public List<Usuario> readObjectByEmail(String nomeTabela, String email){
 
         return getUsuarioByEmail(nomeTabela, email);

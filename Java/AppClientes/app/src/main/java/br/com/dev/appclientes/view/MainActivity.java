@@ -89,12 +89,12 @@ public class MainActivity extends AppCompatActivity
         fragmentManager.beginTransaction().replace(R.id.content_fragment, new ListarClientesFragment()).commit();
 
         //Teste de inclusao dos dados
-        //TODO: Excluir este método
+        //TODO: Excluir este método teste
         //incluirClienteTeste();
         
         //Teste de alteração dos dados
-        //TODO: Excluir este método
-        alterarClienteTeste();
+        //TODO: Excluir este método teste
+        //alterarClienteTeste();
 
     }
 

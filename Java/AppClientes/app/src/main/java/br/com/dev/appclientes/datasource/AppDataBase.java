@@ -3,6 +3,7 @@ package br.com.dev.appclientes.datasource;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -33,8 +34,24 @@ public class AppDataBase extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(ClienteDataModel.criarTabela());
-        db.execSQL(UsuarioDataModel.criarTabela());
+        try{
+            db.execSQL(ClienteDataModel.criarTabela());
+        }catch(SQLException sqlException){
+            Log.e(AppUtil.TAG,"["+ClienteDataModel.TABELA+"] "+sqlException.getMessage());
+        }
+
+        try{
+            db.execSQL(UsuarioDataModel.criarTabela());
+        }catch(SQLException sqlException){
+            Log.e(AppUtil.TAG,"["+UsuarioDataModel.TABELA+"] "+sqlException.getMessage());
+        }
+
+        try{
+            db.execSQL("PRAGMA foreign_keys = ON;");
+        }catch(SQLException err){
+            Log.e(AppUtil.TAG,"[PRAGMA foreing_keys] "+err.getMessage());
+        }
+
     }
 
     @Override
@@ -51,7 +68,7 @@ public class AppDataBase extends SQLiteOpenHelper {
         try{
             retorno = db.insert(nometabela, null, objeto) > 0;
             Log.i(AppUtil.TAG,"Dados Inseridos com sucesso: \n"+objeto.toString());
-        }catch(Exception e){
+        }catch(SQLException e){
             Log.e(AppUtil.TAG,"Erro ao incluir dados na tabela "+nometabela+" -"+e.getMessage());
         }
 
@@ -69,7 +86,7 @@ public class AppDataBase extends SQLiteOpenHelper {
         try{
             retorno = db.delete(nometabela,"ID=?",new String[]{String.valueOf(id)}) > 0;
             Log.i(AppUtil.TAG,"Dados Excluídos com sucesso");
-        }catch(Exception e){
+        }catch(SQLException e){
             Log.e(AppUtil.TAG,"Erro ao deletar dados na tabela "+nometabela+" -"+e.getMessage());
         }
 
@@ -86,7 +103,7 @@ public class AppDataBase extends SQLiteOpenHelper {
         try{
             retorno = db.update(nometabela,objeto,"ID=?",new String[]{String.valueOf(objeto.get("ID"))}) > 0;
             Log.i(AppUtil.TAG,"Dados Atualizados com sucesso: \n"+ objeto);
-        }catch(Exception e){
+        }catch(SQLException e){
             Log.e(AppUtil.TAG,"Erro ao atualizar dados na tabela "+nometabela+" -"+e.getMessage());
         }
 
@@ -106,40 +123,44 @@ public class AppDataBase extends SQLiteOpenHelper {
 
         String sql = "SELECT * FROM " + nomeTabela;
 
-        cursor = db.rawQuery(sql,null);
+        try{
+            cursor = db.rawQuery(sql,null);
 
-        if(cursor.moveToFirst()){
+            if(cursor.moveToFirst()){
 
-            do{
+                do{
 
-                cliente = new Cliente();
+                    cliente = new Cliente();
 
-                cliente.setId(cursor.getInt(cursor.getColumnIndexOrThrow("ID")));
-                cliente.setNome(cursor.getString(cursor.getColumnIndexOrThrow("NOME")));
-                cliente.setTelefone(cursor.getString(cursor.getColumnIndexOrThrow("TELEFONE")));
-                cliente.setEmail(cursor.getString(cursor.getColumnIndexOrThrow("EMAIL")));
-                cliente.setCep(cursor.getInt(cursor.getColumnIndexOrThrow("CEP")));
-                cliente.setLogradouro(cursor.getString(cursor.getColumnIndexOrThrow("LOGRADOURO")));
-                cliente.setComplemento(cursor.getString(cursor.getColumnIndexOrThrow("COMPLEMENTO")));
-                cliente.setNumero(cursor.getString(cursor.getColumnIndexOrThrow("NUMERO")));
-                cliente.setBairro(cursor.getString(cursor.getColumnIndexOrThrow("BAIRRO")));
-                cliente.setCidade(cursor.getString(cursor.getColumnIndexOrThrow("CIDADE")));
-                cliente.setEstado(cursor.getString(cursor.getColumnIndexOrThrow("ESTADO")));
-                cliente.setPais(cursor.getString(cursor.getColumnIndexOrThrow("PAIS")));
+                    cliente.setId(cursor.getInt(cursor.getColumnIndexOrThrow("ID")));
+                    cliente.setNome(cursor.getString(cursor.getColumnIndexOrThrow("NOME")));
+                    cliente.setTelefone(cursor.getString(cursor.getColumnIndexOrThrow("TELEFONE")));
+                    cliente.setEmail(cursor.getString(cursor.getColumnIndexOrThrow("EMAIL")));
+                    cliente.setCep(cursor.getInt(cursor.getColumnIndexOrThrow("CEP")));
+                    cliente.setLogradouro(cursor.getString(cursor.getColumnIndexOrThrow("LOGRADOURO")));
+                    cliente.setComplemento(cursor.getString(cursor.getColumnIndexOrThrow("COMPLEMENTO")));
+                    cliente.setNumero(cursor.getString(cursor.getColumnIndexOrThrow("NUMERO")));
+                    cliente.setBairro(cursor.getString(cursor.getColumnIndexOrThrow("BAIRRO")));
+                    cliente.setCidade(cursor.getString(cursor.getColumnIndexOrThrow("CIDADE")));
+                    cliente.setEstado(cursor.getString(cursor.getColumnIndexOrThrow("ESTADO")));
+                    cliente.setPais(cursor.getString(cursor.getColumnIndexOrThrow("PAIS")));
 
-                if(cursor.getColumnIndexOrThrow("TERMOS_DE_USO") > 0){
-                    cliente.setTermosDeUso(false);
-                }else{
-                    cliente.setTermosDeUso(true);
-                }
+                    if(cursor.getColumnIndexOrThrow("TERMOS_DE_USO") > 0){
+                        cliente.setTermosDeUso(false);
+                    }else{
+                        cliente.setTermosDeUso(true);
+                    }
+                    dadosTabela.add(cliente);
 
+                }while(cursor.moveToNext());
 
-             dadosTabela.add(cliente);
+                Log.i(AppUtil.TAG,"Dados listados com sucesso [CLIENTE]");
 
-            }while(cursor.moveToNext());
-
-
+            }
+        }catch(SQLException e){
+            Log.e(AppUtil.TAG,"Erro ao listar os dados. [CLIENTE] "+e.getMessage());
         }
+
 
 
         return dadosTabela;
@@ -156,41 +177,44 @@ public class AppDataBase extends SQLiteOpenHelper {
 
         List<Cliente> dadosTabela = new ArrayList<>();
 
-        cursor = db.rawQuery("SELECT * FROM "+nomeTabela+"WHERE ID = ?",new String[]{String.valueOf(id)});
+        try{
+            cursor = db.rawQuery("SELECT * FROM "+nomeTabela+"WHERE ID = ?",new String[]{String.valueOf(id)});
 
-        if(cursor.moveToFirst()){
+            if(cursor.moveToFirst()){
 
-            do{
+                do{
 
-                cliente = new Cliente();
+                    cliente = new Cliente();
 
-                cliente.setId(cursor.getInt(cursor.getColumnIndexOrThrow("ID")));
-                cliente.setNome(cursor.getString(cursor.getColumnIndexOrThrow("NOME")));
-                cliente.setTelefone(cursor.getString(cursor.getColumnIndexOrThrow("TELEFONE")));
-                cliente.setEmail(cursor.getString(cursor.getColumnIndexOrThrow("EMAIL")));
-                cliente.setCep(cursor.getInt(cursor.getColumnIndexOrThrow("CEP")));
-                cliente.setLogradouro(cursor.getString(cursor.getColumnIndexOrThrow("LOGRADOURO")));
-                cliente.setComplemento(cursor.getString(cursor.getColumnIndexOrThrow("COMPLEMENTO")));
-                cliente.setNumero(cursor.getString(cursor.getColumnIndexOrThrow("NUMERO")));
-                cliente.setBairro(cursor.getString(cursor.getColumnIndexOrThrow("BAIRRO")));
-                cliente.setCidade(cursor.getString(cursor.getColumnIndexOrThrow("CIDADE")));
-                cliente.setEstado(cursor.getString(cursor.getColumnIndexOrThrow("ESTADO")));
-                cliente.setPais(cursor.getString(cursor.getColumnIndexOrThrow("PAIS")));
+                    cliente.setId(cursor.getInt(cursor.getColumnIndexOrThrow("ID")));
+                    cliente.setNome(cursor.getString(cursor.getColumnIndexOrThrow("NOME")));
+                    cliente.setTelefone(cursor.getString(cursor.getColumnIndexOrThrow("TELEFONE")));
+                    cliente.setEmail(cursor.getString(cursor.getColumnIndexOrThrow("EMAIL")));
+                    cliente.setCep(cursor.getInt(cursor.getColumnIndexOrThrow("CEP")));
+                    cliente.setLogradouro(cursor.getString(cursor.getColumnIndexOrThrow("LOGRADOURO")));
+                    cliente.setComplemento(cursor.getString(cursor.getColumnIndexOrThrow("COMPLEMENTO")));
+                    cliente.setNumero(cursor.getString(cursor.getColumnIndexOrThrow("NUMERO")));
+                    cliente.setBairro(cursor.getString(cursor.getColumnIndexOrThrow("BAIRRO")));
+                    cliente.setCidade(cursor.getString(cursor.getColumnIndexOrThrow("CIDADE")));
+                    cliente.setEstado(cursor.getString(cursor.getColumnIndexOrThrow("ESTADO")));
+                    cliente.setPais(cursor.getString(cursor.getColumnIndexOrThrow("PAIS")));
 
-                if(cursor.getColumnIndexOrThrow("TERMOS_DE_USO") > 0){
-                    cliente.setTermosDeUso(false);
-                }else{
-                    cliente.setTermosDeUso(true);
-                }
-
-
-                dadosTabela.add(cliente);
-
-            }while(cursor.moveToNext());
+                    if(cursor.getColumnIndexOrThrow("TERMOS_DE_USO") > 0){
+                        cliente.setTermosDeUso(false);
+                    }else{
+                        cliente.setTermosDeUso(true);
+                    }
 
 
+                    dadosTabela.add(cliente);
+
+                }while(cursor.moveToNext());
+
+
+            }
+        }catch(SQLException e){
+            Log.e(AppUtil.TAG,"Erro ao listar os dados por ID [CLIENTE] "+e.getMessage());
         }
-
 
         return dadosTabela;
     }

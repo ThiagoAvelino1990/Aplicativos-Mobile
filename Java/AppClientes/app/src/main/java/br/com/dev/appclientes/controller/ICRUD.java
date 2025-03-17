@@ -12,4 +12,6 @@ public interface ICRUD <T>{
 
     public List<T> readObject();
 
+    public List<T> readObjectById(int id);
+
 }

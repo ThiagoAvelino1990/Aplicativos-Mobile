@@ -34,6 +34,10 @@ public class ClienteDataModel {
                 ESTADO + " TEXT, " +
                 PAIS + " TEXT, " +
                 TERMOSDEUSO + " INTEGER)";
+        /**
+         * Exemplo de com criar FOREIGN KEY
+         * FOREIGN KEY(fk_coluna) REFERENCES tabela(coluna)
+         */
     }
 
 }
