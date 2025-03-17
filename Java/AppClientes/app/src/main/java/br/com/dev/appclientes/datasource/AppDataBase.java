@@ -228,32 +228,128 @@ public class AppDataBase extends SQLiteOpenHelper {
 
         List<Usuario> usuarioList = new ArrayList<>();
 
-        cursor = db.rawQuery("SELECT * FROM "+nomeTabela+" WHERE EMAIL = ?",new String[]{email});
+        try{
+            cursor = db.rawQuery("SELECT * FROM "+nomeTabela+" WHERE EMAIL = ?",new String[]{email});
 
-        if(cursor.moveToFirst()){
+            if(cursor.moveToFirst()){
 
-            do{
+                do{
 
-                usuario = new Usuario();
+                    usuario = new Usuario();
 
-                usuario.setId(cursor.getInt(cursor.getColumnIndexOrThrow("ID")));
-                usuario.setEmail(cursor.getString(cursor.getColumnIndexOrThrow("EMAIL")));
-                usuario.setNome(cursor.getString(cursor.getColumnIndexOrThrow("NOME")));
-                usuario.setSenha(cursor.getString(cursor.getColumnIndexOrThrow("SENHA")));
+                    usuario.setId(cursor.getInt(cursor.getColumnIndexOrThrow("ID")));
+                    usuario.setEmail(cursor.getString(cursor.getColumnIndexOrThrow("EMAIL")));
+                    usuario.setNome(cursor.getString(cursor.getColumnIndexOrThrow("NOME")));
+                    usuario.setSenha(cursor.getString(cursor.getColumnIndexOrThrow("SENHA")));
 
-                if(cursor.getColumnIndexOrThrow("LEMBRAR_SENHA") > 0){
-                    usuario.setChkLembrarSenha(false);
-                }else{
-                    usuario.setChkLembrarSenha(true);
-                }
-
-
-                usuarioList.add(usuario);
-
-            }while(cursor.moveToNext());
+                    if(cursor.getColumnIndexOrThrow("LEMBRAR_SENHA") > 0){
+                        usuario.setChkLembrarSenha(false);
+                    }else{
+                        usuario.setChkLembrarSenha(true);
+                    }
 
 
+                    usuarioList.add(usuario);
+
+                }while(cursor.moveToNext());
+
+            }
+            Log.i(UsuarioDataModel.TABELA,"Dados encontrados com sucesso [USUARIO]");
+        }catch(SQLException e){
+            Log.e(UsuarioDataModel.TABELA,"Erro ao listar usuario por email [USUARIO] "+e.getMessage());
         }
+
+
+
+        return usuarioList;
+    }
+
+
+    public List<Usuario> getUsuarioByID(String nomeTabela, int id){
+        db = getWritableDatabase();
+
+        Cursor cursor;
+
+        Usuario usuario;
+
+        List<Usuario> usuarioList = new ArrayList<>();
+
+        try{
+            cursor = db.rawQuery("SELECT * FROM "+nomeTabela+" WHERE EMAIL = ?",new String[]{String.valueOf(id)});
+
+            if(cursor.moveToFirst()){
+
+                do{
+
+                    usuario = new Usuario();
+
+                    usuario.setId(cursor.getInt(cursor.getColumnIndexOrThrow("ID")));
+                    usuario.setEmail(cursor.getString(cursor.getColumnIndexOrThrow("EMAIL")));
+                    usuario.setNome(cursor.getString(cursor.getColumnIndexOrThrow("NOME")));
+                    usuario.setSenha(cursor.getString(cursor.getColumnIndexOrThrow("SENHA")));
+
+                    if(cursor.getColumnIndexOrThrow("LEMBRAR_SENHA") > 0){
+                        usuario.setChkLembrarSenha(false);
+                    }else{
+                        usuario.setChkLembrarSenha(true);
+                    }
+
+
+                    usuarioList.add(usuario);
+
+                }while(cursor.moveToNext());
+
+            }
+            Log.i(UsuarioDataModel.TABELA,"Dados encontrados com sucesso [USUARIO]");
+        }catch(SQLException e){
+            Log.e(UsuarioDataModel.TABELA,"Erro ao listar usuario por ID [USUARIO] "+e.getMessage());
+        }
+
+
+
+        return usuarioList;
+    }
+
+    public List<Usuario> getAllUsuarios(String nomeTabela){
+        db = getWritableDatabase();
+
+        Cursor cursor;
+
+        Usuario usuario;
+
+        List<Usuario> usuarioList = new ArrayList<>();
+
+        try{
+            cursor = db.rawQuery("SELECT * FROM " + nomeTabela,null);
+
+            if(cursor.moveToFirst()){
+
+                do{
+
+                    usuario = new Usuario();
+
+                    usuario.setId(cursor.getInt(cursor.getColumnIndexOrThrow("ID")));
+                    usuario.setEmail(cursor.getString(cursor.getColumnIndexOrThrow("EMAIL")));
+                    usuario.setNome(cursor.getString(cursor.getColumnIndexOrThrow("NOME")));
+                    usuario.setSenha(cursor.getString(cursor.getColumnIndexOrThrow("SENHA")));
+
+                    if(cursor.getColumnIndexOrThrow("LEMBRAR_SENHA") > 0){
+                        usuario.setChkLembrarSenha(false);
+                    }else{
+                        usuario.setChkLembrarSenha(true);
+                    }
+
+
+                    usuarioList.add(usuario);
+
+                }while(cursor.moveToNext());
+
+            }
+            Log.i(UsuarioDataModel.TABELA,"Dados encontrados com sucesso [USUARIO]");
+        }catch(SQLException e){
+            Log.e(UsuarioDataModel.TABELA,"Erro ao listar getAllUsuarios [USUARIO] "+e.getMessage());
+        }
+
 
 
         return usuarioList;

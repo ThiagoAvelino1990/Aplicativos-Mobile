@@ -6,6 +6,7 @@ import android.content.Context;
 import java.util.Collections;
 import java.util.List;
 
+import br.com.dev.appclientes.api.AppUtil;
 import br.com.dev.appclientes.datamodel.UsuarioDataModel;
 import br.com.dev.appclientes.datasource.AppDataBase;
 import br.com.dev.appclientes.model.Usuario;
@@ -32,7 +33,8 @@ public class UsuarioController extends AppDataBase implements ICRUD<Usuario> {
 
     @Override
     public boolean deleteObject(Usuario obj) {
-        return false;
+
+        return deleteDados(UsuarioDataModel.TABELA, obj.getId());
     }
 
     @Override
@@ -48,12 +50,12 @@ public class UsuarioController extends AppDataBase implements ICRUD<Usuario> {
 
     @Override
     public List<Usuario> readObject() {
-        return Collections.emptyList();
+        return getAllUsuarios(UsuarioDataModel.TABELA);
     }
 
     @Override
     public List<Usuario> readObjectById(int id) {
-        return Collections.emptyList();
+        return getUsuarioByID(UsuarioDataModel.TABELA, id);
     }
 
     public List<Usuario> readObjectByEmail(String nomeTabela, String email){
