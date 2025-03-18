@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +23,8 @@ import com.shashank.sony.fancydialoglib.Animation;
 import com.shashank.sony.fancydialoglib.FancyAlertDialog;
 import com.shashank.sony.fancydialoglib.FancyAlertDialogListener;
 
+import org.w3c.dom.Text;
+
 import br.com.dev.appclientes.R;
 import br.com.dev.appclientes.api.AppUtil;
 import br.com.dev.appclientes.controller.UsuarioController;
@@ -38,6 +41,7 @@ public class CadastroActivity extends AppCompatActivity {
 
     Usuario usuario;
     UsuarioController controller;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,30 +67,50 @@ public class CadastroActivity extends AppCompatActivity {
         });
 
         btnConfirmarCadastro.setOnClickListener(new View.OnClickListener() {
+            Intent intent;
+
             @Override
             public void onClick(View v) {
+                FancyAlertDialog.Builder
+                        .with(CadastroActivity.this)
+                        .setTitle("Termos de uso")
+                        .setBackgroundColorRes(R.color.splash_bgr)
+                        .setMessage(AppUtil.TERMOS_DE_USO)
+                        .setNegativeBtnText("Não")
+                        .setPositiveBtnBackgroundRes(R.color.splash_bgr)
+                        .setPositiveBtnText("Sim")
+                        .setNegativeBtnBackgroundRes(R.color.splash_bgr)
+                        .setAnimation(Animation.POP)
+                        .isCancellable(true)
+                        .setIcon(R.mipmap.ic_launcher_round, View.VISIBLE)
+                        .onPositiveClicked(dialog -> {
+                            if(validarDados()){
+                            setDataPreferences();
 
-                if(validarDados()){
-                    setDataPreferences();
+                            controller.insertObject(usuario);
 
-                    controller.insertObject(usuario);
-
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(CadastroActivity.this,"Usuário cadastrado com sucesso !",Toast.LENGTH_LONG).show();
-                            Intent intent;
-                            intent = new Intent(CadastroActivity.this, LoginActivity.class);
-                            startActivity(intent);
-                            finish();
-                        }
-                    },AppUtil.TIME_CADASTRO);
-                }
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(CadastroActivity.this,"Usuário cadastrado com sucesso !",Toast.LENGTH_LONG).show();
+                                    Intent intent;
+                                    intent = new Intent(CadastroActivity.this, LoginActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            },AppUtil.TIME_CADASTRO);
+                        }})
+                        .onNegativeClicked(dialog -> {
+                            Toast.makeText(CadastroActivity.this, "Desculpa, o cadastro só pode ser concluído aceitando os termos", Toast.LENGTH_SHORT).show();
+                            closeContextMenu();})
+                        .build()
+                        .show();
             }
         });
 
         btnCancelar.setOnClickListener(new View.OnClickListener() {
             Intent intent;
+
             @Override
             public void onClick(View v) {
                 FancyAlertDialog.Builder
@@ -175,6 +199,7 @@ public class CadastroActivity extends AppCompatActivity {
         btnConfirmarCadastro = findViewById(R.id.btnConfirmarCadastro);
         btnVoltarCadastro = findViewById(R.id.btnVoltarCadastro);
         btnCancelar = findViewById(R.id.btnCancelar);
+
 
     }
 }
