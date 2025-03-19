@@ -12,4 +12,14 @@
     <string name="txtMinhasCompras">Minhas Compras</string>
     <string name="txtCompartilhar">Compartilhar</string>
     <string name="txtSairDoApp">Sair do App</string>
+    <string name="txt_login">Login</string>
+    <string name="txt_informe_seu_email">Informe seu Email</string>
+    <string name="edit_email_email_com_br">email@email.com.br</string>
+    <string name="txt_informe_sua_senha">Informe sua senha</string>
+    <string name="edit_informe_sua_senha">********</string>
+    <string name="chk_lembrar_meu_dados">Lembrar meu dados</string>
+    <string name="txt_verifique_os_dados_e_tente_novamente">* Verifique os dados e tente novamente</string>
+    <string name="btn_login">LOGIN</string>
+    <string name="btn_esqueci_a_senha">Esqueci a senha</string>
+    <string name="btn_cadastre_se">CADASTRE-SE</string>
 </resources>

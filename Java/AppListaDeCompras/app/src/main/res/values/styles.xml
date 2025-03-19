@@ -17,4 +17,9 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name ="CustomizeButton" parent="Widget.AppCompat.Button">
+        <item name="android:textColor">@color/bg_color_dark_theme</item>
+        <item name="backgroundTint">@color/bgr_app</item>
+    </style>
+
 </resources>
