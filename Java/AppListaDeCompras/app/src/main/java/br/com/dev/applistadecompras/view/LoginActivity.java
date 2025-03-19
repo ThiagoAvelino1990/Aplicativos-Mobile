@@ -1,6 +1,8 @@
 package br.com.dev.applistadecompras.view;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -28,6 +30,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         
         initComponentesDeLayout();
+
+        btnCadastrarUsuario(btnCadastrar);
         
     }
 
@@ -47,5 +51,18 @@ public class LoginActivity extends AppCompatActivity {
         btnEsqueceuSenha = findViewById(R.id.btnEsqueceuSenha);
         btnCadastrar = findViewById(R.id.btnCadastrar);
 
+    }
+
+    public void btnCadastrarUsuario(View view) {
+        btnCadastrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent cadastro;
+
+                cadastro = new Intent(LoginActivity.this, CadastroActivity.class);
+                startActivity(cadastro);
+                finish();
+            }
+        });
     }
 }
