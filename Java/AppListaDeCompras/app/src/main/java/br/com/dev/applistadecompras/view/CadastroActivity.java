@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -22,28 +23,36 @@ import br.com.dev.applistadecompras.R;
 
 public class CadastroActivity extends AppCompatActivity {
 
-    TextView txtCadastroNovoUsuario;
-    EditText editNomeCompleto, editCadastroEmail, editSenha, editConfirmarSenha;
+    TextView txtViewCadastro, txtCadastroNovoUsuario;
+    EditText editNome, editSobrenome, editEndereco, editComplemento, editCpf, editCadastroEmail, editSenha, editConfirmarSenha;
     Button btnConfirmarCadastro, btnVoltarCadastro;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_cadastro);
 
         initLayout();
+        btnConfirmarCadastro(btnConfirmarCadastro);
         btnCancelarCadastro(btnVoltarCadastro);
+
     }
 
     private void initLayout() {
 
         txtCadastroNovoUsuario = findViewById(R.id.txtCadastroNovoUsuario);
+        txtViewCadastro = findViewById(R.id.txtViewCadastro);
 
-        editNomeCompleto = findViewById(R.id.editNomeCompleto);
+        editNome = findViewById(R.id.editNome);
+        editSobrenome = findViewById(R.id.editSobrenome);
+        editEndereco = findViewById(R.id.editEndereco);
+        editComplemento = findViewById(R.id.editComplemento);
+        editCpf = findViewById(R.id.editCpf);
         editCadastroEmail = findViewById(R.id.editCadastroEmail);
         editSenha = findViewById(R.id.editSenha);
-        editConfirmarSenha = findViewById(R.id.editLoginSenha);
+        editConfirmarSenha = findViewById(R.id.editConfirmarSenha);
 
         btnConfirmarCadastro = findViewById(R.id.btnConfirmarCadastro);
         btnVoltarCadastro = findViewById(R.id.btnVoltarCadastro);
@@ -78,5 +87,93 @@ public class CadastroActivity extends AppCompatActivity {
                         .show();
             }
         });
+    }
+
+    public void btnConfirmarCadastro(View view) {
+        btnConfirmarCadastro.setOnClickListener(new View.OnClickListener() {
+            Intent intent;
+
+            @Override
+            public void onClick(View v) {
+                FancyAlertDialog.Builder
+                        .with(CadastroActivity.this)
+                        .setTitle("Confirmar Cadastro")
+                        .setBackgroundColor(Color.parseColor("#303F9F"))  // for @ColorRes use setBackgroundColorRes(R.color.colorvalue)
+                        .setMessage("Deseja confirmar o cadastro ?")
+                        .setNegativeBtnText("Não")
+                        .setPositiveBtnBackground(Color.parseColor("#FF4081"))  // for @ColorRes use setPositiveBtnBackgroundRes(R.color.colorvalue)
+                        .setPositiveBtnText("Sim")
+                        .setNegativeBtnBackground(Color.parseColor("#FFA9A7A8"))  // for @ColorRes use setNegativeBtnBackgroundRes(R.color.colorvalue)
+                        .setAnimation(Animation.POP)
+                        .isCancellable(true)
+                        .setIcon(R.mipmap.ic_launcher_round, View.VISIBLE)
+                        .onPositiveClicked(dialog -> {
+                            if(validaDados()){
+                                Toast.makeText(CadastroActivity.this,"Cadastro realizado com sucesso !",Toast.LENGTH_LONG).show();
+                                intent = new Intent(CadastroActivity.this, LoginActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }else{
+                                Toast.makeText(CadastroActivity.this,"Verifique os dados e tente novamente !",Toast.LENGTH_LONG).show();
+                                closeContextMenu();
+                            }
+                        })
+                        .onNegativeClicked(dialog -> closeContextMenu())
+                        .build()
+                        .show();
+            }
+        });
+    }
+
+    public boolean validaDados(){
+
+        boolean isDadosOK = true;
+
+        if(editNome.getText().toString().isEmpty()){
+            editNome.setError("*");
+            editNome.requestFocus();
+            isDadosOK = false;
+        }
+
+        if(editSobrenome.getText().toString().isEmpty()){
+            editSobrenome.setError("*");
+            editSobrenome.requestFocus();
+            isDadosOK = false;
+        }
+
+        if(editEndereco.getText().toString().isEmpty()){
+            editEndereco.setError("*");
+            editEndereco.requestFocus();
+            isDadosOK = false;
+        }
+
+        if(editCpf.getText().toString().isEmpty()){
+            editCpf.setError("*");
+            editCpf.requestFocus();
+            isDadosOK = false;
+        }
+
+        if(editCadastroEmail.getText().toString().isEmpty()){
+            editCadastroEmail.setError("*");
+            editCadastroEmail.requestFocus();
+            isDadosOK = false;
+        }
+
+        if(editSenha.getText().toString().isEmpty()){
+            editSenha.setError("*");
+            editSenha.requestFocus();
+            isDadosOK = false;
+        }
+
+        if(!editSenha.getText().toString().equals(editConfirmarSenha.getText().toString())){
+            editSenha.setError("*");
+            editSenha.requestFocus();
+            editSenha.setText("");
+            editConfirmarSenha.setError("*");
+            editConfirmarSenha.setText("");
+            isDadosOK = false;
+        }
+
+        return isDadosOK;
     }
 }

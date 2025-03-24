@@ -26,6 +26,9 @@ public class Usuario extends RealmObject {
 
     private boolean termos;
 
+    private String dataInclusao;
+    private String dataAlteracao;
+
     public int getId() {
         return id;
     }
@@ -98,6 +101,21 @@ public class Usuario extends RealmObject {
         this.termos = termos;
     }
 
+    public String getDataInclusao() {
+        return dataInclusao;
+    }
+
+    public void setDataInclusao(String dataInclusao) {
+        this.dataInclusao = dataInclusao;
+    }
+
+    public String getDataAlteracao() {
+        return dataAlteracao;
+    }
+
+    public void setDataAlteracao(String dataAlteracao) {
+        this.dataAlteracao = dataAlteracao;
+    }
 
     @Override
     public String toString() {
@@ -111,6 +129,8 @@ public class Usuario extends RealmObject {
                 ", senha='" + senha + '\'' +
                 ", cpf='" + cpf + '\'' +
                 ", termos=" + termos +
+                ", dataInclusao='" + dataInclusao + '\'' +
+                ", dataAlteracao='" + dataAlteracao + '\'' +
                 '}';
     }
 }
