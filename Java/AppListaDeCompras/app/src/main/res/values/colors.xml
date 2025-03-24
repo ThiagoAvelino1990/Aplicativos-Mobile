@@ -6,4 +6,6 @@
 
     <color name="bg_color_dark_theme">#000000</color>
     <color name="bgr_app">#2196F3</color>
+
+    <color name="rootApp">#FF6E42</color>
 </resources>

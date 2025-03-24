@@ -21,7 +21,7 @@
 
     <style name ="CustomizeButton" parent="Widget.AppCompat.Button">
         <item name="android:textColor">@color/bg_color_dark_theme</item>
-        <item name="backgroundTint">@color/bgr_app</item>
+        <item name="backgroundTint">@color/rootApp</item>
     </style>
 
 

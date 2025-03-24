@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     tools:context=".view.CadastroActivity">
 
     <ScrollView
@@ -68,7 +69,7 @@
                         android:textSize="24sp"
                         android:textStyle="bold" />
 
-                    <EditText android:id="@+id/editNome"
+                    <EditText android:id="@+id/editNomeCadastro"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -163,7 +164,7 @@
                         android:hint="confirmar senha"
                         android:inputType="textPassword"
                         android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"/>
                 </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.cardview.widget.CardView>
 

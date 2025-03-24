@@ -16,4 +16,13 @@ public class AppUtil {
         return dateFormat.format(data);
     }
 
+    public static boolean validaEmail(String email){
+
+        if(email.indexOf("@") > 0){
+            return true;
+        }
+
+        return false;
+    }
+
 }

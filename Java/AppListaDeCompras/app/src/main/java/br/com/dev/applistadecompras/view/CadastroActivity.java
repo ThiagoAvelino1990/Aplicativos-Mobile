@@ -3,6 +3,7 @@ package br.com.dev.applistadecompras.view;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -12,20 +13,24 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.shashank.sony.fancydialoglib.Animation;
 import com.shashank.sony.fancydialoglib.FancyAlertDialog;
 
 import br.com.dev.applistadecompras.R;
+import br.com.dev.applistadecompras.controller.UsuarioController;
+import br.com.dev.applistadecompras.model.Usuario;
+import br.com.dev.applistadecompras.util.AppUtil;
 
 public class CadastroActivity extends AppCompatActivity {
 
     TextView txtViewCadastro, txtCadastroNovoUsuario;
-    EditText editNome, editSobrenome, editEndereco, editComplemento, editCpf, editCadastroEmail, editSenha, editConfirmarSenha;
+    EditText editNomeCadastro, editSobrenome, editEndereco, editComplemento, editCpf, editCadastroEmail, editSenha, editConfirmarSenha;
     Button btnConfirmarCadastro, btnVoltarCadastro;
+
+    Usuario usuario;
+    UsuarioController usuarioController;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +50,7 @@ public class CadastroActivity extends AppCompatActivity {
         txtCadastroNovoUsuario = findViewById(R.id.txtCadastroNovoUsuario);
         txtViewCadastro = findViewById(R.id.txtViewCadastro);
 
-        editNome = findViewById(R.id.editNome);
+        editNomeCadastro = findViewById(R.id.editNomeCadastro);
         editSobrenome = findViewById(R.id.editSobrenome);
         editEndereco = findViewById(R.id.editEndereco);
         editComplemento = findViewById(R.id.editComplemento);
@@ -56,6 +61,9 @@ public class CadastroActivity extends AppCompatActivity {
 
         btnConfirmarCadastro = findViewById(R.id.btnConfirmarCadastro);
         btnVoltarCadastro = findViewById(R.id.btnVoltarCadastro);
+
+        usuario = new Usuario();
+        usuarioController = new UsuarioController();
 
     }
 
@@ -129,9 +137,9 @@ public class CadastroActivity extends AppCompatActivity {
 
         boolean isDadosOK = true;
 
-        if(editNome.getText().toString().isEmpty()){
-            editNome.setError("*");
-            editNome.requestFocus();
+        if(editNomeCadastro.getText().toString().isEmpty()){
+            editNomeCadastro.setError("*");
+            editNomeCadastro.requestFocus();
             isDadosOK = false;
         }
 
@@ -172,6 +180,29 @@ public class CadastroActivity extends AppCompatActivity {
             editConfirmarSenha.setError("*");
             editConfirmarSenha.setText("");
             isDadosOK = false;
+        }
+
+        if(!AppUtil.validaEmail(editCadastroEmail.getText().toString())){
+            isDadosOK = false;
+            editCadastroEmail.setError("*");
+            editCadastroEmail.requestFocus();
+            Toast.makeText(CadastroActivity.this,"Por favor informar um e-mail válido",Toast.LENGTH_SHORT).show();
+        }
+
+        if (isDadosOK){
+
+            usuario.setNome(editNomeCadastro.getText().toString());
+            usuario.setSobrenome(editSobrenome.getText().toString());
+            usuario.setEndereco(editEndereco.getText().toString());
+            usuario.setComplemento(editComplemento.getText().toString());;
+            usuario.setCpf(editCpf.getText().toString());
+            usuario.setEmail(editCadastroEmail.getText().toString());
+            usuario.setSenha(editConfirmarSenha.getText().toString());
+            usuario.setDataInclusao(AppUtil.getDataAtual());
+
+            usuarioController.insert(usuario);
+
+            Log.i(AppUtil.TAG,usuarioController.toString());
         }
 
         return isDadosOK;
