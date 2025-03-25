@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:fitsSystemWindows="true"
+    android:orientation="vertical"
     tools:context=".view.CadastroActivity">
 
     <ScrollView
@@ -29,13 +29,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <ImageView android:id="@+id/imgAppClienteCadastro"
+                    <ImageView
+                        android:id="@+id/imgAppClienteCadastro"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
                         android:src="@mipmap/ic_launcher" />
 
-                    <TextView android:id="@+id/txtViewCadastro"
+                    <TextView
+                        android:id="@+id/txtViewCadastro"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="16dp"
@@ -60,7 +62,8 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <TextView android:id="@+id/txtCadastroNovoUsuario"
+                    <TextView
+                        android:id="@+id/txtCadastroNovoUsuario"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="16dp"
@@ -69,7 +72,8 @@
                         android:textSize="24sp"
                         android:textStyle="bold" />
 
-                    <EditText android:id="@+id/editNomeCadastro"
+                    <EditText
+                        android:id="@+id/editNomeCadastro"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -77,11 +81,12 @@
                         android:layout_marginEnd="8dp"
                         android:gravity="left"
                         android:hint="Nome"
-                        android:textSize="18sp"
                         android:inputType="textPersonName"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
-                    <EditText android:id="@+id/editSobrenome"
+                    <EditText
+                        android:id="@+id/editSobrenome"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -89,11 +94,12 @@
                         android:layout_marginEnd="8dp"
                         android:gravity="left"
                         android:hint="Sobrenome"
-                        android:textSize="18sp"
                         android:inputType="textPersonName"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
-                    <EditText android:id="@+id/editEndereco"
+                    <EditText
+                        android:id="@+id/editEndereco"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -105,7 +111,8 @@
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
-                    <EditText android:id="@+id/editComplemento"
+                    <EditText
+                        android:id="@+id/editComplemento"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -113,23 +120,25 @@
                         android:layout_marginEnd="8dp"
                         android:gravity="left"
                         android:hint="Complemento"
-                        android:textSize="18sp"
                         android:inputType="textAutoComplete"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
-                    <EditText android:id="@+id/editCpf"
+                    <EditText
+                        android:id="@+id/editCpf"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="8dp"
                         android:gravity="left"
-                        android:inputType="number"
                         android:hint="CPF"
+                        android:inputType="number"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
-                    <EditText android:id="@+id/editCadastroEmail"
+                    <EditText
+                        android:id="@+id/editCadastroEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -141,7 +150,8 @@
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
-                    <EditText android:id="@+id/editSenha"
+                    <EditText
+                        android:id="@+id/editSenha"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -153,7 +163,8 @@
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
-                    <EditText android:id="@+id/editConfirmarSenha"
+                    <EditText
+                        android:id="@+id/editConfirmarSenha"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -164,7 +175,14 @@
                         android:hint="confirmar senha"
                         android:inputType="textPassword"
                         android:textSize="18sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
+
+                    <CheckBox android:id="@+id/chkTermos"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Termos de uso"
+                        android:textStyle="bold" />
+
                 </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.cardview.widget.CardView>
 
@@ -185,16 +203,16 @@
                         style="@style/CustomizeButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Confirmar Cadastro"
-                        android:onClick="btnConfirmarCadastro"/>
+                        android:onClick="btnConfirmarCadastro"
+                        android:text="Confirmar Cadastro" />
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btnVoltarCadastro"
                         style="@style/CustomizeButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Cancelar Cadastro"
-                        android:onClick="btnCancelarCadastro"/>
+                        android:onClick="btnCancelarCadastro"
+                        android:text="Cancelar Cadastro" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.cardview.widget.CardView>

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,10 +28,10 @@ public class CadastroActivity extends AppCompatActivity {
     TextView txtViewCadastro, txtCadastroNovoUsuario;
     EditText editNomeCadastro, editSobrenome, editEndereco, editComplemento, editCpf, editCadastroEmail, editSenha, editConfirmarSenha;
     Button btnConfirmarCadastro, btnVoltarCadastro;
+    CheckBox chkTermos;
 
     Usuario usuario;
     UsuarioController usuarioController;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,8 @@ public class CadastroActivity extends AppCompatActivity {
 
         btnConfirmarCadastro = findViewById(R.id.btnConfirmarCadastro);
         btnVoltarCadastro = findViewById(R.id.btnVoltarCadastro);
+
+        chkTermos = findViewById(R.id.chkTermos);
 
         usuario = new Usuario();
         usuarioController = new UsuarioController();
@@ -107,7 +110,7 @@ public class CadastroActivity extends AppCompatActivity {
                         .with(CadastroActivity.this)
                         .setTitle("Confirmar Cadastro")
                         .setBackgroundColor(Color.parseColor("#303F9F"))  // for @ColorRes use setBackgroundColorRes(R.color.colorvalue)
-                        .setMessage("Deseja confirmar o cadastro ?")
+                        .setMessage(AppUtil.TERMOS_DE_USO)
                         .setNegativeBtnText("Não")
                         .setPositiveBtnBackground(Color.parseColor("#FF4081"))  // for @ColorRes use setPositiveBtnBackgroundRes(R.color.colorvalue)
                         .setPositiveBtnText("Sim")
@@ -123,10 +126,14 @@ public class CadastroActivity extends AppCompatActivity {
                                 finish();
                             }else{
                                 Toast.makeText(CadastroActivity.this,"Verifique os dados e tente novamente !",Toast.LENGTH_LONG).show();
+                                chkTermos.setChecked(false);
                                 closeContextMenu();
                             }
                         })
-                        .onNegativeClicked(dialog -> closeContextMenu())
+                        .onNegativeClicked(dialog -> {
+                            chkTermos.setChecked(false);
+                            closeContextMenu();
+                        })
                         .build()
                         .show();
             }
@@ -136,6 +143,8 @@ public class CadastroActivity extends AppCompatActivity {
     public boolean validaDados(){
 
         boolean isDadosOK = true;
+
+        chkTermos.setChecked(true);
 
         if(editNomeCadastro.getText().toString().isEmpty()){
             editNomeCadastro.setError("*");
@@ -189,6 +198,7 @@ public class CadastroActivity extends AppCompatActivity {
             Toast.makeText(CadastroActivity.this,"Por favor informar um e-mail válido",Toast.LENGTH_SHORT).show();
         }
 
+
         if (isDadosOK){
 
             usuario.setNome(editNomeCadastro.getText().toString());
@@ -199,6 +209,7 @@ public class CadastroActivity extends AppCompatActivity {
             usuario.setEmail(editCadastroEmail.getText().toString());
             usuario.setSenha(editConfirmarSenha.getText().toString());
             usuario.setDataInclusao(AppUtil.getDataAtual());
+            usuario.setTermos(chkTermos.isChecked());
 
             usuarioController.insert(usuario);
 
