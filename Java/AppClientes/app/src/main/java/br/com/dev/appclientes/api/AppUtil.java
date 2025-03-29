@@ -1,8 +1,12 @@
 package br.com.dev.appclientes.api;
 
+import android.util.Log;
+import android.widget.Toast;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.InputMismatchException;
 
 public class AppUtil {
 
@@ -45,65 +49,141 @@ public class AppUtil {
 
     public static boolean validaCnpjCpf(String cpfCnpj){
 
-        cpfCnpj = "14572457000185";
+        String cpfCnpjRevertido = "";
 
-        int peso = 2;
-        int soma = 0;
-        int somaTotal = 0;
-        int digVerifUm, digVerifDois;
-        String cnpj = cpfCnpj;
-        int tam = cpfCnpj.length() - 2;
+        //Verificação primária
+        for(int i = (cpfCnpj.length() - 1); i >= 0 ; i--){
+            cpfCnpjRevertido = cpfCnpjRevertido + cpfCnpj.charAt(i);
+        }
 
-        //Cálculo para validação do CNPJ
-        // Calcular o Dígito verificador 1
-        for (int i = tam; i > 0; i--){
-            soma = ((int)cnpj.charAt(i) * peso);
-            peso ++;
+        if(cpfCnpj.equals(cpfCnpjRevertido)){
+            return false;
+        }
+        try{
+            int validador = 0;
+            int soma = 0;
+            int digVerifUm = 0, digVerifDois = 0;
 
-            if(peso > 9){
+            if (cpfCnpj.length() == 14){
+                //Cálculo para validação do CNPJ
+                // Calcular o Dígito verificador 1
+                int peso = 2;
+
+                for (int i = 11; i >= 0; i--){
+                    validador = (Character.getNumericValue(cpfCnpj.charAt(i)) * peso);
+                    peso ++;
+
+                    if(peso > 9){
+                        peso = 2;
+                    }
+                    soma = soma + validador;
+                }
+
+                if(soma % 11 == 0 || soma % 11 == 1){
+                    digVerifUm = 0;
+                }else{
+                    digVerifUm = 11 - (soma % 11);
+                }
+
+                validador = 0;
                 peso = 2;
+                soma = 0;
+
+                //Calculo do segundo dígito verificador
+                for(int i = 12; i >= 0; i--){
+                    validador = (Character.getNumericValue(cpfCnpj.charAt(i)) * peso);
+                    peso ++;
+
+                    if(peso > 9){
+                        peso = 2;
+                    }
+                    soma = soma + validador;
+                }
+
+                if(soma % 11 == 0 || soma % 11 == 1){
+                    digVerifDois = 0;
+                }else{
+                    digVerifDois = 11 - (soma % 11);
+                }
+
+                if((digVerifUm == Character.getNumericValue(cpfCnpj.charAt(12))) && (digVerifDois == Character.getNumericValue(cpfCnpj.charAt(13)))){
+                    return true;
+                }
+
+            } else if (cpfCnpj.length() == 11){
+                int peso = 10;
+
+                //Verificando o digito verificardor Um
+                for(int i = 0; i <= 8; i++){
+                    validador = (Character.getNumericValue(cpfCnpj.charAt(i)) * peso);
+
+                    if(peso > 2){
+                        peso--;
+                    }
+
+                    soma = soma + validador;
+                }
+
+                digVerifUm = 11 - (soma % 11);
+
+                if(digVerifUm == 10 || digVerifUm == 11){
+                    digVerifUm = 0;
+                }
+
+                //Verificando o digito verificardor Dois
+                peso = 11;
+                validador = 0;
+                soma =0;
+                for(int i = 0; i <= 9; i++){
+                    validador = (Character.getNumericValue(cpfCnpj.charAt(i)) * peso);
+
+                    if(peso > 2){
+                        peso--;
+                    }
+
+                    soma = soma + validador;
+
+                }
+
+                digVerifDois = 11 - (soma % 11);
+
+                if(digVerifDois == 11 || digVerifDois == 10){
+                    digVerifDois =0;
+                }
+
+                //Validando os dados
+                if((digVerifUm == Character.getNumericValue(cpfCnpj.charAt(9))) && (digVerifDois == Character.getNumericValue(cpfCnpj.charAt(10)))){
+                    return true;
+                }
             }
-            somaTotal = somaTotal + soma;
-        }
-
-        if(soma % 11 == 0 || soma % 11 == 1){
-            digVerifUm = 0;
-        }else{
-            digVerifUm = 11 - (soma % 11);
-        }
-
-        soma = 0;
-        peso = 0;
-        cnpj = digVerifUm+cnpj;
-        tam  = cpfCnpj.length() - 1;
-
-        for(int i = tam; i > 0; i--){
-            soma = ((int)cnpj.charAt(i) * peso);
-            peso ++;
-
-            if(peso > 9){
-                peso = 2;
-            }
-            somaTotal = somaTotal + soma;
-        }
-
-        if(soma % 11 == 0 || soma % 11 == 1){
-            digVerifDois = 0;
-        }else{
-            digVerifDois = 11 - (soma % 11);
-        }
-
-        if((digVerifUm == cpfCnpj.charAt(12)) && (digVerifDois == cpfCnpj.charAt(13))){
-            return true;
+        }catch(InputMismatchException err){
+            Log.e(TAG,"AppUtil.validaCnpjCpf" +err.getMessage());
+        }catch(Exception err){
+            Log.e(TAG,"AppUtil.validaCnpjCpf" +err.getMessage());
         }
 
         return false;
-
     }
 
+    public static String formataDocumento(String documento, int tamanho){
 
+        try{
+            if(tamanho == 14){
+                documento = documento.substring(0,2)+"."+documento.substring(2,5)+"."+
+                        documento.substring(5,8)+"."+documento.substring(8,12)+"-"+
+                        documento.substring(12,14);
 
+                return documento;
+            } else if (tamanho == 11) {
+                documento = documento.substring(0,3)+"."+documento.substring(3,6)+"."+
+                        documento.substring(6,9)+"-"+documento.substring(9,11);
 
+                return documento;
+            }
+        }catch(Exception err){
+            Log.e(TAG,"AppUtil.formataDocumento" +err.getMessage());
+        }
 
-
+        return "ERRO - Documento inválido";
+    }
 }

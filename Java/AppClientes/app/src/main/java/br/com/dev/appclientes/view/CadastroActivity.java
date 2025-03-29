@@ -34,7 +34,7 @@ public class CadastroActivity extends AppCompatActivity {
 
     ImageView imgAppClienteCadastro;
     TextView txtViewCadastro, txtCadastroNovoUsuario;
-    EditText editNomeCompleto, editCadastroEmail, editSenha, editConfirmarSenha;
+    EditText editNomeCompleto, editCadastroEmail, editSenha, editConfirmarSenha, editCpfCnpj;
     Button btnConfirmarCadastro, btnVoltarCadastro, btnCancelar;
 
     SharedPreferences preferencesCadastro;
@@ -152,6 +152,11 @@ public class CadastroActivity extends AppCompatActivity {
             editCadastroEmail.requestFocus();
             editCadastroEmail.setError("*");
             Toast.makeText(CadastroActivity.this,"* Email não pode ser vazio",Toast.LENGTH_LONG).show();
+        }else if (editCpfCnpj.getText().toString().isEmpty() || !AppUtil.validaCnpjCpf(editCpfCnpj.getText().toString())) {
+            isDadosOK = false;
+            editCpfCnpj.requestFocus();
+            editCpfCnpj.setError("*");
+            Toast.makeText(CadastroActivity.this,"* Documento Inválido",Toast.LENGTH_LONG).show();
         }else if((editSenha.getText().toString().isEmpty()) || (!editSenha.getText().toString().equals(editConfirmarSenha.getText().toString()))){
             isDadosOK = false;
             editSenha.requestFocus();
@@ -173,12 +178,14 @@ public class CadastroActivity extends AppCompatActivity {
         SharedPreferences.Editor data = preferencesCadastro.edit();
 
         data.putString("nome",editNomeCompleto.getText().toString());
+        data.putString("documento",AppUtil.formataDocumento(editCpfCnpj.getText().toString(),editCpfCnpj.getText().toString().length()));
         data.putString("email",editCadastroEmail.getText().toString());
         data.putString("senha",editSenha.getText().toString());
 
         data.apply();
 
         usuario.setNome(preferencesCadastro.getString("nome",null));
+        usuario.setSenha(preferencesCadastro.getString("documento", null));
         usuario.setEmail(preferencesCadastro.getString("email",null));
         usuario.setSenha(preferencesCadastro.getString("senha", null));
 
@@ -195,6 +202,7 @@ public class CadastroActivity extends AppCompatActivity {
         editCadastroEmail = findViewById(R.id.editCadastroEmail);
         editSenha = findViewById(R.id.editSenha);
         editConfirmarSenha = findViewById(R.id.editConfirmarSenha);
+        editCpfCnpj = findViewById(R.id.editCpfCnpj);
 
         btnConfirmarCadastro = findViewById(R.id.btnConfirmarCadastro);
         btnVoltarCadastro = findViewById(R.id.btnVoltarCadastro);
