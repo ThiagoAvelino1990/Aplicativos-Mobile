@@ -164,10 +164,11 @@ public class CadastroActivity extends AppCompatActivity {
             isDadosOK = false;
         }
 
-        if(editCpf.getText().toString().isEmpty()){
+        if(editCpf.getText().toString().isEmpty() || !AppUtil.validaCnpjCpf(editCpf.getText().toString())){
             editCpf.setError("*");
             editCpf.requestFocus();
             isDadosOK = false;
+            Toast.makeText(CadastroActivity.this,"* Documento inválido",Toast.LENGTH_LONG).show();
         }
 
         if(editCadastroEmail.getText().toString().isEmpty()){
@@ -205,7 +206,7 @@ public class CadastroActivity extends AppCompatActivity {
             usuario.setSobrenome(editSobrenome.getText().toString());
             usuario.setEndereco(editEndereco.getText().toString());
             usuario.setComplemento(editComplemento.getText().toString());;
-            usuario.setCpf(editCpf.getText().toString());
+            usuario.setCpf(AppUtil.formataDocumento(editCpf.getText().toString(), editCpf.getText().toString().length()));
             usuario.setEmail(editCadastroEmail.getText().toString());
             usuario.setSenha(editConfirmarSenha.getText().toString());
             usuario.setDataInclusao(AppUtil.getDataAtual());
