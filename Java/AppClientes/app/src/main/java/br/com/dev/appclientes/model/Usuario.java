@@ -7,6 +7,10 @@ public class Usuario {
     private String email;
     private String senha;
     private boolean chkLembrarSenha;
+    private String logradouro;
+    private String complemento;
+    private String cpfCnpj;
+    private boolean isPessoaFisica;
 
     public int getId() {
         return id;
@@ -48,6 +52,39 @@ public class Usuario {
         this.chkLembrarSenha = chkLembrarSenha;
     }
 
+
+    public String getLogradouro() {
+        return logradouro;
+    }
+
+    public void setLogradouro(String logradouro) {
+        this.logradouro = logradouro;
+    }
+
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
+    }
+
+    public String getCpfCnpj() {
+        return cpfCnpj;
+    }
+
+    public void setCpfCnpj(String cpfCnpj) {
+        this.cpfCnpj = cpfCnpj;
+    }
+
+    public boolean isPessoaFisica() {
+        return isPessoaFisica;
+    }
+
+    public void setPessoaFisica(boolean pessoaFisica) {
+        isPessoaFisica = pessoaFisica;
+    }
+
     @Override
     public String toString() {
         return "Usuario{" +
@@ -56,6 +93,10 @@ public class Usuario {
                 ", email='" + email + '\'' +
                 ", senha='" + senha + '\'' +
                 ", chkLembrarSenha=" + chkLembrarSenha +
+                ", logradouro='" + logradouro + '\'' +
+                ", complemento='" + complemento + '\'' +
+                ", cpfCnpj='" + cpfCnpj + '\'' +
+                ", isPessoaFisica=" + isPessoaFisica +
                 '}';
     }
 }

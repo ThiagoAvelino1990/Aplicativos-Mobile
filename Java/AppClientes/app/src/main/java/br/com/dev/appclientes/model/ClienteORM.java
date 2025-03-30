@@ -25,6 +25,8 @@ public class ClienteORM extends RealmObject {
     private boolean termosDeUso;
     private String dataDeInclusao;
     private String dataDeAtualizacao;
+    private boolean idTipoPessoa;
+
 
     public int getId() {
         return id;
@@ -146,6 +148,14 @@ public class ClienteORM extends RealmObject {
         this.dataDeAtualizacao = dataDeAtualizacao;
     }
 
+    public boolean isIdTipoPessoa() {
+        return idTipoPessoa;
+    }
+
+    public void setIdTipoPessoa(boolean idTipoPessoa) {
+        this.idTipoPessoa = idTipoPessoa;
+    }
+
     @Override
     public String toString() {
         return "ClienteORM{" +
@@ -164,6 +174,7 @@ public class ClienteORM extends RealmObject {
                 ", termosDeUso=" + termosDeUso +
                 ", dataDeInclusao='" + dataDeInclusao + '\'' +
                 ", dataDeAtualizacao='" + dataDeAtualizacao + '\'' +
+                ", idTipoPessoa=" + idTipoPessoa +
                 '}';
     }
 }

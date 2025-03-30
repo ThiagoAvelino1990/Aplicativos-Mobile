@@ -15,6 +15,7 @@ public class Cliente {
     private String estado;
     private String pais;
     private boolean termosDeUso;
+    private char idTipoPessoa;
 
     public int getId() {
         return id;
@@ -120,6 +121,14 @@ public class Cliente {
         this.termosDeUso = termosDeUso;
     }
 
+    public char getIdTipoPessoa() {
+        return idTipoPessoa;
+    }
+
+    public void setIdTipoPessoa(char idTipoPessoa) {
+        this.idTipoPessoa = idTipoPessoa;
+    }
+
     @Override
     public String toString() {
         return "Cliente{" +
@@ -136,6 +145,7 @@ public class Cliente {
                 ", estado='" + estado + '\'' +
                 ", pais='" + pais + '\'' +
                 ", termosDeUso=" + termosDeUso +
+                ", idTipoPessoa=" + idTipoPessoa +
                 '}';
     }
 }
