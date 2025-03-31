@@ -60,8 +60,12 @@ public class CadastroActivity extends AppCompatActivity {
 
         initComponentesLayout();
 
+        /*Instanciando os objetos*/
         usuario = new Usuario();
         controller = new UsuarioController(CadastroActivity.this);
+
+        usuarioORM = new UsuarioORM();
+        controllerORM = new UsuarioORMController();
 
         switchPjPF.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if(switchPjPF.isChecked()){
@@ -282,7 +286,7 @@ public class CadastroActivity extends AppCompatActivity {
         usuarioORM.setSenha(preferencesCadastro.getString("senha", null));
         usuarioORM.setDataInclusao(preferencesCadastro.getString("dataInclusao", null));
 
-        if(preferencesCadastro.getString("tipo_pessoa",null)== "1"){
+        if(preferencesCadastro.getString("tipo_pessoa",null).equals("1")){
             usuarioORM.setPessoaFisica(true);
         }else{
             usuarioORM.setPessoaFisica(false);
