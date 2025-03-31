@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import br.com.dev.appclientes.api.AppUtil;
 import br.com.dev.appclientes.model.ClienteORM;
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -32,7 +33,7 @@ public class ClienteORMController {
             realm.copyToRealm(obj);
 
         }catch(RealmException err){
-            Log.e("db_log","insertORM: "+err.getMessage());
+            Log.e(AppUtil.TAG,"insertORM: "+err.getMessage());
         }finally {
             realm.commitTransaction();
             realm.close();
@@ -65,7 +66,7 @@ public class ClienteORMController {
             clienteORM.setDataDeAtualizacao(obj.getDataDeAtualizacao());
 
         }catch(RealmException err){
-            Log.e("db_log","updateORM: "+err.getMessage());
+            Log.e(AppUtil.TAG,"updateORM: "+err.getMessage());
         }finally {
             realm.commitTransaction();
             realm.close();
@@ -87,7 +88,7 @@ public class ClienteORMController {
             results.deleteAllFromRealm();
 
         }catch(RealmException err){
-            Log.e("db_log","deleteORM: "+err.getMessage());
+            Log.e(AppUtil.TAG,"deleteORM: "+err.getMessage());
         }finally {
             realm.commitTransaction();
             realm.close();
@@ -105,7 +106,7 @@ public class ClienteORMController {
             realm.beginTransaction();
             results.deleteAllFromRealm();
         }catch(RealmException err){
-            Log.e("db_log","deleteORMByID: "+err.getMessage());
+            Log.e(AppUtil.TAG,"deleteORMByID: "+err.getMessage());
         }finally {
             realm.commitTransaction();
             realm.close();
@@ -129,7 +130,7 @@ public class ClienteORMController {
             ListORM = realm.copyFromRealm(results);
 
         }catch(RealmException err){
-            Log.e("db_log","listarORM: "+err.getMessage());
+            Log.e(AppUtil.TAG,"listarORM: "+err.getMessage());
         }finally {
             realm.close();
         }
@@ -149,7 +150,7 @@ public class ClienteORMController {
             obj = realm.copyFromRealm(Objects.requireNonNull(realm.where(ClienteORM.class)).equalTo("id",id).findFirst());
 
         }catch(Exception err){
-            Log.e("db_log","listarORMByID: "+err.getMessage());
+            Log.e(AppUtil.TAG,"listarORMByID: "+err.getMessage());
         }finally {
             realm.close();
         }

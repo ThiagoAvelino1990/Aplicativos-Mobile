@@ -31,7 +31,9 @@ import org.w3c.dom.Text;
 import br.com.dev.appclientes.R;
 import br.com.dev.appclientes.api.AppUtil;
 import br.com.dev.appclientes.controller.UsuarioController;
+import br.com.dev.appclientes.controller.UsuarioORMController;
 import br.com.dev.appclientes.model.Usuario;
+import br.com.dev.appclientes.model.UsuarioORM;
 
 public class CadastroActivity extends AppCompatActivity {
 
@@ -45,6 +47,9 @@ public class CadastroActivity extends AppCompatActivity {
 
     Usuario usuario;
     UsuarioController controller;
+
+    UsuarioORM usuarioORM;
+    UsuarioORMController controllerORM;
 
 
     @Override
@@ -107,6 +112,7 @@ public class CadastroActivity extends AppCompatActivity {
 
                             setDataPreferences();
                             setUsuarioSQL();
+                            setUsuarioORM();
 
                             new Handler().postDelayed(new Runnable() {
                                 @Override
@@ -261,6 +267,25 @@ public class CadastroActivity extends AppCompatActivity {
         }
 
         controller.insertObject(usuario);
+
+    }
+
+    public void setUsuarioORM(){
+
+        usuarioORM.setNome(preferencesCadastro.getString("descricao",null));
+        usuarioORM.setCpfCnpj(preferencesCadastro.getString("documento", null));
+        usuarioORM.setLogradouro(preferencesCadastro.getString("logradouro", null));
+        usuarioORM.setComplemento(preferencesCadastro.getString("complemento", null));
+        usuarioORM.setEmail(preferencesCadastro.getString("email",null));
+        usuarioORM.setSenha(preferencesCadastro.getString("senha", null));
+
+        if(preferencesCadastro.getString("tipo_pessoa",null)== "1"){
+            usuarioORM.setPessoaFisica(true);
+        }else{
+            usuarioORM.setPessoaFisica(false);
+        }
+
+        controllerORM.insertORM(usuarioORM);
 
     }
 
