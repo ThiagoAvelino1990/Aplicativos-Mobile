@@ -11,6 +11,8 @@ public class Usuario {
     private String complemento;
     private String cpfCnpj;
     private boolean isPessoaFisica;
+    private String dataInclusao;
+    private String dataAlteracao;
 
     public int getId() {
         return id;
@@ -85,6 +87,22 @@ public class Usuario {
         isPessoaFisica = pessoaFisica;
     }
 
+    public String getDataInclusao() {
+        return dataInclusao;
+    }
+
+    public void setDataInclusao(String dataInclusao) {
+        this.dataInclusao = dataInclusao;
+    }
+
+    public String getDataAlteracao() {
+        return dataAlteracao;
+    }
+
+    public void setDataAlteracao(String dataAlteracao) {
+        this.dataAlteracao = dataAlteracao;
+    }
+
     @Override
     public String toString() {
         return "Usuario{" +
@@ -97,6 +115,8 @@ public class Usuario {
                 ", complemento='" + complemento + '\'' +
                 ", cpfCnpj='" + cpfCnpj + '\'' +
                 ", isPessoaFisica=" + isPessoaFisica +
+                ", dataInclusao='" + dataInclusao + '\'' +
+                ", dataAlteracao='" + dataAlteracao + '\'' +
                 '}';
     }
 }

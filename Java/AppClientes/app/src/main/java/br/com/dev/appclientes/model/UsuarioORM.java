@@ -20,8 +20,11 @@ public class UsuarioORM extends RealmObject {
     private String complemento;
     @Required
     private String cpfCnpj;
-    @Required
+
     private boolean isPessoaFisica;
+
+    private String dataInclusao;
+    private String dataAlteracao;
 
 
     public int getId() {
@@ -96,6 +99,21 @@ public class UsuarioORM extends RealmObject {
         isPessoaFisica = pessoaFisica;
     }
 
+    public String getDataInclusao() {
+        return dataInclusao;
+    }
+
+    public void setDataInclusao(String dataInclusao) {
+        this.dataInclusao = dataInclusao;
+    }
+
+    public String getDataAlteracao() {
+        return dataAlteracao;
+    }
+
+    public void setDataAlteracao(String dataAlteracao) {
+        this.dataAlteracao = dataAlteracao;
+    }
 
     @Override
     public String toString() {
@@ -109,6 +127,8 @@ public class UsuarioORM extends RealmObject {
                 ", complemento='" + complemento + '\'' +
                 ", cpfCnpj='" + cpfCnpj + '\'' +
                 ", isPessoaFisica=" + isPessoaFisica +
+                ", dataInclusao='" + dataInclusao + '\'' +
+                ", dataAlteracao='" + dataAlteracao + '\'' +
                 '}';
     }
 }

@@ -59,6 +59,7 @@ public class UsuarioORMController {
             usuarioORM.setSenha(obj.getSenha());
             usuarioORM.setChkLembrarSenha(obj.isChkLembrarSenha());
             usuarioORM.setPessoaFisica(obj.isPessoaFisica());
+            usuarioORM.setDataAlteracao(AppUtil.getDataFormat());
 
 
         }catch(RealmException err){

@@ -217,7 +217,8 @@ public class CadastroActivity extends AppCompatActivity {
             data.putString("logradouro",editEndereco.getText().toString());
             data.putString("complemento",editComplementoEnd.getText().toString());
             data.putString("email",editCadastroEmail.getText().toString());
-            data.putString("senha",editSenha.getText().toString());
+            data.putString("senha",AppUtil.criptografarPass(editSenha.getText().toString()));
+            data.putString("dataInclusao",AppUtil.getDataFormat());
 
 
             data.apply();
@@ -259,6 +260,7 @@ public class CadastroActivity extends AppCompatActivity {
         usuario.setComplemento(preferencesCadastro.getString("complemento", null));
         usuario.setEmail(preferencesCadastro.getString("email",null));
         usuario.setSenha(preferencesCadastro.getString("senha", null));
+        usuario.setDataInclusao(preferencesCadastro.getString("dataInclusao", null));
 
         if(preferencesCadastro.getString("tipo_pessoa",null)== "1"){
             usuario.setPessoaFisica(true);
@@ -278,6 +280,7 @@ public class CadastroActivity extends AppCompatActivity {
         usuarioORM.setComplemento(preferencesCadastro.getString("complemento", null));
         usuarioORM.setEmail(preferencesCadastro.getString("email",null));
         usuarioORM.setSenha(preferencesCadastro.getString("senha", null));
+        usuarioORM.setDataInclusao(preferencesCadastro.getString("dataInclusao", null));
 
         if(preferencesCadastro.getString("tipo_pessoa",null)== "1"){
             usuarioORM.setPessoaFisica(true);
