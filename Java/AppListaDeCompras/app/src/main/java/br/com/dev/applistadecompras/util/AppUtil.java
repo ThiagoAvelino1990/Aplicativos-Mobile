@@ -2,6 +2,8 @@ package br.com.dev.applistadecompras.util;
 
 import android.util.Log;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -190,6 +192,41 @@ public class AppUtil {
 
         return "ERRO - Genérico";
 
+    }
+
+
+    public static String criptografarPass(String password) {
+
+        String retorno = "";
+
+        if(!password.isEmpty()) {
+
+            try {
+                // Create SHA Hash
+                MessageDigest digest = MessageDigest.getInstance("SHA");
+                digest.update(password.getBytes());
+                byte messageDigest[] = digest.digest();
+
+                StringBuffer SHAHash = new StringBuffer();
+                for (int i = 0; i < messageDigest.length; i++) {
+                    String h = Integer.toHexString(0xFF & messageDigest[i]);
+                    while (h.length() < 2)
+                        h = "0" + h;
+                    SHAHash.append(h);
+                }
+
+                return SHAHash.toString();
+
+            } catch (NoSuchAlgorithmException e) {
+                retorno = "[ERRO] -CRIPTOGRAFAR SENHA: "+e.getMessage();
+                Log.e(TAG,"[ERRO] -CRIPTOGRAFAR SENHA: "+e.getMessage());
+            }catch(Exception err){
+                retorno = "[ERRO GENÉRICO] -CRIPTOGRAFAR SENHA: "+err.getMessage();
+                Log.e(TAG,"[ERRO GENÉRICO] -CRIPTOGRAFAR SENHA: "+err.getMessage());
+            }
+
+        }
+        return retorno;
     }
 
 }
