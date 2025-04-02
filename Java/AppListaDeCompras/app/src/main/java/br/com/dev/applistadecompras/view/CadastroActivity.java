@@ -120,10 +120,14 @@ public class CadastroActivity extends AppCompatActivity {
                         .setIcon(R.mipmap.ic_launcher_round, View.VISIBLE)
                         .onPositiveClicked(dialog -> {
                             if(validaDados()){
-                                Toast.makeText(CadastroActivity.this,"Cadastro realizado com sucesso !",Toast.LENGTH_LONG).show();
-                                intent = new Intent(CadastroActivity.this, LoginActivity.class);
-                                startActivity(intent);
-                                finish();
+
+                                if(setUsuario()){
+                                    Toast.makeText(CadastroActivity.this,"Cadastro realizado com sucesso !",Toast.LENGTH_LONG).show();
+                                    intent = new Intent(CadastroActivity.this, LoginActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+
                             }else{
                                 Toast.makeText(CadastroActivity.this,"Verifique os dados e tente novamente !",Toast.LENGTH_LONG).show();
                                 chkTermos.setChecked(false);
@@ -138,6 +142,34 @@ public class CadastroActivity extends AppCompatActivity {
                         .show();
             }
         });
+    }
+
+    private boolean setUsuario() {
+
+        try{
+            usuario.setNome(editNomeCadastro.getText().toString());
+            usuario.setSobrenome(editSobrenome.getText().toString());
+            usuario.setEndereco(editEndereco.getText().toString());
+            usuario.setComplemento(editComplemento.getText().toString());;
+            usuario.setCpf(AppUtil.formataDocumento(editCpf.getText().toString(), editCpf.getText().toString().length()));
+            usuario.setEmail(editCadastroEmail.getText().toString());
+            usuario.setSenha(AppUtil.criptografarPass(editConfirmarSenha.getText().toString()));
+            usuario.setDataInclusao(AppUtil.getDataAtual());
+            usuario.setTermos(chkTermos.isChecked());
+
+            usuarioController.insert(usuario);
+
+            Log.i(AppUtil.TAG,usuarioController.toString());
+
+            return true;
+
+        }catch(Exception err){
+            Toast.makeText(CadastroActivity.this,"Não foi possível inserir os dados",Toast.LENGTH_LONG).show();
+            Log.e(AppUtil.TAG,"Erro ao inserir os dados do usuário "+err.getMessage());
+            return false;
+        }
+
+
     }
 
     public boolean validaDados(){
@@ -200,22 +232,7 @@ public class CadastroActivity extends AppCompatActivity {
         }
 
 
-        if (isDadosOK){
 
-            usuario.setNome(editNomeCadastro.getText().toString());
-            usuario.setSobrenome(editSobrenome.getText().toString());
-            usuario.setEndereco(editEndereco.getText().toString());
-            usuario.setComplemento(editComplemento.getText().toString());;
-            usuario.setCpf(AppUtil.formataDocumento(editCpf.getText().toString(), editCpf.getText().toString().length()));
-            usuario.setEmail(editCadastroEmail.getText().toString());
-            usuario.setSenha(editConfirmarSenha.getText().toString());
-            usuario.setDataInclusao(AppUtil.getDataAtual());
-            usuario.setTermos(chkTermos.isChecked());
-
-            usuarioController.insert(usuario);
-
-            Log.i(AppUtil.TAG,usuarioController.toString());
-        }
 
         return isDadosOK;
     }
