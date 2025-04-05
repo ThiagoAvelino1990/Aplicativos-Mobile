@@ -16,7 +16,13 @@ public class ClienteDataModel {
     public static final String CIDADE = "CIDADE";
     public static final String ESTADO = "ESTADO";
     public static final String PAIS = "PAIS";
+    public static final String DOCUMENTO = "DOCUMENTO";
+    public static final String IDTIPODOCUMENTO = "ID_TIPO_DOCUMENTO";
+    public static final String IDTIPOPESSOA = "ID_TIPO_PESSOA";
     public static final String TERMOSDEUSO = "TERMOS_DE_USO";
+    public static final String DATAINLCUSAO = "DATA_INCLUSAO";
+    public static final String DATAALTERACAO = "DATA_ALTERACAO";
+    public static final String IDUSUARIO = "ID_USUARIO";
 
     public static String criarTabela(){
 
@@ -33,7 +39,14 @@ public class ClienteDataModel {
                 CIDADE + " TEXT, " +
                 ESTADO + " TEXT, " +
                 PAIS + " TEXT, " +
-                TERMOSDEUSO + " INTEGER)";
+                DOCUMENTO + "TEXT, "+
+                IDTIPODOCUMENTO + "TEXT, "+
+                IDTIPOPESSOA + "TEXT, "+
+                TERMOSDEUSO + " INTEGER, "+
+                DATAINLCUSAO + " TEXT, "+
+                DATAALTERACAO + "TEXT, "+
+                IDUSUARIO + "INTEGER, "+
+                "FOREIGN KEY("+IDUSUARIO+") REFERENCES USUARIO(ID)";
         /**
          * Exemplo de com criar FOREIGN KEY
          * FOREIGN KEY(fk_coluna) REFERENCES tabela(coluna)

@@ -14,8 +14,13 @@ public class Cliente {
     private String cidade;
     private String estado;
     private String pais;
+    private String documento;
+    private String idTipoDocumento;
+    private String idTipoPessoa;
     private boolean termosDeUso;
-    private char idTipoPessoa;
+    private String dataInclusao;
+    private String dataAlteracao;
+    private int fkIdUsuario;
 
     public int getId() {
         return id;
@@ -113,6 +118,30 @@ public class Cliente {
         this.pais = pais;
     }
 
+    public String getDocumento() {
+        return documento;
+    }
+
+    public void setDocumento(String documento) {
+        this.documento = documento;
+    }
+
+    public String getIdTipoDocumento() {
+        return idTipoDocumento;
+    }
+
+    public void setIdTipoDocumento(String idTipoDocumento) {
+        this.idTipoDocumento = idTipoDocumento;
+    }
+
+    public String getIdTipoPessoa() {
+        return idTipoPessoa;
+    }
+
+    public void setIdTipoPessoa(String idTipoPessoa) {
+        this.idTipoPessoa = idTipoPessoa;
+    }
+
     public boolean isTermosDeUso() {
         return termosDeUso;
     }
@@ -121,13 +150,30 @@ public class Cliente {
         this.termosDeUso = termosDeUso;
     }
 
-    public char getIdTipoPessoa() {
-        return idTipoPessoa;
+    public String getDataInclusao() {
+        return dataInclusao;
     }
 
-    public void setIdTipoPessoa(char idTipoPessoa) {
-        this.idTipoPessoa = idTipoPessoa;
+    public void setDataInclusao(String dataInclusao) {
+        this.dataInclusao = dataInclusao;
     }
+
+    public String getDataAlteracao() {
+        return dataAlteracao;
+    }
+
+    public void setDataAlteracao(String dataAlteracao) {
+        this.dataAlteracao = dataAlteracao;
+    }
+
+    public int getFkIdUsuario() {
+        return fkIdUsuario;
+    }
+
+    public void setFkIdUsuario(int fkIdUsuario) {
+        this.fkIdUsuario = fkIdUsuario;
+    }
+
 
     @Override
     public String toString() {
@@ -144,8 +190,13 @@ public class Cliente {
                 ", cidade='" + cidade + '\'' +
                 ", estado='" + estado + '\'' +
                 ", pais='" + pais + '\'' +
-                ", termosDeUso=" + termosDeUso +
+                ", documento='" + documento + '\'' +
+                ", idTipoDocumento='" + idTipoDocumento + '\'' +
                 ", idTipoPessoa=" + idTipoPessoa +
+                ", termosDeUso=" + termosDeUso +
+                ", dataInclusao='" + dataInclusao + '\'' +
+                ", dataAlteracao='" + dataAlteracao + '\'' +
+                ", fkIdUsuario=" + fkIdUsuario +
                 '}';
     }
 }
