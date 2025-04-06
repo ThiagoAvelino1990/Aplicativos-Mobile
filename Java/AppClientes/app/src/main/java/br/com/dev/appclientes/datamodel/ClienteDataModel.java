@@ -44,7 +44,7 @@ public class ClienteDataModel {
                 IDTIPOPESSOA + " TEXT, "+
                 TERMOSDEUSO + " INTEGER, "+
                 DATAINLCUSAO + " TEXT, "+
-                DATAALTERACAO + "TEXT, "+
+                DATAALTERACAO + " TEXT, "+
                 IDUSUARIO + " INTEGER, "+
                 "FOREIGN KEY(" +IDUSUARIO+ ") REFERENCES USUARIO(ID)"+
                 ");";

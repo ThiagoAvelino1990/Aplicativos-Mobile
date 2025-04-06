@@ -31,7 +31,7 @@ public class UsuarioDataModel {
                 SENHA + " TEXT, " +
                 LEMBRARSENHA + " INTEGER, " +
                 DATACINLUSAO + " TEXT, "+
-                DATAALTERACAO + "TEXT)";
+                DATAALTERACAO + " TEXT)";
 
         /**
          * Exemplo de com criar FOREIGN KEY
