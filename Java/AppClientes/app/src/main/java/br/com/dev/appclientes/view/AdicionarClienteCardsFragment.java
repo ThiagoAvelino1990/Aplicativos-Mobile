@@ -52,7 +52,6 @@ public class AdicionarClienteCardsFragment extends Fragment {
 
     UsuarioController usuarioController;
 
-
     //Construtor
     public AdicionarClienteCardsFragment() {
     }
@@ -143,7 +142,7 @@ public class AdicionarClienteCardsFragment extends Fragment {
         clienteORM = new ClienteORM();
         clienteORMController = new ClienteORMController();
 
-        usuarioController = new UsuarioController();
+        usuarioController = new UsuarioController(getContext());
 
     }
 
@@ -360,11 +359,15 @@ public class AdicionarClienteCardsFragment extends Fragment {
 
                 if(isDadosOK){
 
-                    setClienteSQLLite();
+                    if(setClienteSQLLite()){
+                        Toast.makeText(getContext(),"Erro ao salvar os dados SQLLITE...", Toast.LENGTH_LONG).show();
+                    }else if(setClienteORM()){
+                        Toast.makeText(getContext(),"Erro ao salvar os dados ORM...", Toast.LENGTH_LONG).show();
+                    }else{
+                        Toast.makeText(getContext(),"Dados salvos com sucesso...", Toast.LENGTH_LONG).show();
+                    }
 
-                    setClienteORM();
 
-                    Toast.makeText(getContext(),"Dados salvos com sucesso...", Toast.LENGTH_LONG).show();
                 }else{
                     Toast.makeText(getContext(),"Verifique os campos...", Toast.LENGTH_LONG).show();
                 }
@@ -372,7 +375,7 @@ public class AdicionarClienteCardsFragment extends Fragment {
         });
     }
 
-    public void setClienteSQLLite(){
+    public boolean setClienteSQLLite(){
 
 
         try{
@@ -389,15 +392,16 @@ public class AdicionarClienteCardsFragment extends Fragment {
             cliente.setEstado(editEstado.getText().toString());
             cliente.setPais(editPais.getText().toString());
             cliente.setTermosDeUso(chkTermosDeUso.isChecked());
-            cliente.setFkIdUsuario(usuarioController.getIdUsuarioCliente()); //Verificar
 
             clienteController.insertObject(cliente);
+            return true;
         }catch(Exception err){
             Log.e(AppUtil.TAG,"Erro ao salvar o cliente[SQL LITE] "+err.getMessage());
+            return false;
         }
     }
 
-    public void setClienteORM(){
+    public boolean setClienteORM(){
         try{
             /*Inclusão de dados ORM*/
             clienteORM.setNome(editNomeCompleto.getText().toString());
@@ -416,9 +420,10 @@ public class AdicionarClienteCardsFragment extends Fragment {
             clienteORM.toString();
 
             clienteORMController.insertORM(clienteORM);
-
+            return true;
         }catch (Exception err){
             Log.e(AppUtil.TAG,"Erro ao salvar o cliente[ORM] "+err.getMessage());
+            return false;
         }
     }
 

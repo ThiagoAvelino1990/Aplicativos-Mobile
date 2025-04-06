@@ -2,6 +2,7 @@ package br.com.dev.appclientes.datasource;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -23,11 +24,16 @@ public class AppDataBase extends SQLiteOpenHelper {
     public static final String DB_NAME="CLIENTES.SQL";
     public static final int DB_VERSION = 1;
 
+    Context context;
+
     SQLiteDatabase db;
+
+    SharedPreferences prefs;
 
 
     public AppDataBase(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
+        this.context = context;
 
         db = getWritableDatabase();
     }
@@ -355,31 +361,30 @@ public class AppDataBase extends SQLiteOpenHelper {
         return usuarioList;
     }
 
-    public int getIdUsuario(){
+
+
+    public int getIdUsuarioByEmail(String nomeTabela, String email){
         db = getWritableDatabase();
 
         Cursor cursor;
 
-        Usuario usuario;
-
-        int idUsuario = 0;
-
+        int idUsuario = -1;
 
         try{
-            cursor = db.rawQuery("SELECT ID FROM USUARIO",null);
+            cursor = db.rawQuery("SELECT ID FROM "+nomeTabela+" WHERE EMAIL = ?",new String[]{email});
 
             if(cursor.moveToFirst()){
 
                 do{
-                    idUsuario =cursor.getInt(cursor.getColumnIndexOrThrow("ID"));
-
+                    idUsuario = cursor.getInt(cursor.getColumnIndexOrThrow("ID"));
                 }while(cursor.moveToNext());
 
             }
-            Log.i(UsuarioDataModel.TABELA,"Dados encontrados com sucesso [USUARIO]");
+            Log.i(UsuarioDataModel.TABELA,"Dados encontrados com sucesso [getIdUsuarioByEmail]");
         }catch(SQLException e){
-            Log.e(UsuarioDataModel.TABELA,"Erro ao listar usuario por ID [USUARIO] "+e.getMessage());
+            Log.e(UsuarioDataModel.TABELA,"Erro ao listar getIdUsuarioByEmail [getIdUsuarioByEmail] "+e.getMessage());
         }
+
 
         return idUsuario;
     }

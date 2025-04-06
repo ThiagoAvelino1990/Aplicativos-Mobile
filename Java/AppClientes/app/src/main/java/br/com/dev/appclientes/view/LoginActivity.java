@@ -14,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import br.com.dev.appclientes.R;
 import br.com.dev.appclientes.api.AppUtil;
+import br.com.dev.appclientes.controller.UsuarioController;
+import br.com.dev.appclientes.datamodel.UsuarioDataModel;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -23,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     Button btnLogin, btnEsqueceuSenha, btnCadastrar;
 
     SharedPreferences sharedPreferences;
+    UsuarioController usuarioController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +88,13 @@ public class LoginActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences(AppUtil.PREF_APP, MODE_PRIVATE);
         SharedPreferences.Editor dadosSalvos = sharedPreferences.edit();
 
+        int idUser = usuarioController.readObjetcIdByEmail(UsuarioDataModel.TABELA,sharedPreferences.getString("email",""));
+
+
         dadosSalvos.putBoolean("chklembrardados",chkLembrarDados.isChecked());
+        dadosSalvos.putString("idUsuario",String.valueOf(idUser));
+
+
 
         dadosSalvos.apply();
     }
@@ -93,6 +102,8 @@ public class LoginActivity extends AppCompatActivity {
     private boolean validarDadosFormulario() {
 
         sharedPreferences = getSharedPreferences(AppUtil.PREF_APP, MODE_PRIVATE);
+
+        String senhaCriptDigitada = criptografarSenhaDigitada(editLoginSenha.getText().toString());
 
         boolean isDadosOK = true;
 
@@ -102,7 +113,7 @@ public class LoginActivity extends AppCompatActivity {
             txtVerifiqueDados.setVisibility(View.VISIBLE);
             btnEsqueceuSenha.setVisibility(View.VISIBLE);
             isDadosOK = false;
-        }else if (editLoginSenha.getText().toString().isEmpty() || !editLoginSenha.getText().toString().equals(sharedPreferences.getString("senha",""))){
+        }else if (editLoginSenha.getText().toString().isEmpty() || !senhaCriptDigitada.equals(sharedPreferences.getString("senha",""))){
             editLoginSenha.setError("*");
             editLoginSenha.requestFocus();
             txtVerifiqueDados.setVisibility(View.VISIBLE);
@@ -132,5 +143,13 @@ public class LoginActivity extends AppCompatActivity {
         btnCadastrar = findViewById(R.id.btnCadastrar);
 
 
+        usuarioController = new UsuarioController(LoginActivity.this);
+
     }
+
+    private String criptografarSenhaDigitada(String senhaDigitada){
+
+        return AppUtil.criptografarPass(senhaDigitada);
+    }
+
 }

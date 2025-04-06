@@ -39,14 +39,15 @@ public class ClienteDataModel {
                 CIDADE + " TEXT, " +
                 ESTADO + " TEXT, " +
                 PAIS + " TEXT, " +
-                DOCUMENTO + "TEXT, "+
-                IDTIPODOCUMENTO + "TEXT, "+
-                IDTIPOPESSOA + "TEXT, "+
+                DOCUMENTO + " TEXT, "+
+                IDTIPODOCUMENTO + " TEXT, "+
+                IDTIPOPESSOA + " TEXT, "+
                 TERMOSDEUSO + " INTEGER, "+
                 DATAINLCUSAO + " TEXT, "+
                 DATAALTERACAO + "TEXT, "+
-                IDUSUARIO + "INTEGER, "+
-                "FOREIGN KEY("+IDUSUARIO+") REFERENCES USUARIO(ID)";
+                IDUSUARIO + " INTEGER, "+
+                "FOREIGN KEY(" +IDUSUARIO+ ") REFERENCES USUARIO(ID)"+
+                ");";
         /**
          * Exemplo de com criar FOREIGN KEY
          * FOREIGN KEY(fk_coluna) REFERENCES tabela(coluna)

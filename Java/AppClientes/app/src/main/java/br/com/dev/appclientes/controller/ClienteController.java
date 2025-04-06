@@ -1,7 +1,10 @@
 package br.com.dev.appclientes.controller;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,14 +19,20 @@ public class ClienteController extends AppDataBase implements ICRUD<Cliente> {
 
     ContentValues contentValues;
 
+    private Context context;
+
+    SharedPreferences prefs;
+
     public ClienteController(Context context){
         super(context);
+        this.context = context;
     }
 
     @Override
     public boolean insertObject(Cliente obj) {
 
         contentValues = new ContentValues();
+        prefs = context.getSharedPreferences(AppUtil.PREF_APP,MODE_PRIVATE);
 
         contentValues.put(ClienteDataModel.NOME, obj.getNome());
         contentValues.put(ClienteDataModel.TELEFONE, obj.getTelefone());
@@ -49,7 +58,7 @@ public class ClienteController extends AppDataBase implements ICRUD<Cliente> {
         }
         contentValues.put(ClienteDataModel.TERMOSDEUSO, obj.isTermosDeUso());
         contentValues.put(ClienteDataModel.DATAINLCUSAO, AppUtil.getDataFormat());
-        contentValues.put(ClienteDataModel.IDUSUARIO, obj.getFkIdUsuario());
+        contentValues.put(ClienteDataModel.IDUSUARIO, prefs.getString("idUsuario",String.valueOf(-1)));
 
         return insertDados(ClienteDataModel.TABELA,contentValues);
     }

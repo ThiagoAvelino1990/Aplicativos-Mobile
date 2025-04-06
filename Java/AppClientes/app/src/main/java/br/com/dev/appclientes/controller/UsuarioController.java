@@ -2,6 +2,7 @@ package br.com.dev.appclientes.controller;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import java.util.Collections;
 import java.util.List;
@@ -14,7 +15,6 @@ import br.com.dev.appclientes.model.Usuario;
 public class UsuarioController extends AppDataBase implements ICRUD<Usuario> {
 
     ContentValues values;
-
     public UsuarioController(Context context) {
         super(context);
     }
@@ -79,9 +79,9 @@ public class UsuarioController extends AppDataBase implements ICRUD<Usuario> {
         return getUsuarioByEmail(nomeTabela, email);
     }
 
-    public int getIdUsuarioCliente(){
+    public int readObjetcIdByEmail(String nomeTabela, String email){
 
-        return getIdUsuario();
+        return getIdUsuarioByEmail(nomeTabela, email);
     }
 
 }
