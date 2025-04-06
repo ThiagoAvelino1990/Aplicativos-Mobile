@@ -79,4 +79,9 @@ public class UsuarioController extends AppDataBase implements ICRUD<Usuario> {
         return getUsuarioByEmail(nomeTabela, email);
     }
 
+    public int getIdUsuarioCliente(){
+
+        return getIdUsuario();
+    }
+
 }

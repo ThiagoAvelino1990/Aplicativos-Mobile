@@ -48,6 +48,7 @@ public class ClienteController extends AppDataBase implements ICRUD<Cliente> {
             contentValues.put(ClienteDataModel.IDTIPOPESSOA, "ES");
         }
         contentValues.put(ClienteDataModel.TERMOSDEUSO, obj.isTermosDeUso());
+        contentValues.put(ClienteDataModel.DATAINLCUSAO, AppUtil.getDataFormat());
         contentValues.put(ClienteDataModel.IDUSUARIO, obj.getFkIdUsuario());
 
         return insertDados(ClienteDataModel.TABELA,contentValues);
@@ -92,6 +93,7 @@ public class ClienteController extends AppDataBase implements ICRUD<Cliente> {
             contentValues.put(ClienteDataModel.IDTIPOPESSOA, "ES");
         }
         contentValues.put(ClienteDataModel.TERMOSDEUSO, obj.isTermosDeUso());
+        contentValues.put(ClienteDataModel.DATAALTERACAO, AppUtil.getDataFormat());
         contentValues.put(ClienteDataModel.IDUSUARIO, obj.getFkIdUsuario());
 
         return updateDados(ClienteDataModel.TABELA, contentValues);

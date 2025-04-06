@@ -122,7 +122,6 @@ public class CadastroActivity extends AppCompatActivity {
                                 @Override
                                 public void run() {
                                     Toast.makeText(CadastroActivity.this,"Usuário cadastrado com sucesso !",Toast.LENGTH_LONG).show();
-                                    Intent intent;
                                     intent = new Intent(CadastroActivity.this, LoginActivity.class);
                                     startActivity(intent);
                                     finish();

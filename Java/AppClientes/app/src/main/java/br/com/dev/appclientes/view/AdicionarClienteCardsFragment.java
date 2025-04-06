@@ -1,8 +1,10 @@
 package br.com.dev.appclientes.view;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +26,7 @@ import br.com.dev.appclientes.R;
 import br.com.dev.appclientes.api.AppUtil;
 import br.com.dev.appclientes.controller.ClienteController;
 import br.com.dev.appclientes.controller.ClienteORMController;
+import br.com.dev.appclientes.controller.UsuarioController;
 import br.com.dev.appclientes.model.Cliente;
 import br.com.dev.appclientes.model.ClienteORM;
 
@@ -46,6 +49,9 @@ public class AdicionarClienteCardsFragment extends Fragment {
 
     ClienteORM clienteORM;
     ClienteORMController clienteORMController;
+
+    UsuarioController usuarioController;
+
 
     //Construtor
     public AdicionarClienteCardsFragment() {
@@ -136,6 +142,8 @@ public class AdicionarClienteCardsFragment extends Fragment {
 
         clienteORM = new ClienteORM();
         clienteORMController = new ClienteORMController();
+
+        usuarioController = new UsuarioController();
 
     }
 
@@ -312,15 +320,6 @@ public class AdicionarClienteCardsFragment extends Fragment {
                     editLogradouro.requestFocus();
                 }
 
-                /** Removido. Complemento não deve ser um campo obrigatório
-                 *
-
-                 if(TextUtils.isEmpty(editComplemento.getText().toString())){
-                 isDadosOK = false;
-                 editComplemento.setError("*");
-                 editComplemento.requestFocus();
-                 }*/
-
                 if(TextUtils.isEmpty(editNumero.getText().toString())){
                     isDadosOK = false;
                     editNumero.setError("*");
@@ -361,41 +360,9 @@ public class AdicionarClienteCardsFragment extends Fragment {
 
                 if(isDadosOK){
 
-                    cliente.setNome(editNomeCompleto.getText().toString());
-                    cliente.setTelefone(editTelefone.getText().toString());
-                    cliente.setEmail(editEmail.getText().toString());
-                    cliente.setDocumento(editDocumento.getText().toString());
-                    cliente.setCep(Integer.parseInt(editCep.getText().toString()));
-                    cliente.setLogradouro(editLogradouro.getText().toString());
-                    cliente.setComplemento(editComplemento.getText().toString());
-                    cliente.setNumero(editNumero.getText().toString());
-                    cliente.setBairro(editBairro.getText().toString());
-                    cliente.setCidade(editCidade.getText().toString());
-                    cliente.setEstado(editEstado.getText().toString());
-                    cliente.setPais(editPais.getText().toString());
-                    cliente.setTermosDeUso(chkTermosDeUso.isChecked());
+                    setClienteSQLLite();
 
-                    clienteController.insertObject(cliente);
-
-
-                    /*Inclusão de dados ORM*/
-                    clienteORM.setNome(editNomeCompleto.getText().toString());
-                    clienteORM.setTelefone(editTelefone.getText().toString());
-                    clienteORM.setEmail(editEmail.getText().toString());
-                    clienteORM.setCep(Integer.parseInt(editCep.getText().toString()));
-                    clienteORM.setLogradouro(editLogradouro.getText().toString());
-                    clienteORM.setComplemento(editComplemento.getText().toString());
-                    clienteORM.setNumero(editNumero.getText().toString());
-                    clienteORM.setBairro(editBairro.getText().toString());
-                    clienteORM.setCidade(editCidade.getText().toString());
-                    clienteORM.setEstado(editEstado.getText().toString());
-                    clienteORM.setPais(editPais.getText().toString());
-                    clienteORM.setTermosDeUso(chkTermosDeUso.isChecked());
-
-                    clienteORM.toString();
-                    /** Verificar Erro ao salvar os dados
-                     clienteORMController.insertORM(clienteORM);
-                     */
+                    setClienteORM();
 
                     Toast.makeText(getContext(),"Dados salvos com sucesso...", Toast.LENGTH_LONG).show();
                 }else{
@@ -404,4 +371,55 @@ public class AdicionarClienteCardsFragment extends Fragment {
             }
         });
     }
+
+    public void setClienteSQLLite(){
+
+
+        try{
+            cliente.setNome(editNomeCompleto.getText().toString());
+            cliente.setTelefone(editTelefone.getText().toString());
+            cliente.setEmail(editEmail.getText().toString());
+            cliente.setDocumento(editDocumento.getText().toString());
+            cliente.setCep(Integer.parseInt(editCep.getText().toString()));
+            cliente.setLogradouro(editLogradouro.getText().toString());
+            cliente.setComplemento(editComplemento.getText().toString());
+            cliente.setNumero(editNumero.getText().toString());
+            cliente.setBairro(editBairro.getText().toString());
+            cliente.setCidade(editCidade.getText().toString());
+            cliente.setEstado(editEstado.getText().toString());
+            cliente.setPais(editPais.getText().toString());
+            cliente.setTermosDeUso(chkTermosDeUso.isChecked());
+            cliente.setFkIdUsuario(usuarioController.getIdUsuarioCliente()); //Verificar
+
+            clienteController.insertObject(cliente);
+        }catch(Exception err){
+            Log.e(AppUtil.TAG,"Erro ao salvar o cliente[SQL LITE] "+err.getMessage());
+        }
+    }
+
+    public void setClienteORM(){
+        try{
+            /*Inclusão de dados ORM*/
+            clienteORM.setNome(editNomeCompleto.getText().toString());
+            clienteORM.setTelefone(editTelefone.getText().toString());
+            clienteORM.setEmail(editEmail.getText().toString());
+            clienteORM.setCep(Integer.parseInt(editCep.getText().toString()));
+            clienteORM.setLogradouro(editLogradouro.getText().toString());
+            clienteORM.setComplemento(editComplemento.getText().toString());
+            clienteORM.setNumero(editNumero.getText().toString());
+            clienteORM.setBairro(editBairro.getText().toString());
+            clienteORM.setCidade(editCidade.getText().toString());
+            clienteORM.setEstado(editEstado.getText().toString());
+            clienteORM.setPais(editPais.getText().toString());
+            clienteORM.setTermosDeUso(chkTermosDeUso.isChecked());
+
+            clienteORM.toString();
+
+            clienteORMController.insertORM(clienteORM);
+
+        }catch (Exception err){
+            Log.e(AppUtil.TAG,"Erro ao salvar o cliente[ORM] "+err.getMessage());
+        }
+    }
+
 }

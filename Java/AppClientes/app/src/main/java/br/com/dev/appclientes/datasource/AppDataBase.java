@@ -355,5 +355,33 @@ public class AppDataBase extends SQLiteOpenHelper {
         return usuarioList;
     }
 
+    public int getIdUsuario(){
+        db = getWritableDatabase();
+
+        Cursor cursor;
+
+        Usuario usuario;
+
+        int idUsuario = 0;
+
+
+        try{
+            cursor = db.rawQuery("SELECT ID FROM USUARIO",null);
+
+            if(cursor.moveToFirst()){
+
+                do{
+                    idUsuario =cursor.getInt(cursor.getColumnIndexOrThrow("ID"));
+
+                }while(cursor.moveToNext());
+
+            }
+            Log.i(UsuarioDataModel.TABELA,"Dados encontrados com sucesso [USUARIO]");
+        }catch(SQLException e){
+            Log.e(UsuarioDataModel.TABELA,"Erro ao listar usuario por ID [USUARIO] "+e.getMessage());
+        }
+
+        return idUsuario;
+    }
 
 }
