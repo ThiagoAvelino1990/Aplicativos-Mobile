@@ -1,7 +1,9 @@
 package br.com.dev.appclientes.view;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.view.View;
@@ -11,9 +13,14 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.dev.appclientes.R;
 import br.com.dev.appclientes.controller.UsuarioController;
@@ -29,6 +36,8 @@ public class RecuperarSenhaActivity extends AppCompatActivity {
     UsuarioController usuarioController;
 
     SmsManager smsManager;
+
+    String[] permissoesApp = {Manifest.permission.SEND_SMS};
 
 
     @Override
@@ -73,14 +82,41 @@ public class RecuperarSenhaActivity extends AppCompatActivity {
 
     }
 
+    private boolean requestPermissoes() {
+        List<String> permissoesNegadas = new ArrayList<>();
+
+        int verificarPermissoes;
+
+        for(String permissoes : this.permissoesApp){
+
+            verificarPermissoes = ContextCompat.checkSelfPermission(RecuperarSenhaActivity.this,permissoes);
+
+            if(verificarPermissoes != PackageManager.PERMISSION_GRANTED){
+                permissoesNegadas.add(permissoes);
+            }
+        }
+
+        if(!permissoesNegadas.isEmpty()){
+            ActivityCompat.requestPermissions(RecuperarSenhaActivity.this,permissoesNegadas.toArray(new String[permissoesNegadas.size()]), 2025);
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
     private boolean enviarSenha() {
 
         try{
             smsManager.sendTextMessage(editRecuperarSenha.getText().toString(), null, "Nova senha: ",
                     null, null);
-         return true;
+            if(requestPermissoes()){
+                return true;
+            }else{
+                return false;
+            }
         }catch(Exception err){
-        return false;
+            return false;
         }
     }
 
