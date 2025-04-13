@@ -35,6 +35,7 @@ public class UsuarioController extends AppDataBase implements ICRUD<Usuario> {
         values.put(UsuarioDataModel.COMPLEMENTO, obj.getComplemento());
         values.put(UsuarioDataModel.EMAIL, obj.getEmail());
         values.put(UsuarioDataModel.SENHA, obj.getSenha());
+        values.put(UsuarioDataModel.TELEFONE, obj.getTelefone());
         values.put(UsuarioDataModel.DATACINLUSAO, AppUtil.getDataFormat());
 
         if(obj.isChkLembrarSenha()) {
@@ -82,6 +83,11 @@ public class UsuarioController extends AppDataBase implements ICRUD<Usuario> {
     public int readObjetcIdByEmail(String nomeTabela, String email){
 
         return getIdUsuarioByEmail(nomeTabela, email);
+    }
+
+    public int readObjetByTelefone(String nomeTabela, String telefone){
+
+        return getIdUsuarioByTelefone(nomeTabela, telefone);
     }
 
 }

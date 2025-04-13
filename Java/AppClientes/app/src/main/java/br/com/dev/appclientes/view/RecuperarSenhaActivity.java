@@ -40,14 +40,14 @@ public class RecuperarSenhaActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent;
 
-                if(validaEmail()){
+                if(validaTelefone()){
 
-                    Toast.makeText(RecuperarSenhaActivity.this,"Dados enviados para o e-mail informado",Toast.LENGTH_LONG).show();
+                    Toast.makeText(RecuperarSenhaActivity.this,"Dados enviados para o telefone informado",Toast.LENGTH_LONG).show();
 
                     intent = new Intent(RecuperarSenhaActivity.this,LoginActivity.class);
                     startActivity(intent);
                 }else{
-                    Toast.makeText(RecuperarSenhaActivity.this,"Verifique se o e-mail digitado está correto e tente novamente",Toast.LENGTH_LONG).show();
+                    Toast.makeText(RecuperarSenhaActivity.this,"Verifique se o telefone informado está correto e tente novamente",Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -65,12 +65,11 @@ public class RecuperarSenhaActivity extends AppCompatActivity {
 
     }
 
-    private boolean validaEmail() {
+    private boolean validaTelefone() {
         boolean existeCadastro = false;
-        usuario = new Usuario();
-        usuarioController = new UsuarioController(getApplicationContext());
 
-        if(!usuarioController.readObjectByEmail(UsuarioDataModel.TABELA, editRecuperarSenha.getText().toString()).isEmpty()){
+
+        if(usuarioController.readObjetByTelefone(UsuarioDataModel.TABELA, editRecuperarSenha.getText().toString()) > -1 ){
             existeCadastro = true;
         }
 
@@ -83,5 +82,9 @@ public class RecuperarSenhaActivity extends AppCompatActivity {
         editRecuperarSenha = findViewById(R.id.editRecuperarSenha);
         btnRecuperarSenha = findViewById(R.id.btnRecuperarSenha);
         btnVoltar = findViewById(R.id.btnVoltar);
+
+
+        usuario = new Usuario();
+        usuarioController = new UsuarioController(getApplicationContext());
     }
 }

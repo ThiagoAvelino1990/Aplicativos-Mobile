@@ -13,6 +13,7 @@ public class UsuarioDataModel {
     public static final String COMPLEMENTO = "COMPLEMENTO";
     public static final String EMAIL = "EMAIL";
     public static final String SENHA = "SENHA";
+    public static final String TELEFONE = "TELEFONE";
     public static final String LEMBRARSENHA = "LEMBRAR_SENHA";
     public static final String DATACINLUSAO = "DATA_DE_INCLUSAO";
     public static final String DATAALTERACAO = "DATA_DE_ALTERACAO";
@@ -29,6 +30,7 @@ public class UsuarioDataModel {
                 COMPLEMENTO + " TEXT, "+
                 EMAIL + " TEXT, " +
                 SENHA + " TEXT, " +
+                TELEFONE + " TEXT, " +
                 LEMBRARSENHA + " INTEGER, " +
                 DATACINLUSAO + " TEXT, "+
                 DATAALTERACAO + " TEXT)";

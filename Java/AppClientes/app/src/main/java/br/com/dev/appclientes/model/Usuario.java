@@ -6,6 +6,7 @@ public class Usuario {
     private String nome;
     private String email;
     private String senha;
+    private String telefone;
     private boolean chkLembrarSenha;
     private String logradouro;
     private String complemento;
@@ -44,6 +45,14 @@ public class Usuario {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public String getTelefone(){
+        return this.telefone;
+    }
+
+    public void setTelefone(String telefone){
+        this.telefone = telefone;
     }
 
     public boolean isChkLembrarSenha() {
@@ -110,6 +119,7 @@ public class Usuario {
                 ", nome='" + nome + '\'' +
                 ", email='" + email + '\'' +
                 ", senha='" + senha + '\'' +
+                ", telefone='" + telefone + '\'' +
                 ", chkLembrarSenha=" + chkLembrarSenha +
                 ", logradouro='" + logradouro + '\'' +
                 ", complemento='" + complemento + '\'' +

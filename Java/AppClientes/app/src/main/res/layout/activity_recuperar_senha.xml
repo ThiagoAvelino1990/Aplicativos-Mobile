@@ -38,11 +38,11 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/txtLoginEmailRecuperarSenha"
+                    android:id="@+id/txtTelefoneRecuperarSenha"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="@string/txt_LoginInformeEmail"
+                    android:text="@string/txt_RecuperarSenhaTelefone"
                     android:textStyle="bold" />
 
                 <EditText
@@ -52,8 +52,8 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    android:hint="@string/txtExemploEmail"
-                    android:inputType="textEmailAddress"
+                    android:hint="@string/txtExemploTelefone"
+                    android:inputType="phone"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 

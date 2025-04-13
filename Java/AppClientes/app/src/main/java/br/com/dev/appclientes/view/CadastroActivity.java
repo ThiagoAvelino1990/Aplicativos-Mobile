@@ -40,7 +40,7 @@ public class CadastroActivity extends AppCompatActivity {
     ImageView imgAppClienteCadastro;
     SwitchCompat switchPjPF;
     TextView txtViewCadastro, txtCadastroNovoUsuario;
-    EditText editNomeCompleto, editCadastroEmail, editSenha, editConfirmarSenha, editCpfCnpj, editEndereco, editComplementoEnd;
+    EditText editNomeCompleto, editCadastroEmail, editSenha, editConfirmarSenha, editCpfCnpj, editEndereco, editComplementoEnd, editTelefone;
     Button btnConfirmarCadastro, btnCancelar;
 
     SharedPreferences preferencesCadastro;
@@ -189,6 +189,10 @@ public class CadastroActivity extends AppCompatActivity {
             editEndereco.requestFocus();
             editEndereco.setError("*");
             Toast.makeText(CadastroActivity.this,"Endereço deve ser informado",Toast.LENGTH_LONG).show();
+        }else if(editTelefone.getText().toString().isEmpty()){
+            isDadosOK = false;
+            editTelefone.requestFocus();
+            editTelefone.setError("*");
         }else if((editSenha.getText().toString().isEmpty()) || (!editSenha.getText().toString().equals(editConfirmarSenha.getText().toString()))){
             isDadosOK = false;
             editSenha.requestFocus();
@@ -219,6 +223,7 @@ public class CadastroActivity extends AppCompatActivity {
             data.putString("documento",AppUtil.formataDocumento(editCpfCnpj.getText().toString(),editCpfCnpj.getText().toString().length()));
             data.putString("logradouro",editEndereco.getText().toString());
             data.putString("complemento",editComplementoEnd.getText().toString());
+            data.putString("telefone",editTelefone.getText().toString());
             data.putString("email",editCadastroEmail.getText().toString());
             data.putString("senha",AppUtil.criptografarPass(editSenha.getText().toString()));
             data.putString("dataInclusao",AppUtil.getDataFormat());
@@ -249,6 +254,7 @@ public class CadastroActivity extends AppCompatActivity {
         editCpfCnpj = findViewById(R.id.editCpfCnpj);
         editEndereco = findViewById(R.id.editEndereco);
         editComplementoEnd = findViewById(R.id.editComplementoEnd);
+        editTelefone = findViewById(R.id.editTelefone);
 
         btnConfirmarCadastro = findViewById(R.id.btnConfirmarCadastro);
         btnCancelar = findViewById(R.id.btnCancelar);
@@ -261,6 +267,7 @@ public class CadastroActivity extends AppCompatActivity {
         usuario.setCpfCnpj(preferencesCadastro.getString("documento", null));
         usuario.setLogradouro(preferencesCadastro.getString("logradouro", null));
         usuario.setComplemento(preferencesCadastro.getString("complemento", null));
+        usuario.setTelefone(preferencesCadastro.getString("telefone",null));
         usuario.setEmail(preferencesCadastro.getString("email",null));
         usuario.setSenha(preferencesCadastro.getString("senha", null));
         usuario.setDataInclusao(preferencesCadastro.getString("dataInclusao", null));
@@ -281,6 +288,7 @@ public class CadastroActivity extends AppCompatActivity {
         usuarioORM.setCpfCnpj(preferencesCadastro.getString("documento", null));
         usuarioORM.setLogradouro(preferencesCadastro.getString("logradouro", null));
         usuarioORM.setComplemento(preferencesCadastro.getString("complemento", null));
+        usuarioORM.setTelefone(preferencesCadastro.getString("telefone", null));
         usuarioORM.setEmail(preferencesCadastro.getString("email",null));
         usuarioORM.setSenha(preferencesCadastro.getString("senha", null));
         usuarioORM.setDataInclusao(preferencesCadastro.getString("dataInclusao", null));

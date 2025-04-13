@@ -1,5 +1,7 @@
 package br.com.dev.appclientes.model;
 
+import androidx.annotation.RequiresExtension;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
@@ -18,6 +20,8 @@ public class UsuarioORM extends RealmObject {
     @Required
     private String logradouro;
     private String complemento;
+    @Required
+    private String telefone;
     @Required
     private String cpfCnpj;
 
@@ -83,6 +87,14 @@ public class UsuarioORM extends RealmObject {
         this.complemento = complemento;
     }
 
+    public String getTelefone(){
+        return this.telefone;
+    }
+
+    public void setTelefone(String telefone){
+        this.telefone = telefone;
+    }
+
     public String getCpfCnpj() {
         return cpfCnpj;
     }
@@ -125,6 +137,7 @@ public class UsuarioORM extends RealmObject {
                 ", chkLembrarSenha=" + chkLembrarSenha +
                 ", logradouro='" + logradouro + '\'' +
                 ", complemento='" + complemento + '\'' +
+                ", telefone='" + telefone + '\'' +
                 ", cpfCnpj='" + cpfCnpj + '\'' +
                 ", isPessoaFisica=" + isPessoaFisica +
                 ", dataInclusao='" + dataInclusao + '\'' +

@@ -270,6 +270,31 @@ public class AppDataBase extends SQLiteOpenHelper {
         return usuarioList;
     }
 
+    public int getIdUsuarioByTelefone(String nomeTabela, String telefone){
+        db = getWritableDatabase();
+
+        Cursor cursor;
+
+        int idUsuario = -1;
+
+        try{
+            cursor = db.rawQuery("SELECT ID FROM "+nomeTabela+" WHERE TELEFONE = ?",new String[]{telefone});
+
+            if(cursor.moveToFirst()){
+
+                do{
+                    idUsuario = cursor.getInt(cursor.getColumnIndexOrThrow("ID"));
+                }while(cursor.moveToNext());
+
+            }
+            Log.i(UsuarioDataModel.TABELA,"Dados encontrados com sucesso [getIdUsuarioByTelefone]");
+        }catch(SQLException e){
+            Log.e(UsuarioDataModel.TABELA,"Erro ao listar getIdUsuarioByTelefone [getIdUsuarioByTelefone] "+e.getMessage());
+        }
+
+
+        return idUsuario;
+}
 
     public List<Usuario> getUsuarioByID(String nomeTabela, int id){
         db = getWritableDatabase();
