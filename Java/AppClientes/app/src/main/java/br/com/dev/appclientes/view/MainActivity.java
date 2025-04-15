@@ -185,11 +185,13 @@ public class MainActivity extends AppCompatActivity
                     .setAnimation(Animation.POP)
                     .isCancellable(true)
                     .setIcon(R.mipmap.ic_launcher_round, View.VISIBLE)
-                    .onPositiveClicked(dialog -> finish())
+                    .onPositiveClicked(dialog -> {
+                        finish();
+                    })
                     .onNegativeClicked(dialog -> closeContextMenu())
                     .build()
                     .show();
-            finish();
+
             return true;
         }
 
