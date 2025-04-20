@@ -16,6 +16,7 @@ import br.com.dev.appclientes.R;
 import br.com.dev.appclientes.api.AppUtil;
 import br.com.dev.appclientes.controller.UsuarioController;
 import br.com.dev.appclientes.datamodel.UsuarioDataModel;
+import br.com.dev.appclientes.model.Usuario;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -25,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     Button btnLogin, btnEsqueceuSenha, btnCadastrar;
 
     SharedPreferences sharedPreferences;
+    Usuario usuario;
     UsuarioController usuarioController;
 
     @Override
@@ -37,6 +39,13 @@ public class LoginActivity extends AppCompatActivity {
 
         btnEsqueceuSenha.setVisibility(View.VISIBLE);
 
+        btnLogin(btnLogin);
+        btnCadastrar(btnCadastrar);
+        btnEsqueceuSenha(btnEsqueceuSenha);
+
+    }
+
+    public void btnLogin(View view){
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,17 +60,21 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+    }
 
+    public void btnCadastrar(View view){
         btnCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                    Intent intent = new Intent(LoginActivity.this, CadastroActivity.class);
-                    startActivity(intent);
+                Intent intent = new Intent(LoginActivity.this, CadastroActivity.class);
+                startActivity(intent);
                 finish();
             }
         });
+    }
 
+    public void btnEsqueceuSenha(View view){
         btnEsqueceuSenha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,8 +83,6 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-
     }
 
     private void getDataSharedPreferences() {
@@ -142,7 +153,7 @@ public class LoginActivity extends AppCompatActivity {
         btnEsqueceuSenha = findViewById(R.id.btnEsqueceuSenha);
         btnCadastrar = findViewById(R.id.btnCadastrar);
 
-
+        usuario = new Usuario();
         usuarioController = new UsuarioController(LoginActivity.this);
 
     }
@@ -151,5 +162,14 @@ public class LoginActivity extends AppCompatActivity {
 
         return AppUtil.criptografarPass(senhaDigitada);
     }
+
+    /**
+     * TODO :Criar método mudar a senha
+     */
+    public void validaTrocarSenha(){
+
+
+    }
+
 
 }

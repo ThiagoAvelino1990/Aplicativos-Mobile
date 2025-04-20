@@ -12,6 +12,7 @@ public class Usuario {
     private String complemento;
     private String cpfCnpj;
     private boolean isPessoaFisica;
+    private String atualizaSenha;
     private String dataInclusao;
     private String dataAlteracao;
 
@@ -47,11 +48,11 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public String getTelefone(){
-        return this.telefone;
+    public String getTelefone() {
+        return telefone;
     }
 
-    public void setTelefone(String telefone){
+    public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
 
@@ -62,7 +63,6 @@ public class Usuario {
     public void setChkLembrarSenha(boolean chkLembrarSenha) {
         this.chkLembrarSenha = chkLembrarSenha;
     }
-
 
     public String getLogradouro() {
         return logradouro;
@@ -96,6 +96,14 @@ public class Usuario {
         isPessoaFisica = pessoaFisica;
     }
 
+    public String getAtualizaSenha() {
+        return atualizaSenha;
+    }
+
+    public void setAtualizaSenha(String atualizaSenha) {
+        this.atualizaSenha = atualizaSenha;
+    }
+
     public String getDataInclusao() {
         return dataInclusao;
     }
@@ -125,6 +133,7 @@ public class Usuario {
                 ", complemento='" + complemento + '\'' +
                 ", cpfCnpj='" + cpfCnpj + '\'' +
                 ", isPessoaFisica=" + isPessoaFisica +
+                ", atualizaSenha='" + atualizaSenha + '\'' +
                 ", dataInclusao='" + dataInclusao + '\'' +
                 ", dataAlteracao='" + dataAlteracao + '\'' +
                 '}';

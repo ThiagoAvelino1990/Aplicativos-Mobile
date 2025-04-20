@@ -60,7 +60,9 @@ public class UsuarioController extends AppDataBase implements ICRUD<Usuario> {
         values = new ContentValues();
 
         values.put(UsuarioDataModel.SENHA, obj.getSenha());
+        values.put(UsuarioDataModel.ATUALIZARSENHA, obj.getAtualizaSenha());
         values.put(UsuarioDataModel.LEMBRARSENHA, obj.isChkLembrarSenha());
+        values.put(UsuarioDataModel.DATAALTERACAO, AppUtil.getDataFormat());
 
         return updateDados(UsuarioDataModel.TABELA, values);
     }

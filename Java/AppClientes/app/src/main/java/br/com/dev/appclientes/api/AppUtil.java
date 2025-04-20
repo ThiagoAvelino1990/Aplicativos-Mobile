@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -222,5 +223,20 @@ public class AppUtil {
 
         }
         return retorno;
+    }
+
+    public static String radomPass(){
+
+        String characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVXWYZabcdefghijklmnopqrstuvxwyz!@#$%¨&*()-=+/";
+        SecureRandom secureRandom = new SecureRandom();
+        StringBuilder newpass = new StringBuilder();
+
+        for(int i = 0; i <= 15; i++){
+            int indx = secureRandom.nextInt(characters.length());
+            newpass.append(characters.charAt(indx));
+        }
+
+        return newpass.toString();
+
     }
 }

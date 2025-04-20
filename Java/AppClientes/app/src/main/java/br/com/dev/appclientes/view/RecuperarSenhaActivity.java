@@ -2,10 +2,10 @@ package br.com.dev.appclientes.view;
 
 import android.Manifest;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,14 +15,13 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.dev.appclientes.R;
+import br.com.dev.appclientes.api.AppUtil;
 import br.com.dev.appclientes.controller.UsuarioController;
 import br.com.dev.appclientes.datamodel.UsuarioDataModel;
 import br.com.dev.appclientes.model.Usuario;
@@ -48,37 +47,10 @@ public class RecuperarSenhaActivity extends AppCompatActivity {
 
         initComponentesLayout();
 
-        btnRecuperarSenha.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent;
+        btnVoltarMain(btnVoltar);
 
-                if(validaTelefone()){
-                    if(enviarSenha()){
-                        Toast.makeText(RecuperarSenhaActivity.this,"Dados enviados para o telefone informado",Toast.LENGTH_LONG).show();
+        btnRecuperarSenha(btnRecuperarSenha);
 
-                        intent = new Intent(RecuperarSenhaActivity.this,LoginActivity.class);
-                        startActivity(intent);
-                    }else{
-                        Toast.makeText(RecuperarSenhaActivity.this,"[ERRO] - Falha ao enviar a senha",Toast.LENGTH_LONG).show();
-                    }
-
-                }else{
-                    Toast.makeText(RecuperarSenhaActivity.this,"Verifique se o telefone informado está correto e tente novamente",Toast.LENGTH_LONG).show();
-                }
-
-            }
-        });
-
-        btnVoltar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent;
-                intent = new Intent(RecuperarSenhaActivity.this, LoginActivity.class);
-                startActivity(intent);
-
-            }
-        });
 
     }
 
@@ -141,5 +113,82 @@ public class RecuperarSenhaActivity extends AppCompatActivity {
 
         usuario = new Usuario();
         usuarioController = new UsuarioController(getApplicationContext());
+    }
+
+    public void btnVoltarMain(View view) {
+        btnVoltar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent;
+                intent = new Intent(RecuperarSenhaActivity.this, LoginActivity.class);
+                startActivity(intent);
+
+            }
+        });
+    }
+
+    public void btnRecuperarSenha(View view){
+        btnRecuperarSenha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent;
+                String novaSenha = "";
+
+                if(validaEmailInformado(editRecuperarSenha.getText().toString())){
+
+                    novaSenha = AppUtil.radomPass();
+
+                    if(atualizarSenha(novaSenha)){
+                        intent = new Intent(Intent.ACTION_SEND);
+
+                        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{editRecuperarSenha.getText().toString()}); // Destinatário
+
+                        intent.putExtra(Intent.EXTRA_SUBJECT, "Recuperação de senha - AppClientes"); // Assunto
+
+                        intent.putExtra(Intent.EXTRA_TEXT,"Nova senha gerada: "+ novaSenha); //Corpo do e-mail
+
+                        intent.setType("message/rfc822"); //Estilo de mensagem
+
+                        startActivity(Intent.createChooser(intent,"Seleciona aplicativo para enviar o e-mail"));
+                    }else{
+                        Toast.makeText(RecuperarSenhaActivity.this,"Erro ao atualizar senha. \nPor favor tente mais tarde....",Toast.LENGTH_LONG).show();
+                    }
+
+
+                }else{
+                    editRecuperarSenha.setError("*");
+                    editRecuperarSenha.requestFocus();
+                    Toast.makeText(RecuperarSenhaActivity.this,"Favor informar um email válido",Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
+    private boolean validaEmailInformado(String emailInformado) {
+
+        int userID = usuarioController.readObjetcIdByEmail(emailInformado, UsuarioDataModel.TABELA);
+
+        if( userID > -1){
+
+            usuario.setId(userID);
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean atualizarSenha(String novaSenha){
+
+        usuario.setSenha(AppUtil.criptografarPass(novaSenha));
+        usuario.setAtualizaSenha("S");
+
+        try{
+            usuarioController.updateObject(usuario);
+            return true;
+        }catch(Exception err){
+            Log.e(AppUtil.TAG,"Erro ao atualizar o usuário. "+err.getMessage());
+            return false;
+        }
+
     }
 }

@@ -111,6 +111,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
+                android:onClick="btnLogin"
                 android:text="@string/txt_btnLogin" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -119,6 +120,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/txtEsqueciSenha"
+                android:onClick="btnEsqueceuSenha"
                 android:visibility="invisible" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -135,6 +137,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
+                android:onClick="btnCadastrar"
                 android:text="@string/txtBtnCadastre_se" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
