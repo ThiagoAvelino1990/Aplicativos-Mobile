@@ -4,6 +4,9 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
+/**
+ * TODO: Colocar os novos campos conforme classe SQLLite
+ */
 public class ClienteORM extends RealmObject {
 
     @PrimaryKey

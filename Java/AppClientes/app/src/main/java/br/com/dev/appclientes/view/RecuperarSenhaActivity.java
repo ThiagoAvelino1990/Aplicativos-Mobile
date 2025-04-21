@@ -122,6 +122,7 @@ public class RecuperarSenhaActivity extends AppCompatActivity {
                 Intent intent;
                 intent = new Intent(RecuperarSenhaActivity.this, LoginActivity.class);
                 startActivity(intent);
+                finish();
 
             }
         });
@@ -150,6 +151,7 @@ public class RecuperarSenhaActivity extends AppCompatActivity {
                         intent.setType("message/rfc822"); //Estilo de mensagem
 
                         startActivity(Intent.createChooser(intent,"Seleciona aplicativo para enviar o e-mail"));
+                        finish();
                     }else{
                         Toast.makeText(RecuperarSenhaActivity.this,"Erro ao atualizar senha. \nPor favor tente mais tarde....",Toast.LENGTH_LONG).show();
                     }
@@ -166,7 +168,7 @@ public class RecuperarSenhaActivity extends AppCompatActivity {
 
     private boolean validaEmailInformado(String emailInformado) {
 
-        int userID = usuarioController.readObjetcIdByEmail(emailInformado, UsuarioDataModel.TABELA);
+        int userID = usuarioController.readObjetcIdByEmail(UsuarioDataModel.TABELA, emailInformado);
 
         if( userID > -1){
 

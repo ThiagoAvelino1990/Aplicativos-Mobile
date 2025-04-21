@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -57,6 +58,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent;
+
+                validarTrocaDeSenha();
 
                 if(validarDadosFormulario()) {
 
@@ -170,9 +173,6 @@ public class LoginActivity extends AppCompatActivity {
         return AppUtil.criptografarPass(senhaDigitada);
     }
 
-    /**
-     * TODO :Criar método mudar a senha
-     */
     public void validarTrocaDeSenha(){
         sharedPreferences = getSharedPreferences(AppUtil.PREF_APP, MODE_PRIVATE);
 
@@ -182,12 +182,19 @@ public class LoginActivity extends AppCompatActivity {
 
         for(Usuario usuario : usuarioLista){
             if(usuario.getAtualizaSenha().equals("S")){
-
+                atualizarSenha();
             }
         }
     }
 
+    /**
+     * TODO: Identificar erro ao trocar nova senha
+     * Não está funcionando
+     */
     public void atualizarSenha(){
+        sharedPreferences = getSharedPreferences(AppUtil.PREF_APP, MODE_PRIVATE);
+        SharedPreferences.Editor dadosSalvos = sharedPreferences.edit();
+
         AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
         builder.setTitle("Atualizar Senha");
 
@@ -215,13 +222,30 @@ public class LoginActivity extends AppCompatActivity {
            String senhaNova = novaSenha.getText().toString();
            String senhaConfirmar = confirmarSenha.getText().toString();
 
-            /**
-             * TODO: Criar lógica para salvar a senha
-             */
+
             if(senhaNova.isEmpty() || (!senhaNova.equals(senhaConfirmar))){
                Toast.makeText(LoginActivity.this,"As senhas não ocnferem",Toast.LENGTH_LONG).show();
            }else{
-               Toast.makeText(LoginActivity.this,"Senha atualizada com sucesso",Toast.LENGTH_LONG).show();
+                try{
+                    dadosSalvos.putString("senha",AppUtil.criptografarPass(senhaConfirmar));
+                    editLoginSenha.setText(sharedPreferences.getString("senha",null));
+
+
+                    usuario.setId(Integer.parseInt(sharedPreferences.getString("idUsuario",String.valueOf(-1))));
+                    usuario.setEmail(sharedPreferences.getString("email",null));
+                    usuario.setSenha(sharedPreferences.getString("senha",null));
+
+
+
+                    usuarioController.insertObject(usuario);
+
+
+
+                    Toast.makeText(LoginActivity.this,"Senha atualizada com sucesso",Toast.LENGTH_LONG).show();
+                }catch(Exception err){
+                    Log.e(AppUtil.TAG,"Erro ao atualizar nova senha "+err.getMessage());
+                }
+
            }
 
            AlertDialog alertDialog = builder.create();

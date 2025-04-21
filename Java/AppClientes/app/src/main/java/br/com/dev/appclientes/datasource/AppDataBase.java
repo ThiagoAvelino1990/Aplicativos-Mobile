@@ -19,6 +19,9 @@ import br.com.dev.appclientes.datamodel.UsuarioDataModel;
 import br.com.dev.appclientes.model.Cliente;
 import br.com.dev.appclientes.model.Usuario;
 
+/**
+ * TODO:Revisar a classe do SQLLITE em relação aos retornos dos métodos e Log's
+ */
 public class AppDataBase extends SQLiteOpenHelper {
 
     public static final String DB_NAME="CLIENTES.SQL";
@@ -306,7 +309,7 @@ public class AppDataBase extends SQLiteOpenHelper {
         List<Usuario> usuarioList = new ArrayList<>();
 
         try{
-            cursor = db.rawQuery("SELECT * FROM "+nomeTabela+" WHERE EMAIL = ?",new String[]{String.valueOf(id)});
+            cursor = db.rawQuery("SELECT * FROM "+nomeTabela+" WHERE ID = ?",new String[]{String.valueOf(id)});
 
             if(cursor.moveToFirst()){
 
@@ -325,13 +328,16 @@ public class AppDataBase extends SQLiteOpenHelper {
                         usuario.setChkLembrarSenha(true);
                     }
 
+                    usuario.setAtualizaSenha(cursor.getString(cursor.getColumnIndexOrThrow("ATUALIZAR_SENHA")));
+
 
                     usuarioList.add(usuario);
 
                 }while(cursor.moveToNext());
 
+                Log.i(UsuarioDataModel.TABELA,"Dados encontrados com sucesso [USUARIO]");
             }
-            Log.i(UsuarioDataModel.TABELA,"Dados encontrados com sucesso [USUARIO]");
+
         }catch(SQLException e){
             Log.e(UsuarioDataModel.TABELA,"Erro ao listar usuario por ID [USUARIO] "+e.getMessage());
         }

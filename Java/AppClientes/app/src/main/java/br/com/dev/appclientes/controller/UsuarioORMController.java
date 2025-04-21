@@ -7,6 +7,10 @@ import br.com.dev.appclientes.model.UsuarioORM;
 import io.realm.Realm;
 import io.realm.exceptions.RealmException;
 
+/**
+ * TODO: Colocar as alterações corretas para o processo ORM também.
+ * Alterações de senhas, validações e busca por ID'S dos usuários
+ */
 public class UsuarioORMController {
 
     public void insertORM(UsuarioORM obj){
