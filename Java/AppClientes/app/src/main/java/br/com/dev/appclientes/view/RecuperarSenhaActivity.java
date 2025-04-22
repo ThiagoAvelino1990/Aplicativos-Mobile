@@ -2,6 +2,7 @@ package br.com.dev.appclientes.view;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.telephony.SmsManager;
@@ -38,6 +39,7 @@ public class RecuperarSenhaActivity extends AppCompatActivity {
 
     String[] permissoesApp = {Manifest.permission.SEND_SMS};
 
+    SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,12 +169,19 @@ public class RecuperarSenhaActivity extends AppCompatActivity {
     }
 
     private boolean validaEmailInformado(String emailInformado) {
+        preferences = getSharedPreferences(AppUtil.PREF_APP, MODE_PRIVATE);
+        SharedPreferences.Editor dadosPreferences = preferences.edit();
+
 
         int userID = usuarioController.readObjetcIdByEmail(UsuarioDataModel.TABELA, emailInformado);
 
         if( userID > -1){
 
             usuario.setId(userID);
+            dadosPreferences.putString("idUsuario",String.valueOf(userID));
+            dadosPreferences.apply();
+
+
             return true;
         }
 

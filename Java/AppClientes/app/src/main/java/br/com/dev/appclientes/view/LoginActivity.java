@@ -58,7 +58,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent;
-                Log.i(AppUtil.TAG,"1- Entrou aqui");
                 validarTrocaDeSenha();
 
                 if(validarDadosFormulario()) {
@@ -182,24 +181,17 @@ public class LoginActivity extends AppCompatActivity {
 
         for(Usuario usuario : usuarioLista){
             if(usuario.getAtualizaSenha().equals("S")){
-                Log.i(AppUtil.TAG,"2- Entrou aqui");
                 atualizarSenha();
             }
         }
     }
 
-    /**
-     * TODO: Identificar erro ao trocar nova senha
-     * Não está funcionando
-     */
     public void atualizarSenha(){
         sharedPreferences = getSharedPreferences(AppUtil.PREF_APP, MODE_PRIVATE);
         SharedPreferences.Editor dadosSalvos = sharedPreferences.edit();
-        Log.i(AppUtil.TAG,"3- Entrou aqui");
 
         AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
         builder.setTitle("Atualizar Senha");
-        Log.i(AppUtil.TAG,"4- Entrou aqui");
 
 
         //Criando o layout
@@ -224,7 +216,6 @@ public class LoginActivity extends AppCompatActivity {
         builder.setPositiveButton("OK", (dialog, which) -> {
             String senhaNova = novaSenha.getText().toString();
             String senhaConfirmar = confirmarSenha.getText().toString();
-            Log.i(AppUtil.TAG,"7- Entrou aqui");
 
             if(senhaNova.isEmpty() || (!senhaNova.equals(senhaConfirmar))){
                 Toast.makeText(LoginActivity.this,"As senhas não conferem",Toast.LENGTH_LONG).show();
@@ -239,11 +230,15 @@ public class LoginActivity extends AppCompatActivity {
                     usuario.setId(Integer.parseInt(sharedPreferences.getString("idUsuario",String.valueOf(-1))));
                     usuario.setEmail(sharedPreferences.getString("email",null));
                     usuario.setSenha(sharedPreferences.getString("senha",null));
-                    //usuario.setAtualizaSenha("N");
+                    usuario.setAtualizaSenha("N");
 
                     usuarioController.insertObject(usuario);
 
+                    //Limpar o campo de senha
+                    txtLoginSenha.setText("");
+
                     Toast.makeText(LoginActivity.this,"Senha atualizada com sucesso",Toast.LENGTH_LONG).show();
+
 
                 }catch(Exception err){
                     Log.e(AppUtil.TAG,"Erro ao atualizar nova senha "+err.getMessage());
@@ -252,8 +247,9 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        builder.setNegativeButton("Cancelar",(dialog, which) -> dialog.dismiss());
+
         AlertDialog alertDialog = builder.create();
-        Log.i(AppUtil.TAG,"5- Entrou aqui");
 
         alertDialog.show();
     }

@@ -231,7 +231,7 @@ public class AppUtil {
         SecureRandom secureRandom = new SecureRandom();
         StringBuilder newpass = new StringBuilder();
 
-        for(int i = 0; i <= 15; i++){
+        for(int i = 0; i <= 3; i++){
             int indx = secureRandom.nextInt(characters.length());
             newpass.append(characters.charAt(indx));
         }
