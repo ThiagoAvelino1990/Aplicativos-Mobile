@@ -53,14 +53,14 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public void btnLogin(View view){
+    public void btnLogin(View view) {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent;
                 validarTrocaDeSenha();
 
-                if(validarDadosFormulario()) {
+                if (validarDadosFormulario()) {
 
                     intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
@@ -71,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void btnCadastrar(View view){
+    public void btnCadastrar(View view) {
         btnCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void btnEsqueceuSenha(View view){
+    public void btnEsqueceuSenha(View view) {
         btnEsqueceuSenha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,9 +97,9 @@ public class LoginActivity extends AppCompatActivity {
     private void getDataSharedPreferences() {
         sharedPreferences = getSharedPreferences(AppUtil.PREF_APP, MODE_PRIVATE);
 
-        editLoginEmail.setText(sharedPreferences.getString("email",""));
-        editLoginSenha.setText(sharedPreferences.getString("senha",""));
-        chkLembrarDados.setChecked(sharedPreferences.getBoolean("chklembrardados",false));
+        editLoginEmail.setText(sharedPreferences.getString("email", ""));
+        editLoginSenha.setText(sharedPreferences.getString("senha", ""));
+        chkLembrarDados.setChecked(sharedPreferences.getBoolean("chklembrardados", false));
 
     }
 
@@ -108,12 +108,11 @@ public class LoginActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences(AppUtil.PREF_APP, MODE_PRIVATE);
         SharedPreferences.Editor dadosSalvos = sharedPreferences.edit();
 
-        int idUser = usuarioController.readObjetcIdByEmail(UsuarioDataModel.TABELA,sharedPreferences.getString("email",""));
+        int idUser = usuarioController.readObjetcIdByEmail(UsuarioDataModel.TABELA, sharedPreferences.getString("email", ""));
 
 
-        dadosSalvos.putBoolean("chklembrardados",chkLembrarDados.isChecked());
-        dadosSalvos.putString("idUsuario",String.valueOf(idUser));
-
+        dadosSalvos.putBoolean("chklembrardados", chkLembrarDados.isChecked());
+        dadosSalvos.putString("idUsuario", String.valueOf(idUser));
 
 
         dadosSalvos.apply();
@@ -127,19 +126,19 @@ public class LoginActivity extends AppCompatActivity {
 
         boolean isDadosOK = true;
 
-        if(editLoginEmail.getText().toString().isEmpty() || !editLoginEmail.getText().toString().equals(sharedPreferences.getString("email",""))){
+        if (editLoginEmail.getText().toString().isEmpty() || !editLoginEmail.getText().toString().equals(sharedPreferences.getString("email", ""))) {
             editLoginEmail.setError("*");
             editLoginEmail.requestFocus();
             txtVerifiqueDados.setVisibility(View.VISIBLE);
             btnEsqueceuSenha.setVisibility(View.VISIBLE);
             isDadosOK = false;
-        }else if (editLoginSenha.getText().toString().isEmpty() || !senhaCriptDigitada.equals(sharedPreferences.getString("senha",""))){
+        } else if (editLoginSenha.getText().toString().isEmpty() || !senhaCriptDigitada.equals(sharedPreferences.getString("senha", ""))) {
             editLoginSenha.setError("*");
             editLoginSenha.requestFocus();
             txtVerifiqueDados.setVisibility(View.VISIBLE);
             btnEsqueceuSenha.setVisibility(View.VISIBLE);
             isDadosOK = false;
-        }else{
+        } else {
             saveDataSharedPreferences();
         }
 
@@ -167,26 +166,26 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private String criptografarSenhaDigitada(String senhaDigitada){
+    private String criptografarSenhaDigitada(String senhaDigitada) {
 
         return AppUtil.criptografarPass(senhaDigitada);
     }
 
-    public void validarTrocaDeSenha(){
+    public void validarTrocaDeSenha() {
         sharedPreferences = getSharedPreferences(AppUtil.PREF_APP, MODE_PRIVATE);
 
         List<Usuario> usuarioLista = new ArrayList<>();
 
-        usuarioLista = usuarioController.readObjectById(Integer.parseInt(sharedPreferences.getString("idUsuario",String.valueOf(-1))));
+        usuarioLista = usuarioController.readObjectById(Integer.parseInt(sharedPreferences.getString("idUsuario", String.valueOf(-1))));
 
-        for(Usuario usuario : usuarioLista){
-            if(usuario.getAtualizaSenha().equals("S")){
+        for (Usuario usuario : usuarioLista) {
+            if (usuario.getAtualizaSenha().equals("S")) {
                 atualizarSenha();
             }
         }
     }
 
-    public void atualizarSenha(){
+    public void atualizarSenha() {
         sharedPreferences = getSharedPreferences(AppUtil.PREF_APP, MODE_PRIVATE);
         SharedPreferences.Editor dadosSalvos = sharedPreferences.edit();
 
@@ -197,7 +196,7 @@ public class LoginActivity extends AppCompatActivity {
         //Criando o layout
         LinearLayout linearLayout = new LinearLayout(LoginActivity.this);
         linearLayout.setOrientation(LinearLayout.VERTICAL);
-        linearLayout.setPadding(50, 40,50,10);
+        linearLayout.setPadding(50, 40, 50, 10);
 
         //Campos para senha
         final EditText novaSenha = new EditText(LoginActivity.this);
@@ -217,19 +216,19 @@ public class LoginActivity extends AppCompatActivity {
             String senhaNova = novaSenha.getText().toString();
             String senhaConfirmar = confirmarSenha.getText().toString();
 
-            if(senhaNova.isEmpty() || (!senhaNova.equals(senhaConfirmar))){
-                Toast.makeText(LoginActivity.this,"As senhas não conferem",Toast.LENGTH_LONG).show();
-            }else{
-                try{
-                    dadosSalvos.putString("senha",AppUtil.criptografarPass(senhaConfirmar));
+            if (senhaNova.isEmpty() || (!senhaNova.equals(senhaConfirmar))) {
+                Toast.makeText(LoginActivity.this, "As senhas não conferem", Toast.LENGTH_LONG).show();
+            } else {
+                try {
+                    dadosSalvos.putString("senha", AppUtil.criptografarPass(senhaConfirmar));
                     dadosSalvos.apply();
 
-                    editLoginSenha.setText(sharedPreferences.getString("senha",null));
+                    editLoginSenha.setText(sharedPreferences.getString("senha", null));
 
 
-                    usuario.setId(Integer.parseInt(sharedPreferences.getString("idUsuario",String.valueOf(-1))));
-                    usuario.setEmail(sharedPreferences.getString("email",null));
-                    usuario.setSenha(sharedPreferences.getString("senha",null));
+                    usuario.setId(Integer.parseInt(sharedPreferences.getString("idUsuario", String.valueOf(-1))));
+                    usuario.setEmail(sharedPreferences.getString("email", null));
+                    usuario.setSenha(sharedPreferences.getString("senha", null));
                     usuario.setAtualizaSenha("N");
 
                     usuarioController.insertObject(usuario);
@@ -237,23 +236,22 @@ public class LoginActivity extends AppCompatActivity {
                     //Limpar o campo de senha
                     txtLoginSenha.setText("");
 
-                    Toast.makeText(LoginActivity.this,"Senha atualizada com sucesso",Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, "Senha atualizada com sucesso", Toast.LENGTH_LONG).show();
 
 
-                }catch(Exception err){
-                    Log.e(AppUtil.TAG,"Erro ao atualizar nova senha "+err.getMessage());
+                } catch (Exception err) {
+                    Log.e(AppUtil.TAG, "Erro ao atualizar nova senha " + err.getMessage());
                 }
 
             }
         });
 
-        builder.setNegativeButton("Cancelar",(dialog, which) -> dialog.dismiss());
+        builder.setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss());
 
         AlertDialog alertDialog = builder.create();
 
         alertDialog.show();
     }
-
 
 
 }

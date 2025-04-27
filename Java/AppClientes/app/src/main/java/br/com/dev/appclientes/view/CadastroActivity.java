@@ -68,7 +68,7 @@ public class CadastroActivity extends AppCompatActivity {
         controllerORM = new UsuarioORMController();
 
         switchPjPF.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if(switchPjPF.isChecked()){
+            if (switchPjPF.isChecked()) {
                 switchPjPF.setText("Pessoa Jurídica");
                 editNomeCompleto.setHint("Razão Social");
                 editCpfCnpj.setHint("CNPJ");
@@ -79,7 +79,7 @@ public class CadastroActivity extends AppCompatActivity {
                 editCadastroEmail.setText("");
                 editSenha.setText("");
                 editConfirmarSenha.setText("");
-            }else{
+            } else {
                 switchPjPF.setText("Pessoa Física");
                 editNomeCompleto.setHint("Nome Completo");
                 editCpfCnpj.setHint("CPF");
@@ -112,25 +112,27 @@ public class CadastroActivity extends AppCompatActivity {
                         .isCancellable(true)
                         .setIcon(R.mipmap.ic_launcher_round, View.VISIBLE)
                         .onPositiveClicked(dialog -> {
-                            if(validarDados()){
+                            if (validarDados()) {
 
-                            setDataPreferences();
-                            setUsuarioSQL();
-                            setUsuarioORM();
+                                setDataPreferences();
+                                setUsuarioSQL();
+                                setUsuarioORM();
 
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Toast.makeText(CadastroActivity.this,"Usuário cadastrado com sucesso !",Toast.LENGTH_LONG).show();
-                                    intent = new Intent(CadastroActivity.this, LoginActivity.class);
-                                    startActivity(intent);
-                                    finish();
-                                }
-                            },AppUtil.TIME_CADASTRO);
-                        }})
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(CadastroActivity.this, "Usuário cadastrado com sucesso !", Toast.LENGTH_LONG).show();
+                                        intent = new Intent(CadastroActivity.this, LoginActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                }, AppUtil.TIME_CADASTRO);
+                            }
+                        })
                         .onNegativeClicked(dialog -> {
                             Toast.makeText(CadastroActivity.this, "Desculpa, o cadastro só pode ser concluído aceitando os termos", Toast.LENGTH_SHORT).show();
-                            closeContextMenu();})
+                            closeContextMenu();
+                        })
                         .build()
                         .show();
             }
@@ -153,10 +155,12 @@ public class CadastroActivity extends AppCompatActivity {
                         .setAnimation(Animation.POP)
                         .isCancellable(true)
                         .setIcon(R.mipmap.ic_launcher_round, View.VISIBLE)
-                        .onPositiveClicked(dialog -> {Toast.makeText(CadastroActivity.this, "Operação Cancelada", Toast.LENGTH_SHORT).show();
+                        .onPositiveClicked(dialog -> {
+                            Toast.makeText(CadastroActivity.this, "Operação Cancelada", Toast.LENGTH_SHORT).show();
                             intent = new Intent(CadastroActivity.this, LoginActivity.class);
                             startActivity(intent);
-                            finish();})
+                            finish();
+                        })
                         .onNegativeClicked(dialog -> closeContextMenu())
                         .build()
                         .show();
@@ -170,30 +174,30 @@ public class CadastroActivity extends AppCompatActivity {
 
         boolean isDadosOK = true;
 
-        if(editNomeCompleto.getText().toString().isEmpty()){
+        if (editNomeCompleto.getText().toString().isEmpty()) {
             isDadosOK = false;
             editNomeCompleto.requestFocus();
             editNomeCompleto.setError("*");
-            Toast.makeText(CadastroActivity.this,"* Nome não pode ser vazio",Toast.LENGTH_LONG).show();
-        }else if(editCadastroEmail.getText().toString().isEmpty()){
+            Toast.makeText(CadastroActivity.this, "* Nome não pode ser vazio", Toast.LENGTH_LONG).show();
+        } else if (editCadastroEmail.getText().toString().isEmpty()) {
             isDadosOK = false;
             editCadastroEmail.requestFocus();
             editCadastroEmail.setError("*");
-            Toast.makeText(CadastroActivity.this,"* Email não pode ser vazio",Toast.LENGTH_LONG).show();
-        }else if (editCpfCnpj.getText().toString().isEmpty() || !AppUtil.validaCnpjCpf(editCpfCnpj.getText().toString())) {
+            Toast.makeText(CadastroActivity.this, "* Email não pode ser vazio", Toast.LENGTH_LONG).show();
+        } else if (editCpfCnpj.getText().toString().isEmpty() || !AppUtil.validaCnpjCpf(editCpfCnpj.getText().toString())) {
             isDadosOK = false;
             editCpfCnpj.requestFocus();
             editCpfCnpj.setError("*");
-            Toast.makeText(CadastroActivity.this,"* Documento Inválido",Toast.LENGTH_LONG).show();
-        }else if(editEndereco.getText().toString().isEmpty()){
+            Toast.makeText(CadastroActivity.this, "* Documento Inválido", Toast.LENGTH_LONG).show();
+        } else if (editEndereco.getText().toString().isEmpty()) {
             editEndereco.requestFocus();
             editEndereco.setError("*");
-            Toast.makeText(CadastroActivity.this,"Endereço deve ser informado",Toast.LENGTH_LONG).show();
-        }else if(editTelefone.getText().toString().isEmpty()){
+            Toast.makeText(CadastroActivity.this, "Endereço deve ser informado", Toast.LENGTH_LONG).show();
+        } else if (editTelefone.getText().toString().isEmpty()) {
             isDadosOK = false;
             editTelefone.requestFocus();
             editTelefone.setError("*");
-        }else if((editSenha.getText().toString().isEmpty()) || (!editSenha.getText().toString().equals(editConfirmarSenha.getText().toString()))){
+        } else if ((editSenha.getText().toString().isEmpty()) || (!editSenha.getText().toString().equals(editConfirmarSenha.getText().toString()))) {
             isDadosOK = false;
             editSenha.requestFocus();
             editSenha.setError("*");
@@ -201,10 +205,10 @@ public class CadastroActivity extends AppCompatActivity {
             editConfirmarSenha.requestFocus();
             editConfirmarSenha.setError("*");
             editConfirmarSenha.setText(null);
-            Toast.makeText(CadastroActivity.this,"* Senhas não coeincidem",Toast.LENGTH_LONG).show();
+            Toast.makeText(CadastroActivity.this, "* Senhas não coeincidem", Toast.LENGTH_LONG).show();
         }
 
-    return isDadosOK;
+        return isDadosOK;
 
     }
 
@@ -213,27 +217,27 @@ public class CadastroActivity extends AppCompatActivity {
         preferencesCadastro = getSharedPreferences(AppUtil.PREF_APP, MODE_PRIVATE);
         SharedPreferences.Editor data = preferencesCadastro.edit();
 
-        try{
-            if(switchPjPF.isChecked()){
-                data.putString("tipo_pessoa","1");
-            }else{
-                data.putString("tipo_pessoa","0");
+        try {
+            if (switchPjPF.isChecked()) {
+                data.putString("tipo_pessoa", "1");
+            } else {
+                data.putString("tipo_pessoa", "0");
             }
-            data.putString("descricao",editNomeCompleto.getText().toString());
-            data.putString("documento",AppUtil.formataDocumento(editCpfCnpj.getText().toString(),editCpfCnpj.getText().toString().length()));
-            data.putString("logradouro",editEndereco.getText().toString());
-            data.putString("complemento",editComplementoEnd.getText().toString());
-            data.putString("telefone",editTelefone.getText().toString());
-            data.putString("email",editCadastroEmail.getText().toString());
-            data.putString("senha",AppUtil.criptografarPass(editSenha.getText().toString()));
-            data.putString("dataInclusao",AppUtil.getDataFormat());
+            data.putString("descricao", editNomeCompleto.getText().toString());
+            data.putString("documento", AppUtil.formataDocumento(editCpfCnpj.getText().toString(), editCpfCnpj.getText().toString().length()));
+            data.putString("logradouro", editEndereco.getText().toString());
+            data.putString("complemento", editComplementoEnd.getText().toString());
+            data.putString("telefone", editTelefone.getText().toString());
+            data.putString("email", editCadastroEmail.getText().toString());
+            data.putString("senha", AppUtil.criptografarPass(editSenha.getText().toString()));
+            data.putString("dataInclusao", AppUtil.getDataFormat());
 
 
             data.apply();
-        }catch(SecurityException err){
-            Log.e(AppUtil.TAG,"Erro ao gravar os dados no sharedPreferens "+err.getMessage());
-        }catch(Exception err){
-            Log.e(AppUtil.TAG,"Erro ao genérico no sharedPreferens "+err.getMessage());
+        } catch (SecurityException err) {
+            Log.e(AppUtil.TAG, "Erro ao gravar os dados no sharedPreferens " + err.getMessage());
+        } catch (Exception err) {
+            Log.e(AppUtil.TAG, "Erro ao genérico no sharedPreferens " + err.getMessage());
         }
 
     }
@@ -261,20 +265,20 @@ public class CadastroActivity extends AppCompatActivity {
 
     }
 
-    public void setUsuarioSQL(){
+    public void setUsuarioSQL() {
 
-        usuario.setNome(preferencesCadastro.getString("descricao",null));
+        usuario.setNome(preferencesCadastro.getString("descricao", null));
         usuario.setCpfCnpj(preferencesCadastro.getString("documento", null));
         usuario.setLogradouro(preferencesCadastro.getString("logradouro", null));
         usuario.setComplemento(preferencesCadastro.getString("complemento", null));
-        usuario.setTelefone(preferencesCadastro.getString("telefone",null));
-        usuario.setEmail(preferencesCadastro.getString("email",null));
+        usuario.setTelefone(preferencesCadastro.getString("telefone", null));
+        usuario.setEmail(preferencesCadastro.getString("email", null));
         usuario.setSenha(preferencesCadastro.getString("senha", null));
         usuario.setDataInclusao(preferencesCadastro.getString("dataInclusao", null));
 
-        if(preferencesCadastro.getString("tipo_pessoa",null)== "1"){
+        if (preferencesCadastro.getString("tipo_pessoa", null) == "1") {
             usuario.setPessoaFisica(true);
-        }else{
+        } else {
             usuario.setPessoaFisica(false);
         }
 
@@ -282,27 +286,26 @@ public class CadastroActivity extends AppCompatActivity {
 
     }
 
-    public void setUsuarioORM(){
+    public void setUsuarioORM() {
 
-        usuarioORM.setNome(preferencesCadastro.getString("descricao",null));
+        usuarioORM.setNome(preferencesCadastro.getString("descricao", null));
         usuarioORM.setCpfCnpj(preferencesCadastro.getString("documento", null));
         usuarioORM.setLogradouro(preferencesCadastro.getString("logradouro", null));
         usuarioORM.setComplemento(preferencesCadastro.getString("complemento", null));
         usuarioORM.setTelefone(preferencesCadastro.getString("telefone", null));
-        usuarioORM.setEmail(preferencesCadastro.getString("email",null));
+        usuarioORM.setEmail(preferencesCadastro.getString("email", null));
         usuarioORM.setSenha(preferencesCadastro.getString("senha", null));
         usuarioORM.setDataInclusao(preferencesCadastro.getString("dataInclusao", null));
 
-        if(preferencesCadastro.getString("tipo_pessoa",null).equals("1")){
+        if (preferencesCadastro.getString("tipo_pessoa", null).equals("1")) {
             usuarioORM.setPessoaFisica(true);
-        }else{
+        } else {
             usuarioORM.setPessoaFisica(false);
         }
 
         controllerORM.insertORM(usuarioORM);
 
     }
-
 
 
 }

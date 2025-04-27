@@ -61,19 +61,19 @@ public class RecuperarSenhaActivity extends AppCompatActivity {
 
         int verificarPermissoes;
 
-        for(String permissoes : this.permissoesApp){
+        for (String permissoes : this.permissoesApp) {
 
-            verificarPermissoes = ContextCompat.checkSelfPermission(RecuperarSenhaActivity.this,permissoes);
+            verificarPermissoes = ContextCompat.checkSelfPermission(RecuperarSenhaActivity.this, permissoes);
 
-            if(verificarPermissoes != PackageManager.PERMISSION_GRANTED){
+            if (verificarPermissoes != PackageManager.PERMISSION_GRANTED) {
                 permissoesNegadas.add(permissoes);
             }
         }
 
-        if(!permissoesNegadas.isEmpty()){
-            ActivityCompat.requestPermissions(RecuperarSenhaActivity.this,permissoesNegadas.toArray(new String[permissoesNegadas.size()]), 2025);
+        if (!permissoesNegadas.isEmpty()) {
+            ActivityCompat.requestPermissions(RecuperarSenhaActivity.this, permissoesNegadas.toArray(new String[permissoesNegadas.size()]), 2025);
             return true;
-        }else{
+        } else {
             return false;
         }
 
@@ -81,15 +81,15 @@ public class RecuperarSenhaActivity extends AppCompatActivity {
 
     private boolean enviarSenha() {
 
-        try{
+        try {
             smsManager.sendTextMessage(editRecuperarSenha.getText().toString(), null, "Nova senha: ",
                     null, null);
-            if(requestPermissoes()){
+            if (requestPermissoes()) {
                 return true;
-            }else{
+            } else {
                 return false;
             }
-        }catch(Exception err){
+        } catch (Exception err) {
             return false;
         }
     }
@@ -98,7 +98,7 @@ public class RecuperarSenhaActivity extends AppCompatActivity {
         boolean existeCadastro = false;
 
 
-        if(usuarioController.readObjetByTelefone(UsuarioDataModel.TABELA, editRecuperarSenha.getText().toString()) > -1 ){
+        if (usuarioController.readObjetByTelefone(UsuarioDataModel.TABELA, editRecuperarSenha.getText().toString()) > -1) {
             existeCadastro = true;
         }
 
@@ -130,39 +130,39 @@ public class RecuperarSenhaActivity extends AppCompatActivity {
         });
     }
 
-    public void btnRecuperarSenha(View view){
+    public void btnRecuperarSenha(View view) {
         btnRecuperarSenha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent;
                 String novaSenha = "";
 
-                if(validaEmailInformado(editRecuperarSenha.getText().toString())){
+                if (validaEmailInformado(editRecuperarSenha.getText().toString())) {
 
                     novaSenha = AppUtil.radomPass();
 
-                    if(atualizarSenha(novaSenha)){
+                    if (atualizarSenha(novaSenha)) {
                         intent = new Intent(Intent.ACTION_SEND);
 
                         intent.putExtra(Intent.EXTRA_EMAIL, new String[]{editRecuperarSenha.getText().toString()}); // Destinatário
 
                         intent.putExtra(Intent.EXTRA_SUBJECT, "Recuperação de senha - AppClientes"); // Assunto
 
-                        intent.putExtra(Intent.EXTRA_TEXT,"Nova senha gerada: "+ novaSenha); //Corpo do e-mail
+                        intent.putExtra(Intent.EXTRA_TEXT, "Nova senha gerada: " + novaSenha); //Corpo do e-mail
 
                         intent.setType("message/rfc822"); //Estilo de mensagem
 
-                        startActivity(Intent.createChooser(intent,"Seleciona aplicativo para enviar o e-mail"));
+                        startActivity(Intent.createChooser(intent, "Seleciona aplicativo para enviar o e-mail"));
                         finish();
-                    }else{
-                        Toast.makeText(RecuperarSenhaActivity.this,"Erro ao atualizar senha. \nPor favor tente mais tarde....",Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(RecuperarSenhaActivity.this, "Erro ao atualizar senha. \nPor favor tente mais tarde....", Toast.LENGTH_LONG).show();
                     }
 
 
-                }else{
+                } else {
                     editRecuperarSenha.setError("*");
                     editRecuperarSenha.requestFocus();
-                    Toast.makeText(RecuperarSenhaActivity.this,"Favor informar um email válido",Toast.LENGTH_LONG).show();
+                    Toast.makeText(RecuperarSenhaActivity.this, "Favor informar um email válido", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -175,10 +175,10 @@ public class RecuperarSenhaActivity extends AppCompatActivity {
 
         int userID = usuarioController.readObjetcIdByEmail(UsuarioDataModel.TABELA, emailInformado);
 
-        if( userID > -1){
+        if (userID > -1) {
 
             usuario.setId(userID);
-            dadosPreferences.putString("idUsuario",String.valueOf(userID));
+            dadosPreferences.putString("idUsuario", String.valueOf(userID));
             dadosPreferences.apply();
 
 
@@ -188,16 +188,16 @@ public class RecuperarSenhaActivity extends AppCompatActivity {
         return false;
     }
 
-    private boolean atualizarSenha(String novaSenha){
+    private boolean atualizarSenha(String novaSenha) {
 
         usuario.setSenha(AppUtil.criptografarPass(novaSenha));
         usuario.setAtualizaSenha("S");
 
-        try{
+        try {
             usuarioController.updateObject(usuario);
             return true;
-        }catch(Exception err){
-            Log.e(AppUtil.TAG,"Erro ao atualizar o usuário. "+err.getMessage());
+        } catch (Exception err) {
+            Log.e(AppUtil.TAG, "Erro ao atualizar o usuário. " + err.getMessage());
             return false;
         }
 
