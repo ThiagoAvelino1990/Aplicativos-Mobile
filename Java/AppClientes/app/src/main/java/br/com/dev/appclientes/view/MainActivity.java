@@ -204,60 +204,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         // TODO: opter ID para a opção selecionada no MENU DRAWER
-        if (id == R.id.nav_preto) {
-
-            menu = navigationView.getMenu();
-
-            nav_preto = menu.findItem(R.id.nav_preto);
-            nav_preto.setTitle("Preto Ativo");
-
-            nav_vermelho = menu.findItem(R.id.nav_vermelho);
-            nav_vermelho.setTitle("Vermelho");
-
-            nav_azul = menu.findItem(R.id.nav_azul);
-            nav_azul.setTitle("Azul");
-
-            navigationView.setItemTextColor(ColorStateList.valueOf(Color.BLACK));
-
-            fragmentManager.beginTransaction().replace(R.id.content_fragment, new ModeloPretoFragment()).commit();
-
-        } else if (id == R.id.nav_vermelho) {
-
-            menu = navigationView.getMenu();
-
-            nav_preto = menu.findItem(R.id.nav_preto);
-
-            nav_preto.setTitle("Preto");
-
-            nav_vermelho = menu.findItem(R.id.nav_vermelho);
-            nav_vermelho.setTitle("Vermelho Ativado");
-
-            nav_azul = menu.findItem(R.id.nav_azul);
-            nav_azul.setTitle("Azul");
-
-            // TODO: Mudar a cor de todos os itens do menu programaticamente
-            navigationView.setItemTextColor(ColorStateList.valueOf(Color.BLACK));
-
-            fragmentManager.beginTransaction().replace(R.id.content_fragment, new ModeloVermelhoFragment()).commit();
-
-        } else if (id == R.id.nav_azul) {
-
-            menu = navigationView.getMenu();
-
-            nav_preto = menu.findItem(R.id.nav_preto);
-            nav_preto.setTitle("Preto");
-
-            nav_vermelho = menu.findItem(R.id.nav_vermelho);
-            nav_vermelho.setTitle("Vermelho");
-
-            nav_azul = menu.findItem(R.id.nav_azul);
-            nav_azul.setTitle("Azul Ativado");
-
-            navigationView.setItemTextColor(ColorStateList.valueOf(Color.BLACK));
-
-            fragmentManager.beginTransaction().replace(R.id.content_fragment, new ModeloAzulFragment()).commit();
-
-        }else if(id == R.id.adicionar_cliente_nav){
+        if(id == R.id.adicionar_cliente_nav){
 
             fragmentManager.beginTransaction().replace(R.id.content_fragment, new AdicionarClienteFragment()).commit();
 

@@ -5,6 +5,10 @@
 
     <group android:checkableBehavior="single">
 
+        <item android:id="@+id/listar_menu"
+            android:icon="@drawable/ic_item_menu_padrao"
+            android:title="@string/listar_menu" />
+
         <item android:id="@+id/listar_clientes_nav"
             android:icon="@drawable/ic_item_menu_padrao"
             android:title="@string/listar_de_clientes_main" />
@@ -21,17 +25,6 @@
             android:icon="@drawable/ic_item_menu_padrao"
             android:title="@string/adicionar_cliente_cards" />
 
-        <item android:id="@+id/nav_preto"
-            android:icon="@drawable/ic_item_menu_padrao"
-            android:title="@string/fragmento_preto" />
-
-        <item android:id="@+id/nav_vermelho"
-            android:icon="@drawable/ic_item_menu_padrao"
-            android:title="@string/fragmento_vermelho" />
-
-        <item android:id="@+id/nav_azul"
-            android:icon="@drawable/ic_item_menu_padrao"
-            android:title="@string/fragmento_azul" />
 
     </group>
 
