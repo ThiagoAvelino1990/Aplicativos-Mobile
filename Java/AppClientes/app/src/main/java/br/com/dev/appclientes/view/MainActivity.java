@@ -91,14 +91,6 @@ public class MainActivity extends AppCompatActivity
         // tela principal do aplicativo
         fragmentManager.beginTransaction().replace(R.id.content_fragment, new ListarClientesFragment()).commit();
 
-        //Teste de inclusao dos dados
-        //TODO: Excluir este método teste
-        //incluirClienteTeste();
-        
-        //Teste de alteração dos dados
-        //TODO: Excluir este método teste
-        //alterarClienteTeste();
-
     }
 
     private void initComponentesDeLayout() {
@@ -113,38 +105,6 @@ public class MainActivity extends AppCompatActivity
         txtViewClienteNav.setText(sharedPreferences.getString("nome",null));
         txtClienteNav.setText(sharedPreferences.getString("email",null));
 
-    }
-
-    private void incluirClienteTeste() {
-
-        ClienteORM obj = new ClienteORM();
-        ClienteORMController controller = new ClienteORMController();
-
-        obj.setNome("TESTE");
-        obj.setTelefone("123456478");
-        obj.setEmail("teste@teste.com.br");
-        obj.setLogradouro("Rua dos testes");
-        obj.setNumero("32");
-        obj.setComplemento("Testeira");
-        obj.setBairro("Local de teste");
-        obj.setCidade("Testolandia");
-        obj.setEstado("Estado do Para");
-        obj.setPais("Testouros");
-        obj.setCep(444444);
-        obj.setDataDeInclusao(AppUtil.getDataFormat()); //Teste da função de data
-
-        controller.insertORM(obj);
-    }
-
-    private void alterarClienteTeste() {
-        ClienteORM obj = new ClienteORM();
-        ClienteORMController controller = new ClienteORMController();
-
-        obj.setId(1);
-        obj.setNome("TESTE ALTERADO"); //Campo marcado como @Required
-        obj.setDataDeAtualizacao(AppUtil.getDataFormat()); //Teste de outra função de data
-
-        controller.insertORM(obj);
     }
 
     @Override
@@ -203,7 +163,6 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        // TODO: opter ID para a opção selecionada no MENU DRAWER
         if(id == R.id.adicionar_cliente_nav){
 
             fragmentManager.beginTransaction().replace(R.id.content_fragment, new AdicionarClienteFragment()).commit();
