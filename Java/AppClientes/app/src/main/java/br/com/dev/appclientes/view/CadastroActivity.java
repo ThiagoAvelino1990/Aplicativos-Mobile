@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 
 
+import com.google.gson.JsonObject;
 import com.shashank.sony.fancydialoglib.Animation;
 import com.shashank.sony.fancydialoglib.FancyAlertDialog;
 import com.shashank.sony.fancydialoglib.FancyAlertDialogListener;
@@ -40,7 +41,8 @@ public class CadastroActivity extends AppCompatActivity {
     ImageView imgAppClienteCadastro;
     SwitchCompat switchPjPF;
     TextView txtViewCadastro, txtCadastroNovoUsuario;
-    EditText editNomeCompleto, editCadastroEmail, editSenha, editConfirmarSenha, editCpfCnpj, editEndereco, editComplementoEnd, editTelefone;
+    EditText editNomeCompleto, editCadastroEmail, editSenha, editConfirmarSenha, editCpfCnpj, editCep, editEndereco, editComplementoEnd, editTelefone,
+    editBairro, editCidade, editEstado;
     Button btnConfirmarCadastro, btnCancelar;
 
     SharedPreferences preferencesCadastro;
@@ -51,6 +53,7 @@ public class CadastroActivity extends AppCompatActivity {
     UsuarioORM usuarioORM;
     UsuarioORMController controllerORM;
 
+    JsonObject jsonApiEnd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -259,6 +262,10 @@ public class CadastroActivity extends AppCompatActivity {
         editEndereco = findViewById(R.id.editEndereco);
         editComplementoEnd = findViewById(R.id.editComplementoEnd);
         editTelefone = findViewById(R.id.editTelefone);
+        editCep = findViewById(R.id.editCep);
+        editBairro = findViewById(R.id.editBairro);
+        editCidade = findViewById(R.id.editCidade);
+        editEstado = findViewById(R.id.editEstado);
 
         btnConfirmarCadastro = findViewById(R.id.btnConfirmarCadastro);
         btnCancelar = findViewById(R.id.btnCancelar);
@@ -305,6 +312,20 @@ public class CadastroActivity extends AppCompatActivity {
 
         controllerORM.insertORM(usuarioORM);
 
+    }
+
+    //TODO: Após implementar a validação do CEP, implementar as validações restantes aqui
+    public void setInformacoes(){
+        jsonApiEnd = AppUtil.getEndereco(editCep.getText().toString());
+
+        if (jsonApiEnd != null){
+            editEndereco.setText(jsonApiEnd.get("street").getAsString());
+            editBairro.setText(jsonApiEnd.get("neighborhood").getAsString());
+            editCidade.setText(jsonApiEnd.get("city").getAsString());
+            editEstado.setText(jsonApiEnd.get("state").getAsString());
+        }else{
+            null;
+        }
     }
 
 

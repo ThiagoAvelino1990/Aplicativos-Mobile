@@ -3,6 +3,16 @@ package br.com.dev.appclientes.api;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import org.json.JSONException;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -238,5 +248,43 @@ public class AppUtil {
 
         return newpass.toString();
 
+    }
+
+    //TODO: Criar um validador de CEP
+    public boolean validaCep(String cep){
+
+
+        return true;
+    }
+
+    public static JsonObject getEndereco(String cep){
+
+        String urlApi = "https://brasilapi.com.br/api/cep/v1/" + cep;
+
+        //TODO: Colocar o validador de CEP aqui:- validaCep
+
+        try{
+            URL url = new URL(urlApi);
+            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.setRequestMethod("GET");
+
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream(),"UTF-8"));
+            StringBuilder stringBuilder = new StringBuilder();
+            String inputLine;
+
+            while ((inputLine = bufferedReader.readLine())!=null){
+                stringBuilder.append(inputLine);
+            }
+            bufferedReader.close();
+
+            return JsonParser.parseString(bufferedReader.toString()).getAsJsonObject();
+
+        }catch(JsonIOException err){
+            Log.e(TAG,"Erro ao gerar o Json "+err.getMessage());
+            return null;
+        }catch(Exception err){
+            Log.e(TAG,"Erro na execução do Json "+err.getMessage());
+            return null;
+        }
     }
 }

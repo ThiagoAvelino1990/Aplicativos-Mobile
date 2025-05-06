@@ -27,13 +27,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <ImageView android:id="@+id/imgAppClienteCadastro"
+                    <ImageView
+                        android:id="@+id/imgAppClienteCadastro"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
                         android:src="@mipmap/ic_launcher" />
 
-                    <TextView android:id="@+id/txtViewCadastro"
+                    <TextView
+                        android:id="@+id/txtViewCadastro"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="16dp"
@@ -102,6 +104,19 @@
                         android:textStyle="bold" />
 
                     <EditText
+                        android:id="@+id/editCep"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:gravity="left"
+                        android:hint="CEP"
+                        android:inputType="number"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <EditText
                         android:id="@+id/editEndereco"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -122,6 +137,42 @@
                         android:layout_marginEnd="8dp"
                         android:gravity="left"
                         android:hint="Complemento"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/editBairro"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:gravity="left"
+                        android:hint="Bairro"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/editCidade"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:gravity="left"
+                        android:hint="Cidade"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/editEstado"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:gravity="left"
+                        android:hint="Estado"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
@@ -192,13 +243,15 @@
                     android:layout_margin="16dp"
                     android:orientation="vertical">
 
-                    <androidx.appcompat.widget.AppCompatButton android:id="@+id/btnConfirmarCadastro"
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnConfirmarCadastro"
                         style="@style/CustomizeButton"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="@string/bntConfirmar_Cadastro" />
 
-                    <androidx.appcompat.widget.AppCompatButton android:id="@+id/btnCancelar"
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnCancelar"
                         style="@style/CustomizeButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
