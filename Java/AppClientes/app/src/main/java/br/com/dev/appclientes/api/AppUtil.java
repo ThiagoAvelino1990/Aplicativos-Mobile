@@ -250,41 +250,43 @@ public class AppUtil {
 
     }
 
-    //TODO: Criar um validador de CEP
-    public boolean validaCep(String cep){
-
-
-        return true;
+    private static boolean validaCep(String cep){
+        if(cep.matches("^\\d{5}-?\\d{3}$") && cep != null){
+            return true;
+        }else{
+         return false;
+        }
     }
 
     public static JsonObject getEndereco(String cep){
 
-        String urlApi = "https://brasilapi.com.br/api/cep/v1/" + cep;
+        if(validaCep(cep)){
+            String urlApi = "https://brasilapi.com.br/api/cep/v1/" + cep;
 
-        //TODO: Colocar o validador de CEP aqui:- validaCep
+            try{
+                URL url = new URL(urlApi);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("GET");
 
-        try{
-            URL url = new URL(urlApi);
-            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.setRequestMethod("GET");
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream(),"UTF-8"));
+                StringBuilder stringBuilder = new StringBuilder();
+                String inputLine;
 
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream(),"UTF-8"));
-            StringBuilder stringBuilder = new StringBuilder();
-            String inputLine;
+                while ((inputLine = bufferedReader.readLine())!=null){
+                    stringBuilder.append(inputLine);
+                }
+                bufferedReader.close();
 
-            while ((inputLine = bufferedReader.readLine())!=null){
-                stringBuilder.append(inputLine);
+                return JsonParser.parseString(bufferedReader.toString()).getAsJsonObject();
+
+            }catch(JsonIOException err){
+                Log.e(TAG,"Erro ao gerar o Json "+err.getMessage());
+                return null;
+            }catch(Exception err){
+                Log.e(TAG,"Erro na execução do Json "+err.getMessage());
+                return null;
             }
-            bufferedReader.close();
-
-            return JsonParser.parseString(bufferedReader.toString()).getAsJsonObject();
-
-        }catch(JsonIOException err){
-            Log.e(TAG,"Erro ao gerar o Json "+err.getMessage());
-            return null;
-        }catch(Exception err){
-            Log.e(TAG,"Erro na execução do Json "+err.getMessage());
-            return null;
         }
+        return JsonParser.parseString("INVÁLIDO").getAsJsonObject();
     }
 }

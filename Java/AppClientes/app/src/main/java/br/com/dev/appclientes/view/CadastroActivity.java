@@ -323,8 +323,6 @@ public class CadastroActivity extends AppCompatActivity {
             editBairro.setText(jsonApiEnd.get("neighborhood").getAsString());
             editCidade.setText(jsonApiEnd.get("city").getAsString());
             editEstado.setText(jsonApiEnd.get("state").getAsString());
-        }else{
-            null;
         }
     }
 
