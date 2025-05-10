@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,13 +65,6 @@ public class CadastroActivity extends AppCompatActivity {
 
         initComponentesLayout();
 
-        /*Instanciando os objetos*/
-        usuario = new Usuario();
-        controller = new UsuarioController(CadastroActivity.this);
-
-        usuarioORM = new UsuarioORM();
-        controllerORM = new UsuarioORMController();
-
         switchPjPF.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (switchPjPF.isChecked()) {
                 switchPjPF.setText("Pessoa Jurídica");
@@ -96,6 +91,25 @@ public class CadastroActivity extends AppCompatActivity {
             }
         });
 
+
+        editCep.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(!s.toString().isEmpty()){
+                    setInformacoes(s.toString());
+                }
+            }
+
+
+        });
 
         btnConfirmarCadastro.setOnClickListener(new View.OnClickListener() {
             Intent intent;
@@ -173,6 +187,62 @@ public class CadastroActivity extends AppCompatActivity {
 
     }
 
+
+    //TODO: Após implementar a validação do CEP, implementar as validações restantes aqui
+    public void setInformacoes(String cep){
+        jsonApiEnd = AppUtil.getEndereco(cep);
+
+        if (jsonApiEnd != null){
+            editEndereco.setText(jsonApiEnd.get("street").getAsString());
+            editBairro.setText(jsonApiEnd.get("neighborhood").getAsString());
+            editCidade.setText(jsonApiEnd.get("city").getAsString());
+            editEstado.setText(jsonApiEnd.get("state").getAsString());
+        }
+    }
+
+    public void setUsuarioSQL() {
+
+        usuario.setNome(preferencesCadastro.getString("descricao", null));
+        usuario.setCpfCnpj(preferencesCadastro.getString("documento", null));
+        usuario.setLogradouro(preferencesCadastro.getString("logradouro", null));
+        usuario.setComplemento(preferencesCadastro.getString("complemento", null));
+        usuario.setTelefone(preferencesCadastro.getString("telefone", null));
+        usuario.setEmail(preferencesCadastro.getString("email", null));
+        usuario.setSenha(preferencesCadastro.getString("senha", null));
+        usuario.setDataInclusao(preferencesCadastro.getString("dataInclusao", null));
+
+        if (preferencesCadastro.getString("tipo_pessoa", null) == "1") {
+            usuario.setPessoaFisica(true);
+        } else {
+            usuario.setPessoaFisica(false);
+        }
+
+        controller.insertObject(usuario);
+
+    }
+
+    public void setUsuarioORM() {
+
+        usuarioORM.setNome(preferencesCadastro.getString("descricao", null));
+        usuarioORM.setCpfCnpj(preferencesCadastro.getString("documento", null));
+        usuarioORM.setLogradouro(preferencesCadastro.getString("logradouro", null));
+        usuarioORM.setComplemento(preferencesCadastro.getString("complemento", null));
+        usuarioORM.setTelefone(preferencesCadastro.getString("telefone", null));
+        usuarioORM.setEmail(preferencesCadastro.getString("email", null));
+        usuarioORM.setSenha(preferencesCadastro.getString("senha", null));
+        usuarioORM.setDataInclusao(preferencesCadastro.getString("dataInclusao", null));
+
+        if (preferencesCadastro.getString("tipo_pessoa", null).equals("1")) {
+            usuarioORM.setPessoaFisica(true);
+        } else {
+            usuarioORM.setPessoaFisica(false);
+        }
+
+        controllerORM.insertORM(usuarioORM);
+
+    }
+
+    //TODO:Incluir novos campos na validação
     private boolean validarDados() {
 
         boolean isDadosOK = true;
@@ -270,61 +340,13 @@ public class CadastroActivity extends AppCompatActivity {
         btnConfirmarCadastro = findViewById(R.id.btnConfirmarCadastro);
         btnCancelar = findViewById(R.id.btnCancelar);
 
-    }
+        /*Instanciando os objetos*/
+        usuario = new Usuario();
+        controller = new UsuarioController(CadastroActivity.this);
 
-    public void setUsuarioSQL() {
-
-        usuario.setNome(preferencesCadastro.getString("descricao", null));
-        usuario.setCpfCnpj(preferencesCadastro.getString("documento", null));
-        usuario.setLogradouro(preferencesCadastro.getString("logradouro", null));
-        usuario.setComplemento(preferencesCadastro.getString("complemento", null));
-        usuario.setTelefone(preferencesCadastro.getString("telefone", null));
-        usuario.setEmail(preferencesCadastro.getString("email", null));
-        usuario.setSenha(preferencesCadastro.getString("senha", null));
-        usuario.setDataInclusao(preferencesCadastro.getString("dataInclusao", null));
-
-        if (preferencesCadastro.getString("tipo_pessoa", null) == "1") {
-            usuario.setPessoaFisica(true);
-        } else {
-            usuario.setPessoaFisica(false);
-        }
-
-        controller.insertObject(usuario);
+        usuarioORM = new UsuarioORM();
+        controllerORM = new UsuarioORMController();
 
     }
-
-    public void setUsuarioORM() {
-
-        usuarioORM.setNome(preferencesCadastro.getString("descricao", null));
-        usuarioORM.setCpfCnpj(preferencesCadastro.getString("documento", null));
-        usuarioORM.setLogradouro(preferencesCadastro.getString("logradouro", null));
-        usuarioORM.setComplemento(preferencesCadastro.getString("complemento", null));
-        usuarioORM.setTelefone(preferencesCadastro.getString("telefone", null));
-        usuarioORM.setEmail(preferencesCadastro.getString("email", null));
-        usuarioORM.setSenha(preferencesCadastro.getString("senha", null));
-        usuarioORM.setDataInclusao(preferencesCadastro.getString("dataInclusao", null));
-
-        if (preferencesCadastro.getString("tipo_pessoa", null).equals("1")) {
-            usuarioORM.setPessoaFisica(true);
-        } else {
-            usuarioORM.setPessoaFisica(false);
-        }
-
-        controllerORM.insertORM(usuarioORM);
-
-    }
-
-    //TODO: Após implementar a validação do CEP, implementar as validações restantes aqui
-    public void setInformacoes(){
-        jsonApiEnd = AppUtil.getEndereco(editCep.getText().toString());
-
-        if (jsonApiEnd != null){
-            editEndereco.setText(jsonApiEnd.get("street").getAsString());
-            editBairro.setText(jsonApiEnd.get("neighborhood").getAsString());
-            editCidade.setText(jsonApiEnd.get("city").getAsString());
-            editEstado.setText(jsonApiEnd.get("state").getAsString());
-        }
-    }
-
 
 }
