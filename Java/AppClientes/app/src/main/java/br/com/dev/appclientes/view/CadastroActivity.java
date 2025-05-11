@@ -250,13 +250,6 @@ public class CadastroActivity extends AppCompatActivity {
 
     }
 
-    //TODO:Incluir novos campos na validação
-
-    /**
-     * EditText editNomeCompleto, editCadastroEmail, editSenha, editConfirmarSenha, editCpfCnpj, editCep, editEndereco, editComplementoEnd, editTelefone,
-     *     editBairro, editCidade, editEstado;
-     * @return
-     */
     private boolean validarDados() {
 
         boolean isDadosOK = true;
@@ -276,10 +269,26 @@ public class CadastroActivity extends AppCompatActivity {
             editCpfCnpj.requestFocus();
             editCpfCnpj.setError("*");
             Toast.makeText(CadastroActivity.this, "* Documento Inválido", Toast.LENGTH_LONG).show();
+        }else if(editCep.getText().toString().isEmpty()){
+            editCep.requestFocus();
+            editCep.setError("*");
+            Toast.makeText(CadastroActivity.this, "Cep deve ser informado", Toast.LENGTH_LONG).show();
         } else if (editEndereco.getText().toString().isEmpty()) {
             editEndereco.requestFocus();
             editEndereco.setError("*");
             Toast.makeText(CadastroActivity.this, "Endereço deve ser informado", Toast.LENGTH_LONG).show();
+        } else if(editBairro.getText().toString().isEmpty()) {
+            editBairro.requestFocus();
+            editBairro.setError("*");
+            Toast.makeText(CadastroActivity.this, "Bairro deve ser informado", Toast.LENGTH_LONG).show();
+        }else if(editCidade.getText().toString().isEmpty()) {
+            editCidade.requestFocus();
+            editCidade.setError("*");
+            Toast.makeText(CadastroActivity.this, "Cidade deve ser informado", Toast.LENGTH_LONG).show();
+        }else if(editEstado.getText().toString().isEmpty()){
+            editEstado.requestFocus();
+            editEstado.setError("*");
+            Toast.makeText(CadastroActivity.this, "Estado deve ser informado", Toast.LENGTH_LONG).show();
         } else if (editTelefone.getText().toString().isEmpty()) {
             isDadosOK = false;
             editTelefone.requestFocus();
