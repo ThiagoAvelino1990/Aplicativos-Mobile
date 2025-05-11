@@ -187,17 +187,25 @@ public class CadastroActivity extends AppCompatActivity {
 
     }
 
-
-    //TODO: Após implementar a validação do CEP, implementar as validações restantes aqui
     public void setInformacoes(String cep){
-        jsonApiEnd = AppUtil.getEndereco(cep);
+        new Thread(() -> {
+            jsonApiEnd = AppUtil.getEndereco(cep);
 
-        if (jsonApiEnd != null){
-            editEndereco.setText(jsonApiEnd.get("street").getAsString());
-            editBairro.setText(jsonApiEnd.get("neighborhood").getAsString());
-            editCidade.setText(jsonApiEnd.get("city").getAsString());
-            editEstado.setText(jsonApiEnd.get("state").getAsString());
-        }
+            if (jsonApiEnd != null){
+                runOnUiThread(() -> {
+                    try{
+                        editEndereco.setText(jsonApiEnd.get("street").getAsString());
+                        editBairro.setText(jsonApiEnd.get("neighborhood").getAsString());
+                        editCidade.setText(jsonApiEnd.get("city").getAsString());
+                        editEstado.setText(jsonApiEnd.get("state").getAsString());
+                    }catch(Exception err){
+                        Toast.makeText(this,"Erro ao preencher os campos ", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+            }
+        }).start();
+
     }
 
     public void setUsuarioSQL() {
@@ -243,6 +251,12 @@ public class CadastroActivity extends AppCompatActivity {
     }
 
     //TODO:Incluir novos campos na validação
+
+    /**
+     * EditText editNomeCompleto, editCadastroEmail, editSenha, editConfirmarSenha, editCpfCnpj, editCep, editEndereco, editComplementoEnd, editTelefone,
+     *     editBairro, editCidade, editEstado;
+     * @return
+     */
     private boolean validarDados() {
 
         boolean isDadosOK = true;

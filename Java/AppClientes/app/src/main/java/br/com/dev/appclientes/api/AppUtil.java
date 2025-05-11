@@ -277,7 +277,7 @@ public class AppUtil {
                 }
                 bufferedReader.close();
 
-                return JsonParser.parseString(bufferedReader.toString()).getAsJsonObject();
+                return JsonParser.parseString(stringBuilder.toString()).getAsJsonObject();
 
             }catch(JsonIOException err){
                 Log.e(TAG,"Erro ao gerar o Json "+err.getMessage());
@@ -287,6 +287,7 @@ public class AppUtil {
                 return null;
             }
         }
-        return JsonParser.parseString("INVÁLIDO").getAsJsonObject();
+        Log.e(TAG,"CEP inválido");
+        return null;
     }
 }
