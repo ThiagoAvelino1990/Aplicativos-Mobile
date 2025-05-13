@@ -192,12 +192,14 @@ public class AppUtil {
                         documento.substring(6,9)+"-"+documento.substring(9,11);
 
                 return documento;
+            }else{
+                return documento;
             }
         }catch(Exception err){
             Log.e(TAG,"AppUtil.formataDocumento" +err.getMessage());
         }
 
-        return "ERRO - Documento inválido";
+        return documento;
     }
 
 

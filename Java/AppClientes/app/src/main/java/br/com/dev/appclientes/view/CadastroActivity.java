@@ -91,25 +91,8 @@ public class CadastroActivity extends AppCompatActivity {
             }
         });
 
+        formatarCamposFormulario();
 
-        editCep.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if(!s.toString().isEmpty()){
-                    setInformacoes(s.toString());
-                }
-            }
-
-
-        });
 
         btnConfirmarCadastro.setOnClickListener(new View.OnClickListener() {
             Intent intent;
@@ -186,6 +169,58 @@ public class CadastroActivity extends AppCompatActivity {
 
 
     }
+
+    public void formatarCamposFormulario(){
+        //TODO: Manter este processo aqui ?
+        //Utiliza o serviço de CEP para trazer os dados necessários
+        editCep.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(!s.toString().isEmpty()){
+                    setInformacoes(s.toString());
+                }
+            }
+
+
+        });
+
+
+        editCpfCnpj.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String cpfCnpjAtual = s.toString();
+                String cpfCnpjAtualFormatado = AppUtil.formataDocumento(cpfCnpjAtual, cpfCnpjAtual.length());
+
+                if(!cpfCnpjAtual.equals(cpfCnpjAtualFormatado)){
+                    editCpfCnpj.removeTextChangedListener(this);
+                    editCpfCnpj.setText(cpfCnpjAtualFormatado);
+                    editCpfCnpj.setSelection(cpfCnpjAtualFormatado.length());
+                    editCpfCnpj.addTextChangedListener(this);
+                }
+
+            }
+        });
+
+    }
+
 
     public void setInformacoes(String cep){
         new Thread(() -> {
