@@ -184,6 +184,16 @@ public class CadastroActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+                String cepAtual = s.toString();
+                String cepFormatado = AppUtil.formatarCep(editCep.getText().toString());
+
+                if(!cepAtual.equals(cepFormatado)){
+                    editCep.removeTextChangedListener(this);
+                    editCep.setText(cepFormatado);
+                    editCep.setSelection(cepFormatado.length());
+                    editCep.addTextChangedListener(this);
+                }
+
                 if(!s.toString().isEmpty()){
                     setInformacoes(s.toString());
                 }
@@ -219,6 +229,7 @@ public class CadastroActivity extends AppCompatActivity {
             }
         });
 
+        //TODO: Formatar telefone
     }
 
 

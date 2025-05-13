@@ -202,6 +202,15 @@ public class AppUtil {
         return documento;
     }
 
+    public static String formatarCep(String cep){
+        //Formato CEP: XXXXX-XXX
+        if(validaCep(cep)){
+            cep = cep.substring(0,5)+"-"+cep.substring(5);
+        }
+
+        return cep;
+    }
+
 
     public static String criptografarPass(String password) {
 
