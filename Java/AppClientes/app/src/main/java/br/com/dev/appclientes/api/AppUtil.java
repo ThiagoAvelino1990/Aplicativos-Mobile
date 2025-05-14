@@ -58,7 +58,7 @@ public class AppUtil {
     }
 
     public static boolean validaCnpjCpf(String cpfCnpj){
-
+        cpfCnpj = apenasNumeros(cpfCnpj);
         String cpfCnpjRevertido = "";
 
         //Verificação primária
@@ -200,7 +200,7 @@ public class AppUtil {
     }
 
     public static String formatarCep(String cep){
-        cep = cep.replaceAll("[^\\d]","");
+        cep = apenasNumeros(cep);
         //Formato CEP: XXXXX-XXX
         if(validaCep(cep)){
             cep = cep.substring(0,5)+"-"+cep.substring(5);
@@ -210,7 +210,7 @@ public class AppUtil {
     }
 
     public static String formatarTelefone(String telefone){
-        telefone = telefone.replaceAll("[^\\d]","");
+        telefone = apenasNumeros(telefone);
         //Formato Telefone: (XX)XXXXX-XXXX
         if(!telefone.isEmpty() && telefone.length() == 11){
             telefone = "("+telefone.substring(0,2)+")"+telefone.substring(2,7)+"-"+telefone.substring(7);
@@ -310,4 +310,10 @@ public class AppUtil {
         Log.e(TAG,"CEP inválido");
         return null;
     }
+
+    public static String apenasNumeros(String valor){
+        return valor = valor.replaceAll("[^\\d]","");
+    }
+
+
 }
