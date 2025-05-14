@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import br.com.dev.appclientes.api.AppUtil;
@@ -45,7 +44,7 @@ public class ClienteController extends AppDataBase implements ICRUD<Cliente> {
         contentValues.put(ClienteDataModel.CIDADE, obj.getCidade());
         contentValues.put(ClienteDataModel.ESTADO, obj.getEstado());
         contentValues.put(ClienteDataModel.PAIS, obj.getPais());
-        contentValues.put(ClienteDataModel.DOCUMENTO, AppUtil.formataDocumento(obj.getDocumento(), obj.getDocumento().length()));//Formatar o documento de acordo com o tipo
+        contentValues.put(ClienteDataModel.DOCUMENTO, AppUtil.formatarDocumento(obj.getDocumento(), obj.getDocumento().length()));//Formatar o documento de acordo com o tipo
         if(obj.getDocumento().length() == 14){
             contentValues.put(ClienteDataModel.IDTIPODOCUMENTO, "CNPJ");
             contentValues.put(ClienteDataModel.IDTIPOPESSOA, "PJ");
@@ -90,7 +89,7 @@ public class ClienteController extends AppDataBase implements ICRUD<Cliente> {
         contentValues.put(ClienteDataModel.CIDADE, obj.getCidade());
         contentValues.put(ClienteDataModel.ESTADO, obj.getEstado());
         contentValues.put(ClienteDataModel.PAIS, obj.getPais());
-        contentValues.put(ClienteDataModel.DOCUMENTO, AppUtil.formataDocumento(obj.getDocumento(), obj.getDocumento().length()));//Formatar o documento de acordo com o tipo
+        contentValues.put(ClienteDataModel.DOCUMENTO, AppUtil.formatarDocumento(obj.getDocumento(), obj.getDocumento().length()));//Formatar o documento de acordo com o tipo
         if(obj.getDocumento().length() == 14){
             contentValues.put(ClienteDataModel.IDTIPODOCUMENTO, "CNPJ");
             contentValues.put(ClienteDataModel.IDTIPOPESSOA, "PJ");

@@ -2,34 +2,26 @@ package br.com.dev.appclientes.view;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.ColorRes;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 
 
 import com.google.gson.JsonObject;
 import com.shashank.sony.fancydialoglib.Animation;
 import com.shashank.sony.fancydialoglib.FancyAlertDialog;
-import com.shashank.sony.fancydialoglib.FancyAlertDialogListener;
-
-import org.w3c.dom.Text;
 
 import br.com.dev.appclientes.R;
 import br.com.dev.appclientes.api.AppUtil;
@@ -187,6 +179,7 @@ public class CadastroActivity extends AppCompatActivity {
                 String cepAtual = s.toString();
                 String cepFormatado = AppUtil.formatarCep(editCep.getText().toString());
 
+                //Evitar Loop infinito
                 if(!cepAtual.equals(cepFormatado)){
                     editCep.removeTextChangedListener(this);
                     editCep.setText(cepFormatado);
@@ -217,8 +210,9 @@ public class CadastroActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 String cpfCnpjAtual = s.toString();
-                String cpfCnpjAtualFormatado = AppUtil.formataDocumento(cpfCnpjAtual, cpfCnpjAtual.length());
+                String cpfCnpjAtualFormatado = AppUtil.formatarDocumento(cpfCnpjAtual, cpfCnpjAtual.length());
 
+                //Evitar Loop infinito
                 if(!cpfCnpjAtual.equals(cpfCnpjAtualFormatado)){
                     editCpfCnpj.removeTextChangedListener(this);
                     editCpfCnpj.setText(cpfCnpjAtualFormatado);
@@ -230,6 +224,33 @@ public class CadastroActivity extends AppCompatActivity {
         });
 
         //TODO: Formatar telefone
+        editTelefone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String telefoneAtual = s.toString();
+                String telefoneFormatado = AppUtil.formatarTelefone(telefoneAtual);
+
+                //Evitar Loop infinito
+                if (!telefoneAtual.matches(telefoneFormatado)) {
+                    editTelefone.removeTextChangedListener(this);
+                    editTelefone.setText(telefoneFormatado);
+                    editTelefone.setSelection(telefoneFormatado.length());
+                    editEndereco.addTextChangedListener(this);
+
+                }
+
+            }
+        });
     }
 
 
@@ -366,7 +387,7 @@ public class CadastroActivity extends AppCompatActivity {
                 data.putString("tipo_pessoa", "0");
             }
             data.putString("descricao", editNomeCompleto.getText().toString());
-            data.putString("documento", AppUtil.formataDocumento(editCpfCnpj.getText().toString(), editCpfCnpj.getText().toString().length()));
+            data.putString("documento", AppUtil.formatarDocumento(editCpfCnpj.getText().toString(), editCpfCnpj.getText().toString().length()));
             data.putString("logradouro", editEndereco.getText().toString());
             data.putString("complemento", editComplementoEnd.getText().toString());
             data.putString("telefone", editTelefone.getText().toString());

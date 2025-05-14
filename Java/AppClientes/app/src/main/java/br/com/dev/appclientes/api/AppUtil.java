@@ -1,13 +1,10 @@
 package br.com.dev.appclientes.api;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
-import org.json.JSONException;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -178,8 +175,8 @@ public class AppUtil {
         return false;
     }
 
-    public static String formataDocumento(String documento, int tamanho){
-
+    public static String formatarDocumento(String documento, int tamanho){
+        documento = documento.replaceAll("[^\\d]","");
         try{
             if(tamanho == 14){
                 documento = documento.substring(0,2)+"."+documento.substring(2,5)+"."+
@@ -203,12 +200,24 @@ public class AppUtil {
     }
 
     public static String formatarCep(String cep){
+        cep = cep.replaceAll("[^\\d]","");
         //Formato CEP: XXXXX-XXX
         if(validaCep(cep)){
             cep = cep.substring(0,5)+"-"+cep.substring(5);
         }
 
         return cep;
+    }
+
+    public static String formatarTelefone(String telefone){
+        telefone = telefone.replaceAll("[^\\d]","");
+        //Formato Telefone: (XX)XXXXX-XXXX
+        if(!telefone.isEmpty() && telefone.length() == 11){
+            telefone = "("+telefone.substring(0,2)+")"+telefone.substring(2,7)+"-"+telefone.substring(7);
+        }else if (!telefone.isEmpty() && telefone.length() == 10){
+            telefone = "("+telefone.substring(0,2)+")"+telefone.substring(2,6)+"-"+telefone.substring(6);
+        }
+        return telefone;
     }
 
 
