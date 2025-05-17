@@ -277,10 +277,10 @@ public class CadastroActivity extends AppCompatActivity {
 
     public void setUsuarioSQL() {
 
-        usuario.setNome(preferencesCadastro.getString("descricao", null));
+        usuario.setNome(preferencesCadastro.getString("descricao", null).toUpperCase());
         usuario.setCpfCnpj(preferencesCadastro.getString("documento", null));
-        usuario.setLogradouro(preferencesCadastro.getString("logradouro", null));
-        usuario.setComplemento(preferencesCadastro.getString("complemento", null));
+        usuario.setLogradouro(preferencesCadastro.getString("logradouro", null).toUpperCase());
+        usuario.setComplemento(preferencesCadastro.getString("complemento", null).toUpperCase());
         usuario.setTelefone(preferencesCadastro.getString("telefone", null));
         usuario.setEmail(preferencesCadastro.getString("email", null));
         usuario.setSenha(preferencesCadastro.getString("senha", null));
@@ -298,10 +298,10 @@ public class CadastroActivity extends AppCompatActivity {
 
     public void setUsuarioORM() {
 
-        usuarioORM.setNome(preferencesCadastro.getString("descricao", null));
+        usuarioORM.setNome(preferencesCadastro.getString("descricao", null).toUpperCase());
         usuarioORM.setCpfCnpj(preferencesCadastro.getString("documento", null));
-        usuarioORM.setLogradouro(preferencesCadastro.getString("logradouro", null));
-        usuarioORM.setComplemento(preferencesCadastro.getString("complemento", null));
+        usuarioORM.setLogradouro(preferencesCadastro.getString("logradouro", null).toUpperCase());
+        usuarioORM.setComplemento(preferencesCadastro.getString("complemento", null).toUpperCase());
         usuarioORM.setTelefone(preferencesCadastro.getString("telefone", null));
         usuarioORM.setEmail(preferencesCadastro.getString("email", null));
         usuarioORM.setSenha(preferencesCadastro.getString("senha", null));
