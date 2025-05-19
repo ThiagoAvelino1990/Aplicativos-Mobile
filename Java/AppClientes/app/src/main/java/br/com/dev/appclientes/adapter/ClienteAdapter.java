@@ -3,6 +3,7 @@ package br.com.dev.appclientes.adapter;
 import android.content.Context;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -23,6 +24,6 @@ public class ClienteAdapter extends ArrayAdapter<Cliente> implements View.OnClic
 
     @Override
     public void onClick(View v) {
-
+        Toast.makeText(getContext(),"Click no Cliente",Toast.LENGTH_LONG).show();
     }
 }

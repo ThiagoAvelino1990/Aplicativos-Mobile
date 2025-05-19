@@ -106,9 +106,9 @@ public class CadastroActivity extends AppCompatActivity {
                         .onPositiveClicked(dialog -> {
                             if (validarDados()) {
 
-                                setDataPreferences();
                                 setUsuarioSQL();
                                 setUsuarioORM();
+                                setDataPreferences();
 
                                 new Handler().postDelayed(new Runnable() {
                                     @Override
@@ -223,7 +223,6 @@ public class CadastroActivity extends AppCompatActivity {
             }
         });
 
-        //TODO: Formatar telefone
         editTelefone.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -277,25 +276,20 @@ public class CadastroActivity extends AppCompatActivity {
 
     public void setUsuarioSQL() {
 
-        usuario.setNome(preferencesCadastro.getString("descricao", null).toUpperCase());
-        usuario.setCpfCnpj(preferencesCadastro.getString("documento", null));
-        usuario.setLogradouro(preferencesCadastro.getString("logradouro", null).toUpperCase());
-        usuario.setComplemento(preferencesCadastro.getString("complemento", null).toUpperCase());
-        usuario.setTelefone(preferencesCadastro.getString("telefone", null));
-        usuario.setEmail(preferencesCadastro.getString("email", null));
-        usuario.setSenha(preferencesCadastro.getString("senha", null));
-        usuario.setDataInclusao(preferencesCadastro.getString("dataInclusao", null));
-
-        if (preferencesCadastro.getString("tipo_pessoa", null) == "1") {
-            usuario.setPessoaFisica(true);
-        } else {
-            usuario.setPessoaFisica(false);
-        }
+        usuario.setNome(editNomeCompleto.getText().toString().toUpperCase());
+        usuario.setCpfCnpj(editCpfCnpj.getText().toString());
+        usuario.setLogradouro(editEndereco.getText().toString().toUpperCase());
+        usuario.setComplemento(editComplementoEnd.getText().toString().toUpperCase());
+        usuario.setTelefone(editTelefone.getText().toString());
+        usuario.setEmail(editCadastroEmail.getText().toString());
+        usuario.setSenha(AppUtil.criptografarPass(editSenha.getText().toString()));
+        usuario.setDataInclusao(AppUtil.getDataFormat());
+        usuario.setPessoaFisica(switchPjPF.isChecked());
 
         controller.insertObject(usuario);
 
     }
-
+    //TODO:Utilizar dados digitados e não o sharedPreferences
     public void setUsuarioORM() {
 
         usuarioORM.setNome(preferencesCadastro.getString("descricao", null).toUpperCase());
@@ -386,10 +380,10 @@ public class CadastroActivity extends AppCompatActivity {
             } else {
                 data.putString("tipo_pessoa", "0");
             }
-            data.putString("descricao", editNomeCompleto.getText().toString());
+            data.putString("descricao", editNomeCompleto.getText().toString().toUpperCase());
             data.putString("documento", AppUtil.formatarDocumento(editCpfCnpj.getText().toString(), editCpfCnpj.getText().toString().length()));
-            data.putString("logradouro", editEndereco.getText().toString());
-            data.putString("complemento", editComplementoEnd.getText().toString());
+            data.putString("logradouro", editEndereco.getText().toString().toUpperCase());
+            data.putString("complemento", editComplementoEnd.getText().toString().toUpperCase());
             data.putString("telefone", editTelefone.getText().toString());
             data.putString("email", editCadastroEmail.getText().toString());
             data.putString("senha", AppUtil.criptografarPass(editSenha.getText().toString()));
