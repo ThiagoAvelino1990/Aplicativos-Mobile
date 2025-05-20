@@ -41,7 +41,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="90dp"
             android:layout_marginEnd="16dp"
-            android:hint="Pesquisar" />
+            android:hint="@string/edittxt_pesquisar" />
 
     </androidx.cardview.widget.CardView>
 

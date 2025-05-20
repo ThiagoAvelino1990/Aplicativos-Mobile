@@ -63,6 +63,7 @@
     <string name="txt_LoginInformeEmail">Informe o email</string>
     <string name="txtExemploEmail">email@email.com.br</string>
     <string name="listar_menu">Menu</string>
+    <string name="edittxt_pesquisar">Pesquisar</string>
 
     <!-- tela de Cadastro -->
 

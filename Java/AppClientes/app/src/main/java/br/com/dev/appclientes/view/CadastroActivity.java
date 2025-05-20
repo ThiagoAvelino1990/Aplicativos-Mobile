@@ -289,23 +289,18 @@ public class CadastroActivity extends AppCompatActivity {
         controller.insertObject(usuario);
 
     }
-    //TODO:Utilizar dados digitados e não o sharedPreferences
+
     public void setUsuarioORM() {
 
-        usuarioORM.setNome(preferencesCadastro.getString("descricao", null).toUpperCase());
-        usuarioORM.setCpfCnpj(preferencesCadastro.getString("documento", null));
-        usuarioORM.setLogradouro(preferencesCadastro.getString("logradouro", null).toUpperCase());
-        usuarioORM.setComplemento(preferencesCadastro.getString("complemento", null).toUpperCase());
-        usuarioORM.setTelefone(preferencesCadastro.getString("telefone", null));
-        usuarioORM.setEmail(preferencesCadastro.getString("email", null));
-        usuarioORM.setSenha(preferencesCadastro.getString("senha", null));
-        usuarioORM.setDataInclusao(preferencesCadastro.getString("dataInclusao", null));
-
-        if (preferencesCadastro.getString("tipo_pessoa", null).equals("1")) {
-            usuarioORM.setPessoaFisica(true);
-        } else {
-            usuarioORM.setPessoaFisica(false);
-        }
+        usuarioORM.setNome(editNomeCompleto.getText().toString().toUpperCase());
+        usuarioORM.setCpfCnpj(editCpfCnpj.getText().toString());
+        usuarioORM.setLogradouro(editEndereco.getText().toString().toUpperCase());
+        usuarioORM.setComplemento(editComplementoEnd.getText().toString().toUpperCase());
+        usuarioORM.setTelefone(editTelefone.getText().toString());
+        usuarioORM.setEmail(editCadastroEmail.getText().toString());
+        usuarioORM.setSenha(AppUtil.criptografarPass(editSenha.getText().toString()));
+        usuarioORM.setDataInclusao(AppUtil.getDataFormat());
+        usuarioORM.setPessoaFisica(switchPjPF.isChecked());
 
         controllerORM.insertORM(usuarioORM);
 

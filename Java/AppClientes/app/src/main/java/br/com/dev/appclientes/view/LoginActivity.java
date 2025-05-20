@@ -177,7 +177,7 @@ public class LoginActivity extends AppCompatActivity {
         List<Usuario> usuarioLista = new ArrayList<>();
 
         usuarioLista = usuarioController.readObjectById(Integer.parseInt(sharedPreferences.getString("idUsuario", String.valueOf(-1))));
-
+        //TODO: Identiifcar problema ao validar troca de senha
         for (Usuario usuario : usuarioLista) {
             if (usuario.getAtualizaSenha().equals("S")) {
                 atualizarSenha();
