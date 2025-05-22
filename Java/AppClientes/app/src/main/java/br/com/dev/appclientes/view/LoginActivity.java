@@ -23,6 +23,7 @@ import java.util.List;
 import br.com.dev.appclientes.R;
 import br.com.dev.appclientes.api.AppUtil;
 import br.com.dev.appclientes.controller.UsuarioController;
+import br.com.dev.appclientes.datamodel.ClienteDataModel;
 import br.com.dev.appclientes.datamodel.UsuarioDataModel;
 import br.com.dev.appclientes.model.Usuario;
 
@@ -176,13 +177,19 @@ public class LoginActivity extends AppCompatActivity {
 
         List<Usuario> usuarioLista = new ArrayList<>();
 
-        usuarioLista = usuarioController.readObjectById(Integer.parseInt(sharedPreferences.getString("idUsuario", String.valueOf(-1))));
-        //TODO: Identiifcar problema ao validar troca de senha
-        for (Usuario usuario : usuarioLista) {
-            if (usuario.getAtualizaSenha().equals("S")) {
-                atualizarSenha();
+        try{
+            usuarioLista = usuarioController.readObjectByEmail(ClienteDataModel.TABELA,sharedPreferences.getString("email",null));
+            for (Usuario usuario : usuarioLista) {
+                if (usuario.getAtualizaSenha().equals("S")) {
+                    atualizarSenha();
+                }
             }
+        }catch(Exception err){
+            Log.e(AppUtil.TAG,"[LoginActivity - validarTrocaDeSenha] -Erro ao realizar a validação de torca de senha "+err.getMessage());
         }
+
+
+
     }
 
     public void atualizarSenha() {

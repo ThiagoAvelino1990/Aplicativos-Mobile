@@ -108,7 +108,6 @@ public class CadastroActivity extends AppCompatActivity {
 
                                 setUsuarioSQL();
                                 setUsuarioORM();
-                                setDataPreferences();
 
                                 new Handler().postDelayed(new Runnable() {
                                     @Override
@@ -276,33 +275,48 @@ public class CadastroActivity extends AppCompatActivity {
 
     public void setUsuarioSQL() {
 
-        usuario.setNome(editNomeCompleto.getText().toString().toUpperCase());
-        usuario.setCpfCnpj(editCpfCnpj.getText().toString());
-        usuario.setLogradouro(editEndereco.getText().toString().toUpperCase());
-        usuario.setComplemento(editComplementoEnd.getText().toString().toUpperCase());
-        usuario.setTelefone(editTelefone.getText().toString());
-        usuario.setEmail(editCadastroEmail.getText().toString());
-        usuario.setSenha(AppUtil.criptografarPass(editSenha.getText().toString()));
-        usuario.setDataInclusao(AppUtil.getDataFormat());
-        usuario.setPessoaFisica(switchPjPF.isChecked());
+        try{
+            usuario.setNome(editNomeCompleto.getText().toString().toUpperCase());
+            usuario.setCpfCnpj(editCpfCnpj.getText().toString());
+            usuario.setLogradouro(editEndereco.getText().toString().toUpperCase());
+            usuario.setComplemento(editComplementoEnd.getText().toString().toUpperCase());
+            usuario.setTelefone(editTelefone.getText().toString());
+            usuario.setEmail(editCadastroEmail.getText().toString());
+            usuario.setSenha(AppUtil.criptografarPass(editSenha.getText().toString()));
+            usuario.setDataInclusao(AppUtil.getDataFormat());
+            usuario.setPessoaFisica(switchPjPF.isChecked());
 
-        controller.insertObject(usuario);
+            controller.insertObject(usuario);
+
+            setDataPreferences(true);
+        }catch(Exception err){
+            Toast.makeText(getApplicationContext(),"Erro ao gravar os dados SQLite",Toast.LENGTH_LONG).show();
+            Log.e(AppUtil.TAG,"[CadastroActivity - setUsuarioSQL] Erro ao gravar os dados SQLite "+err.getMessage());
+            setDataPreferences(false);
+        }
+
 
     }
 
     public void setUsuarioORM() {
 
-        usuarioORM.setNome(editNomeCompleto.getText().toString().toUpperCase());
-        usuarioORM.setCpfCnpj(editCpfCnpj.getText().toString());
-        usuarioORM.setLogradouro(editEndereco.getText().toString().toUpperCase());
-        usuarioORM.setComplemento(editComplementoEnd.getText().toString().toUpperCase());
-        usuarioORM.setTelefone(editTelefone.getText().toString());
-        usuarioORM.setEmail(editCadastroEmail.getText().toString());
-        usuarioORM.setSenha(AppUtil.criptografarPass(editSenha.getText().toString()));
-        usuarioORM.setDataInclusao(AppUtil.getDataFormat());
-        usuarioORM.setPessoaFisica(switchPjPF.isChecked());
+        try{
+            usuarioORM.setNome(editNomeCompleto.getText().toString().toUpperCase());
+            usuarioORM.setCpfCnpj(editCpfCnpj.getText().toString());
+            usuarioORM.setLogradouro(editEndereco.getText().toString().toUpperCase());
+            usuarioORM.setComplemento(editComplementoEnd.getText().toString().toUpperCase());
+            usuarioORM.setTelefone(editTelefone.getText().toString());
+            usuarioORM.setEmail(editCadastroEmail.getText().toString());
+            usuarioORM.setSenha(AppUtil.criptografarPass(editSenha.getText().toString()));
+            usuarioORM.setDataInclusao(AppUtil.getDataFormat());
+            usuarioORM.setPessoaFisica(switchPjPF.isChecked());
 
-        controllerORM.insertORM(usuarioORM);
+            controllerORM.insertORM(usuarioORM);
+        }catch(Exception err){
+            Toast.makeText(getApplicationContext(),"Erro ao gravar os dados Realm",Toast.LENGTH_LONG).show();
+            Log.e(AppUtil.TAG,"[CadastroActivity - setUsuarioORM] Erro ao gravar os dados Realm "+err.getMessage());
+            setDataPreferences(false);
+        }
 
     }
 
@@ -364,32 +378,34 @@ public class CadastroActivity extends AppCompatActivity {
 
     }
 
-    private void setDataPreferences() {
+    private void setDataPreferences(boolean idGravarShared) {
 
-        preferencesCadastro = getSharedPreferences(AppUtil.PREF_APP, MODE_PRIVATE);
-        SharedPreferences.Editor data = preferencesCadastro.edit();
+        if(idGravarShared){
+            preferencesCadastro = getSharedPreferences(AppUtil.PREF_APP, MODE_PRIVATE);
+            SharedPreferences.Editor data = preferencesCadastro.edit();
 
-        try {
-            if (switchPjPF.isChecked()) {
-                data.putString("tipo_pessoa", "1");
-            } else {
-                data.putString("tipo_pessoa", "0");
+            try {
+                if (switchPjPF.isChecked()) {
+                    data.putString("tipo_pessoa", "1");
+                } else {
+                    data.putString("tipo_pessoa", "0");
+                }
+                data.putString("descricao", editNomeCompleto.getText().toString().toUpperCase());
+                data.putString("documento", AppUtil.formatarDocumento(editCpfCnpj.getText().toString(), editCpfCnpj.getText().toString().length()));
+                data.putString("logradouro", editEndereco.getText().toString().toUpperCase());
+                data.putString("complemento", editComplementoEnd.getText().toString().toUpperCase());
+                data.putString("telefone", editTelefone.getText().toString());
+                data.putString("email", editCadastroEmail.getText().toString());
+                data.putString("senha", AppUtil.criptografarPass(editSenha.getText().toString()));
+                data.putString("dataInclusao", AppUtil.getDataFormat());
+
+
+                data.apply();
+            } catch (SecurityException err) {
+                Log.e(AppUtil.TAG, "Erro ao gravar os dados no sharedPreferens " + err.getMessage());
+            } catch (Exception err) {
+                Log.e(AppUtil.TAG, "Erro ao genérico no sharedPreferens " + err.getMessage());
             }
-            data.putString("descricao", editNomeCompleto.getText().toString().toUpperCase());
-            data.putString("documento", AppUtil.formatarDocumento(editCpfCnpj.getText().toString(), editCpfCnpj.getText().toString().length()));
-            data.putString("logradouro", editEndereco.getText().toString().toUpperCase());
-            data.putString("complemento", editComplementoEnd.getText().toString().toUpperCase());
-            data.putString("telefone", editTelefone.getText().toString());
-            data.putString("email", editCadastroEmail.getText().toString());
-            data.putString("senha", AppUtil.criptografarPass(editSenha.getText().toString()));
-            data.putString("dataInclusao", AppUtil.getDataFormat());
-
-
-            data.apply();
-        } catch (SecurityException err) {
-            Log.e(AppUtil.TAG, "Erro ao gravar os dados no sharedPreferens " + err.getMessage());
-        } catch (Exception err) {
-            Log.e(AppUtil.TAG, "Erro ao genérico no sharedPreferens " + err.getMessage());
         }
 
     }
