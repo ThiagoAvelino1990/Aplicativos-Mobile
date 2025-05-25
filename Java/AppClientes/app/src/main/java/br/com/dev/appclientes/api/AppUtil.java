@@ -315,5 +315,12 @@ public class AppUtil {
         return valor = valor.replaceAll("[^\\d]","");
     }
 
+    public static boolean validaEmail(String email){
+        if (email.indexOf("@.com") > 0){
+            return true;
+        }
+        return false;
+    }
+
 
 }
