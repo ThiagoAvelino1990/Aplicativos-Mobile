@@ -5,7 +5,10 @@ import static android.content.Context.MODE_PRIVATE;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.SQLException;
+import android.widget.Toast;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -129,5 +132,11 @@ public class ClienteController extends AppDataBase implements ICRUD<Cliente> {
         }
 
         return clientList;
+    }
+
+    public ArrayList<Cliente> getallClientesByIdUser(int idUser){
+
+            return getClientesByIdUsuario(ClienteDataModel.TABELA, idUser);
+
     }
 }

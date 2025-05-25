@@ -119,7 +119,7 @@ public class AppDataBase extends SQLiteOpenHelper {
         return retorno;
     }
 
-
+    /*--------------- Dados Cliente ---------------*/
     public List<Cliente> getAllClientes(String nomeTabela){
 
         db = getWritableDatabase();
@@ -227,6 +227,68 @@ public class AppDataBase extends SQLiteOpenHelper {
 
         return dadosTabela;
     }
+
+    /**
+     *
+     * @param nomeTabela = CLIENTE
+     * @param id = IDUSUARIO
+     * @return retorna a lista de clientes do usuário logado no app
+     */
+    public ArrayList<Cliente> getClientesByIdUsuario(String nomeTabela, int id){
+
+        db = getWritableDatabase();
+
+        Cursor cursor;
+
+        Cliente cliente;
+
+        ArrayList<Cliente> dadosCliente = new ArrayList<>();
+
+        try{
+            cursor = db.rawQuery("SELECT * FROM "+nomeTabela+"WHERE IDUSUARIO = ?",new String[]{String.valueOf(id)});
+
+            if(cursor.moveToFirst()){
+
+                do{
+
+                    cliente = new Cliente();
+
+                    cliente.setId(cursor.getInt(cursor.getColumnIndexOrThrow("ID")));
+                    cliente.setNome(cursor.getString(cursor.getColumnIndexOrThrow("NOME")));
+
+                    //TODO:AJUSTAR PARA BUSCAR MAIS QUANDO QUANDO CORRIGIR O LISTVIEW
+                    /*cliente.setTelefone(cursor.getString(cursor.getColumnIndexOrThrow("TELEFONE")));
+                    cliente.setEmail(cursor.getString(cursor.getColumnIndexOrThrow("EMAIL")));
+                    cliente.setCep(cursor.getInt(cursor.getColumnIndexOrThrow("CEP")));
+                    cliente.setLogradouro(cursor.getString(cursor.getColumnIndexOrThrow("LOGRADOURO")));
+                    cliente.setComplemento(cursor.getString(cursor.getColumnIndexOrThrow("COMPLEMENTO")));
+                    cliente.setNumero(cursor.getString(cursor.getColumnIndexOrThrow("NUMERO")));
+                    cliente.setBairro(cursor.getString(cursor.getColumnIndexOrThrow("BAIRRO")));
+                    cliente.setCidade(cursor.getString(cursor.getColumnIndexOrThrow("CIDADE")));
+                    cliente.setEstado(cursor.getString(cursor.getColumnIndexOrThrow("ESTADO")));
+                    cliente.setPais(cursor.getString(cursor.getColumnIndexOrThrow("PAIS")));
+
+                    if(cursor.getColumnIndexOrThrow("TERMOS_DE_USO") > 0){
+                        cliente.setTermosDeUso(false);
+                    }else{
+                        cliente.setTermosDeUso(true);
+                    }
+                    */
+
+                    dadosCliente.add(cliente);
+
+                }while(cursor.moveToNext());
+
+            }
+        }catch(SQLException e){
+            Log.e(AppUtil.TAG,"Erro ao listar os dados por IDUSUARIO [AppDataBase - getClientesByIdUsuario] "+e.getMessage());
+        }
+
+        return dadosCliente;
+    }
+
+
+    /*--------------- Dados Usuario ---------------*/
 
     public List<Usuario> getUsuarioByEmail(String nomeTabela, String email){
         db = getWritableDatabase();
