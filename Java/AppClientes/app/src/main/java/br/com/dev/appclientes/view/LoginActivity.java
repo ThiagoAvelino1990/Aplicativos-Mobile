@@ -123,24 +123,35 @@ public class LoginActivity extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences(AppUtil.PREF_APP, MODE_PRIVATE);
 
-        String senhaCriptDigitada = criptografarSenhaDigitada(editLoginSenha.getText().toString());
-
         boolean isDadosOK = true;
 
-        if (editLoginEmail.getText().toString().isEmpty() || !editLoginEmail.getText().toString().equals(sharedPreferences.getString("email", ""))) {
-            editLoginEmail.setError("*");
-            editLoginEmail.requestFocus();
-            txtVerifiqueDados.setVisibility(View.VISIBLE);
-            btnEsqueceuSenha.setVisibility(View.VISIBLE);
+        List<Usuario> usuarioList = new ArrayList<>();
+        try{
+            usuarioList = usuarioController.readObjectByEmail(ClienteDataModel.TABELA,editLoginEmail.getText().toString());
+            for (Usuario usuario: usuarioList) {
+                if(usuario.getEmail().isEmpty()){
+                    editLoginEmail.setError("*");
+                    editLoginEmail.requestFocus();
+                    txtVerifiqueDados.setVisibility(View.VISIBLE);
+                    btnEsqueceuSenha.setVisibility(View.VISIBLE);
+                    isDadosOK = false;
+                    Toast.makeText(getApplicationContext(),"Verifique os dados e tente novamente", Toast.LENGTH_SHORT).show();
+                    break;
+                } else if (usuario.getSenha().isEmpty()) {
+                    editLoginSenha.setError("*");
+                    editLoginSenha.requestFocus();
+                    txtVerifiqueDados.setVisibility(View.VISIBLE);
+                    btnEsqueceuSenha.setVisibility(View.VISIBLE);
+                    isDadosOK = false;
+                    Toast.makeText(getApplicationContext(),"Verifique os dados e tente novamente", Toast.LENGTH_SHORT).show();
+                } else {
+                    saveDataSharedPreferences();
+                }
+            }
+        }catch(Exception err){
+            Toast.makeText(getApplicationContext(),"Erro ao validar os dados",Toast.LENGTH_LONG).show();
             isDadosOK = false;
-        } else if (editLoginSenha.getText().toString().isEmpty() || !senhaCriptDigitada.equals(sharedPreferences.getString("senha", ""))) {
-            editLoginSenha.setError("*");
-            editLoginSenha.requestFocus();
-            txtVerifiqueDados.setVisibility(View.VISIBLE);
-            btnEsqueceuSenha.setVisibility(View.VISIBLE);
-            isDadosOK = false;
-        } else {
-            saveDataSharedPreferences();
+            Log.e(AppUtil.TAG,"[LoginActivity - validarDadosFormulario]" + err.getMessage());
         }
 
         return isDadosOK;
@@ -196,68 +207,76 @@ public class LoginActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences(AppUtil.PREF_APP, MODE_PRIVATE);
         SharedPreferences.Editor dadosSalvos = sharedPreferences.edit();
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-        builder.setTitle("Atualizar Senha");
+        try{
+            AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+            builder.setTitle("Atualizar Senha");
 
 
-        //Criando o layout
-        LinearLayout linearLayout = new LinearLayout(LoginActivity.this);
-        linearLayout.setOrientation(LinearLayout.VERTICAL);
-        linearLayout.setPadding(50, 40, 50, 10);
+            //Criando o layout
+            LinearLayout linearLayout = new LinearLayout(LoginActivity.this);
+            linearLayout.setOrientation(LinearLayout.VERTICAL);
+            linearLayout.setPadding(50, 40, 50, 10);
 
-        //Campos para senha
-        final EditText novaSenha = new EditText(LoginActivity.this);
-        novaSenha.setHint("Nova senha");
-        novaSenha.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-        linearLayout.addView(novaSenha);
+            //Campos para senha
+            final EditText novaSenha = new EditText(LoginActivity.this);
+            novaSenha.setHint("Nova senha");
+            novaSenha.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            linearLayout.addView(novaSenha);
 
-        //Confirmação da senha
-        final EditText confirmarSenha = new EditText(LoginActivity.this);
-        confirmarSenha.setHint("Confirmar senha");
-        confirmarSenha.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-        linearLayout.addView(confirmarSenha);
+            //Confirmação da senha
+            final EditText confirmarSenha = new EditText(LoginActivity.this);
+            confirmarSenha.setHint("Confirmar senha");
+            confirmarSenha.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            linearLayout.addView(confirmarSenha);
 
-        builder.setView(linearLayout);
+            builder.setView(linearLayout);
 
-        builder.setPositiveButton("OK", (dialog, which) -> {
-            String senhaNova = novaSenha.getText().toString();
-            String senhaConfirmar = confirmarSenha.getText().toString();
+            builder.setPositiveButton("OK", (dialog, which) -> {
+                String senhaNova = novaSenha.getText().toString();
+                String senhaConfirmar = confirmarSenha.getText().toString();
 
-            if (senhaNova.isEmpty() || (!senhaNova.equals(senhaConfirmar))) {
-                Toast.makeText(LoginActivity.this, "As senhas não conferem", Toast.LENGTH_LONG).show();
-            } else {
-                try {
-                    dadosSalvos.putString("senha", AppUtil.criptografarPass(senhaConfirmar));
-                    dadosSalvos.apply();
+                if (senhaNova.isEmpty() || (!senhaNova.equals(senhaConfirmar))) {
+                    Toast.makeText(LoginActivity.this, "As senhas não conferem", Toast.LENGTH_LONG).show();
+                } else {
+                    try {
+                        dadosSalvos.putString("senha", AppUtil.criptografarPass(senhaConfirmar));
+                        dadosSalvos.apply();
 
-                    editLoginSenha.setText(sharedPreferences.getString("senha", null));
-
-
-                    usuario.setId(Integer.parseInt(sharedPreferences.getString("idUsuario", String.valueOf(-1))));
-                    usuario.setEmail(sharedPreferences.getString("email", null));
-                    usuario.setSenha(sharedPreferences.getString("senha", null));
-                    usuario.setAtualizaSenha("N");
-
-                    usuarioController.insertObject(usuario);
-
-                    //Limpar o campo de senha
-                    txtLoginSenha.setText("");
-
-                    Toast.makeText(LoginActivity.this, "Senha atualizada com sucesso", Toast.LENGTH_LONG).show();
+                        editLoginSenha.setText(sharedPreferences.getString("senha", null));
 
 
-                } catch (Exception err) {
-                    Log.e(AppUtil.TAG, "Erro ao atualizar nova senha " + err.getMessage());
+                        usuario.setId(Integer.parseInt(sharedPreferences.getString("idUsuario", String.valueOf(-1))));
+                        usuario.setEmail(sharedPreferences.getString("email", null));
+                        usuario.setSenha(sharedPreferences.getString("senha", null));
+                        usuario.setAtualizaSenha("N");
+
+                        usuarioController.insertObject(usuario);
+
+                        //Limpar o campo de senha
+                        txtLoginSenha.setText("");
+
+                        Toast.makeText(LoginActivity.this, "Senha atualizada com sucesso", Toast.LENGTH_LONG).show();
+
+
+                    } catch (Exception err) {
+                        Log.e(AppUtil.TAG, "Erro ao atualizar nova senha " + err.getMessage());
+                    }
+
                 }
+            });
 
-            }
-        });
+            builder.setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss());
 
-        builder.setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss());
+            AlertDialog alertDialog = builder.create();
 
-        AlertDialog alertDialog = builder.create();
-
-        alertDialog.show();
+            alertDialog.show();
+        }catch(NullPointerException err){
+            Toast.makeText(getApplicationContext(),"Não foi possível realizar a troca de senha.",Toast.LENGTH_LONG).show();
+            Log.e(AppUtil.TAG,"Não foi possível realizar a troca de senha(NullPointerException).[LoginActivity - atualizarSenha] "+err.getMessage());
+        }catch(Exception err){
+            Toast.makeText(getApplicationContext(),"Não foi possível criar a tela para troca de senha.",Toast.LENGTH_LONG).show();
+            Log.e(AppUtil.TAG,"Não foi possível realizar a troca de senha.[LoginActivity - atualizarSenha] "+err.getMessage());
+        }
     }
 
 

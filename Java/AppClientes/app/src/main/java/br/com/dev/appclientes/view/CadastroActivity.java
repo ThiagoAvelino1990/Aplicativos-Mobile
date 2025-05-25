@@ -329,7 +329,7 @@ public class CadastroActivity extends AppCompatActivity {
             editNomeCompleto.requestFocus();
             editNomeCompleto.setError("*");
             Toast.makeText(CadastroActivity.this, "* Nome não pode ser vazio", Toast.LENGTH_LONG).show();
-        } else if (editCadastroEmail.getText().toString().isEmpty()) {
+        } else if (editCadastroEmail.getText().toString().isEmpty() || !AppUtil.validaEmail(editCadastroEmail.getText().toString())) {
             isDadosOK = false;
             editCadastroEmail.requestFocus();
             editCadastroEmail.setError("*");

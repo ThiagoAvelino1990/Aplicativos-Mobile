@@ -316,7 +316,7 @@ public class AppUtil {
     }
 
     public static boolean validaEmail(String email){
-        if (email.indexOf("@.com") > 0){
+        if (email.contains("@.com")){
             return true;
         }
         return false;
