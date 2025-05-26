@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import br.com.dev.appclientes.R;
+import br.com.dev.appclientes.adapter.ClienteAdapter;
 import br.com.dev.appclientes.api.AppUtil;
 import br.com.dev.appclientes.controller.ClienteController;
 import br.com.dev.appclientes.model.Cliente;
@@ -34,17 +35,19 @@ public class ListarClientesCardsFragment extends Fragment {
 
     ListView listViewCliente;
 
-    List<Cliente> clienteList;
+    ArrayList<Cliente> clienteList;
 
     List<String> clienteListString;
 
-    ArrayAdapter<String> clienteAdapter;
+    //ArrayAdapter<String> clienteAdapter;
 
     ArrayList<HashMap<String, String>> filtroClientes;
 
     ClienteController clienteController;
 
     Cliente cliente;
+
+    ClienteAdapter clienteAdapter;
 
     public ListarClientesCardsFragment() {
     }
@@ -61,28 +64,21 @@ public class ListarClientesCardsFragment extends Fragment {
 
         view =  inflater.inflate(R.layout.fragment_listar_cliente_cards, container, false);
 
-        TextView txtTitulo = view.findViewById(R.id.txtViewCliente);
-
-        txtTitulo.setText(R.string.lista_de_clientes_cards);
-
-        // Trocar a cor da propriedade texto (setTextColor)
-        txtTitulo.setTextColor(ColorStateList.valueOf(Color.CYAN));
+        editPesquisarCliente = view.findViewById(R.id.editPesquisarCliente);
+        clienteController = new ClienteController(getContext());
 
         //Casting de ListView
         listViewCliente = (ListView) view.findViewById(R.id.listViewCliente);
 
-        editPesquisarCliente = view.findViewById(R.id.editPesquisarCliente);
-
-        clienteController = new ClienteController(getContext());
-        clienteList = clienteController.readObject();
-        clienteListString = clienteController.getAllClientesListView();
+        clienteList = clienteController.getallClientesByIdUser(1);
 
         /*configurar o adpter*/
-        clienteAdapter = new ArrayAdapter<>(getContext(), R.layout.fragment_listar_cliente_item, R.id.txtViewItemCliente, clienteListString);
+        clienteAdapter = new ClienteAdapter(clienteList, getContext());
 
         /*Injetar o adpter no listView*/
         listViewCliente.setAdapter(clienteAdapter);
 
+        //clienteListString = clienteController.getAllClientesListView();
 
         editPesquisarCliente.addTextChangedListener(new TextWatcher() {
             @Override

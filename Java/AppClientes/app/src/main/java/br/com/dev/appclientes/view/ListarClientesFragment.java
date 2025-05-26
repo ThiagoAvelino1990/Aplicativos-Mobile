@@ -77,8 +77,9 @@ public class ListarClientesFragment extends Fragment {
         clienteList = clienteController.readObject();
         clienteListString = clienteController.getAllClientesListView();
 
+        //TODO: AJUSTAR PARA UTILIZAR A CLASSE ClienteAdapter OU manter para ter duas regras diferentes para estudo
         /*configurar o adpter*/
-        clienteAdapter = new ArrayAdapter<>(getContext(), R.layout.fragment_listar_cliente_item, R.id.txtViewItemCliente, clienteListString);
+        //clienteAdapter = new ArrayAdapter<>(getContext(), R.layout.fragment_listar_cliente_item, R.id.txtViewItemCliente, clienteListString);
 
         /*Injetar o adpter no listView*/
         listViewCliente.setAdapter(clienteAdapter);
