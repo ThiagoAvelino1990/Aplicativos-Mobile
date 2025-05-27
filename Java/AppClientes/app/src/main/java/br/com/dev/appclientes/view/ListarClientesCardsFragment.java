@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -52,10 +53,12 @@ public class ListarClientesCardsFragment extends Fragment {
     public ListarClientesCardsFragment() {
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        initComponentes();
     }
 
     @Override
@@ -102,6 +105,10 @@ public class ListarClientesCardsFragment extends Fragment {
         });
 
         return view;
+    }
+
+    public void initComponentes(){
+
     }
 
 

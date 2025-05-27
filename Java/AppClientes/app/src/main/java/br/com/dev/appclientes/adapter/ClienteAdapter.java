@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +30,7 @@ public class ClienteAdapter extends ArrayAdapter<Cliente> implements View.OnClic
     private static class ViewHolder{
         //Somente os componentes iremos utilizar
         TextView txtViewDescricao, txtViewDocumento,txtViewTelefone;
+        ImageView imgEye, imgEdit, imgDelete;
     }
 
     public ClienteAdapter(ArrayList<Cliente> dataSet, Context context) {
