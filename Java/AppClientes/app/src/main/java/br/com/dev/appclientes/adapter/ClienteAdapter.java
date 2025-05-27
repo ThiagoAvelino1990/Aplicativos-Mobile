@@ -40,6 +40,54 @@ public class ClienteAdapter extends ArrayAdapter<Cliente> implements View.OnClic
 
     }
 
+    @NonNull
+    @Override
+    public View getView(int position, View convertView, @NonNull ViewGroup parent){
+
+        Cliente cliente = getItem(position);
+
+        ViewHolder dadosLinhaLista;
+
+        if(convertView == null){
+            dadosLinhaLista = new ViewHolder();
+
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+
+            convertView = inflater.inflate(R.layout.fragment_listar_cliente_item,parent,false);
+
+            //Inicializa os componentes
+            dadosLinhaLista.txtViewDescricao = convertView.findViewById(R.id.txtViewDescricao);
+            dadosLinhaLista.txtViewDocumento = convertView.findViewById(R.id.txtViewDocumento);
+            dadosLinhaLista.txtViewTelefone = convertView.findViewById(R.id.txtViewTelefone);
+            dadosLinhaLista.imgEye = convertView.findViewById(R.id.imgEye);
+            dadosLinhaLista.imgEdit = convertView.findViewById(R.id.imgEdit);
+            dadosLinhaLista.imgDelete = convertView.findViewById(R.id.imgDelete);
+
+            convertView.setTag(dadosLinhaLista);
+
+        }else{
+            dadosLinhaLista = (ViewHolder) convertView.getTag();
+        }
+
+        //Popular os campos
+        dadosLinhaLista.txtViewDocumento.setText(cliente.getDocumento());
+        dadosLinhaLista.txtViewDescricao.setText(cliente.getNome());
+        dadosLinhaLista.txtViewTelefone.setText(cliente.getTelefone());
+
+        //Instanciar imagens
+        dadosLinhaLista.imgEye.setOnClickListener(this);
+        dadosLinhaLista.imgEye.setTag(position);
+
+        dadosLinhaLista.imgEdit.setOnClickListener(this);
+        dadosLinhaLista.imgEdit.setTag(position);
+
+        dadosLinhaLista.imgDelete.setOnClickListener(this);
+        dadosLinhaLista.imgDelete.setTag(position);
+
+
+
+        return convertView;
+    }
 
     @Override
     public void onClick(View v) {
@@ -49,47 +97,17 @@ public class ClienteAdapter extends ArrayAdapter<Cliente> implements View.OnClic
 
         Cliente cliente = (Cliente) objeto; // Cast do objeto clicado para transformar em um Cliente(Polimorfismo)
 
-       /* switch ((v.getId())){
-            Snackbar.make(v,"Click...",Snackbar.LENGTH_LONG).setAction("No action",null).show();
+        int id = v.getId();
 
-            break;
-        }*/
-
-
-    }
-
-    @NonNull
-    @Override
-    public View getView(int position, View dataSet, @NonNull ViewGroup parent){
-
-        Cliente cliente = getItem(position);
-
-        ViewHolder dadosLinhaLista;
-
-        if(dataSet == null){
-            dadosLinhaLista = new ViewHolder();
-
-            LayoutInflater inflater = LayoutInflater.from(getContext());
-
-            dataSet = inflater.inflate(R.layout.fragment_listar_cliente_item,parent,false);
-
-            //Inicializa os componentes
-            dadosLinhaLista.txtViewDescricao = dataSet.findViewById(R.id.txtViewDescricao);
-            dadosLinhaLista.txtViewDocumento = dataSet.findViewById(R.id.txtViewDocumento);
-            dadosLinhaLista.txtViewTelefone = dataSet.findViewById(R.id.txtViewTelefone);
-
-            dataSet.setTag(dadosLinhaLista);
-
-        }else{
-            dadosLinhaLista = (ViewHolder) dataSet.getTag();
+        if(id == R.id.imgEye){
+            //Criar alert dialog
+        }else if (id == R.id.imgEdit){
+            //Criar alert dialog
+        }else if (id == R.id.imgDelete){
+            //Criar alert dialog
         }
 
-        //Popular os campos
-        dadosLinhaLista.txtViewDocumento.setText(cliente.getDocumento());
-        dadosLinhaLista.txtViewDescricao.setText(cliente.getNome());
-        dadosLinhaLista.txtViewTelefone.setText(cliente.getTelefone());
-
-        return dataSet;
     }
+
 
 }
