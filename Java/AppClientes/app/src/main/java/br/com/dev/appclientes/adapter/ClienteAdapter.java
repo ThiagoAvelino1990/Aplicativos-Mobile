@@ -1,6 +1,7 @@
 package br.com.dev.appclientes.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -17,14 +19,15 @@ import com.shashank.sony.fancydialoglib.FancyAlertDialog;
 import java.util.ArrayList;
 
 import br.com.dev.appclientes.R;
+import br.com.dev.appclientes.api.AppUtil;
 import br.com.dev.appclientes.controller.ClienteController;
+import br.com.dev.appclientes.datamodel.ClienteDataModel;
 import br.com.dev.appclientes.model.Cliente;
 
 public class ClienteAdapter extends ArrayAdapter<Cliente> implements View.OnClickListener{
 
     Context contexto;
     ArrayList<Cliente> dataSet;
-    ListView listView;
     ClienteController clienteController;
 
     private static class ViewHolder{
@@ -100,13 +103,22 @@ public class ClienteAdapter extends ArrayAdapter<Cliente> implements View.OnClic
         int id = v.getId();
 
         if(id == R.id.imgEye){
-            //Criar alert dialog
+            View parent = (View) v.getParent().getParent();
+            TextView txtViewDocumento = parent.findViewById(R.id.txtViewDocumento);
+            txtViewDocumento.setVisibility(View.VISIBLE);
+
+            TextView txtViewDescricao = parent.findViewById(R.id.txtViewDocumento);
+            txtViewDescricao.setVisibility(View.VISIBLE);
+
+            TextView txtViewTelefone = parent.findViewById(R.id.txtViewDocumento);
+            txtViewTelefone.setVisibility(View.VISIBLE);
+
         }else if (id == R.id.imgEdit){
-            //Criar alert dialog
+            //TODO : Criar tela para editar com nova activity
         }else if (id == R.id.imgDelete){
-            //Criar alert dialog
+
             FancyAlertDialog.Builder
-                    .with(getContext())
+                    .with(ClienteAdapter.this.getContext())
                     .setTitle("Deletar Cliente")
                     .setBackgroundColorRes(R.color.splash_bgr)
                     .setMessage("Deseja excluir o cliente ?")
@@ -119,7 +131,15 @@ public class ClienteAdapter extends ArrayAdapter<Cliente> implements View.OnClic
                     .setIcon(R.mipmap.ic_launcher_round, View.VISIBLE)
                     .onPositiveClicked(dialog -> {
                         clienteController = new ClienteController(getContext());
-                        //TODO: criar método em cliente controller para deletar por CPF/CNPJ e Id de usuário logado
+                        try {
+                            clienteController.deleteDados(ClienteDataModel.TABELA, cliente.getId());
+                            dataSet.remove(position);
+                            notifyDataSetChanged();
+                        }catch (Exception err){
+                            Toast.makeText(getContext(),"Erro ao excluir cliente ",Toast.LENGTH_LONG).show();
+                            Log.e(AppUtil.TAG,"Erro ao excluir clinte [ClienteAdapter - onClick] "+err.getMessage());
+
+                        }
                     })
                     .onNegativeClicked(dialog -> {})
                     .build()
