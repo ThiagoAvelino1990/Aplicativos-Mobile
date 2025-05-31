@@ -22,3 +22,13 @@ Aqui você encontrará uma coleção de projetos que desenvolvi para praticar co
 - AndroiStudio
 - SQLite
 - Realm
+
+.
+/Kotlin/
+├── AppGeolocalizacao/  # Localização utilizando maps
+└── AppQRCode/          # Gerador de QRCode
+
+## Tecnologias Utilizadas
+- Kotlin
+- AndroiStudio
+

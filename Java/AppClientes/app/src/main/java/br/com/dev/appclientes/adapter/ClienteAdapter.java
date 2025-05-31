@@ -8,11 +8,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.material.snackbar.Snackbar;
+import com.shashank.sony.fancydialoglib.Animation;
+import com.shashank.sony.fancydialoglib.FancyAlertDialog;
 
 import java.util.ArrayList;
 
@@ -105,6 +105,26 @@ public class ClienteAdapter extends ArrayAdapter<Cliente> implements View.OnClic
             //Criar alert dialog
         }else if (id == R.id.imgDelete){
             //Criar alert dialog
+            FancyAlertDialog.Builder
+                    .with(getContext())
+                    .setTitle("Deletar Cliente")
+                    .setBackgroundColorRes(R.color.splash_bgr)
+                    .setMessage("Deseja excluir o cliente ?")
+                    .setPositiveBtnText("Sim")
+                    .setPositiveBtnBackgroundRes(R.color.splash_bgr)
+                    .setNegativeBtnText("Não")
+                    .setNegativeBtnBackgroundRes(R.color.splash_bgr)
+                    .setAnimation(Animation.POP)
+                    .isCancellable(true)
+                    .setIcon(R.mipmap.ic_launcher_round, View.VISIBLE)
+                    .onPositiveClicked(dialog -> {
+                        clienteController = new ClienteController(getContext());
+                        //TODO: criar método em cliente controller para deletar por CPF/CNPJ e Id de usuário logado
+                    })
+                    .onNegativeClicked(dialog -> {})
+                    .build()
+                    .show();
+
         }
 
     }
