@@ -2,6 +2,10 @@ package br.com.dev.appclientes.model;
 
 import java.io.Serializable;
 
+/**
+ * A implementaçaõ do Serializable é para "transformar" os dados da classe em btyes.
+ * Com isso, é possível transportar os dados de uma activity para outra, ou para um fragment
+ */
 public class Cliente implements Serializable {
 
     private int id;

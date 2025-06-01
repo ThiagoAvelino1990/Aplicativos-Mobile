@@ -82,18 +82,18 @@ public class AlterarClienteCardsFragment extends Fragment {
         textView = view.findViewById(R.id.txtAltCliViewCliente);
         textView.setText("Alterar Dados Cliente");
 
-        editAltCliNomeCompleto = editAltCliNomeCompleto.findViewById(R.id.editAltCliNomeCompleto);
-        editAltCliTelefone = editAltCliTelefone.findViewById(R.id.editAltCliTelefone);
-        editAltCliEmail = editAltCliEmail.findViewById(R.id.editAltCliEmail);
-        editAltCliCep = editAltCliCep.findViewById(R.id.editAltCliCep);
-        editAltCliLogradouro = editAltCliLogradouro.findViewById(R.id.editAltCliLogradouro);
-        editAltCliComplemento = editAltCliComplemento.findViewById(R.id.editAltCliComplemento);
-        editAltCliNumero = editAltCliNumero.findViewById(R.id.editAltCliNumero);
-        editAltCliBairro = editAltCliBairro.findViewById(R.id.editAltCliBairro);
-        editAltCliCidade = editAltCliCidade.findViewById(R.id.editAltCliCidade);
-        editAltCliEstado = editAltCliEstado.findViewById(R.id.editAltCliEstado);
-        editAltCliPais = editAltCliPais.findViewById(R.id.editAltCliPais);
-        editAltCliDocumento = editAltCliDocumento.findViewById(R.id.editAltCliDocumento);
+        editAltCliNomeCompleto = view.findViewById(R.id.editAltCliNomeCompleto);
+        editAltCliTelefone = view.findViewById(R.id.editAltCliTelefone);
+        editAltCliEmail = view.findViewById(R.id.editAltCliEmail);
+        editAltCliCep = view.findViewById(R.id.editAltCliCep);
+        editAltCliLogradouro = view.findViewById(R.id.editAltCliLogradouro);
+        editAltCliComplemento = view.findViewById(R.id.editAltCliComplemento);
+        editAltCliNumero = view.findViewById(R.id.editAltCliNumero);
+        editAltCliBairro = view.findViewById(R.id.editAltCliBairro);
+        editAltCliCidade = view.findViewById(R.id.editAltCliCidade);
+        editAltCliEstado = view.findViewById(R.id.editAltCliEstado);
+        editAltCliPais = view.findViewById(R.id.editAltCliPais);
+        editAltCliDocumento = view.findViewById(R.id.editAltCliDocumento);
 
         cliente = new Cliente();
         clienteController = new ClienteController(getContext());
