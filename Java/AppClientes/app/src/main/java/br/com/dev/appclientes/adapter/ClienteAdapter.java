@@ -1,6 +1,8 @@
 package br.com.dev.appclientes.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +25,7 @@ import br.com.dev.appclientes.api.AppUtil;
 import br.com.dev.appclientes.controller.ClienteController;
 import br.com.dev.appclientes.datamodel.ClienteDataModel;
 import br.com.dev.appclientes.model.Cliente;
+import br.com.dev.appclientes.view.AlterarClienteCardsFragment;
 
 public class ClienteAdapter extends ArrayAdapter<Cliente> implements View.OnClickListener{
 
@@ -113,8 +116,19 @@ public class ClienteAdapter extends ArrayAdapter<Cliente> implements View.OnClic
             TextView txtViewTelefone = parent.findViewById(R.id.txtViewDocumento);
             txtViewTelefone.setVisibility(View.VISIBLE);
 
+            ImageView imgEye = parent.findViewById(R.id.imgEye);
+            imgEye.setImageResource(R.drawable.eye_hide);
+
         }else if (id == R.id.imgEdit){
-            //TODO : Criar tela para editar com nova activity
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent;
+                    intent = new Intent(getContext(), AlterarClienteCardsFragment.class);
+                    contexto.startActivity(intent);
+                }
+            },AppUtil.TIME_SPLASH);
+
         }else if (id == R.id.imgDelete){
 
             FancyAlertDialog.Builder
