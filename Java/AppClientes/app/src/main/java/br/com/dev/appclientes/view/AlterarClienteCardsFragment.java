@@ -23,6 +23,7 @@ import br.com.dev.appclientes.controller.UsuarioController;
 import br.com.dev.appclientes.model.Cliente;
 import br.com.dev.appclientes.model.ClienteORM;
 
+//TODO: criar lógica para alteração dos dados de um cliente
 public class AlterarClienteCardsFragment extends Fragment {
 
     // Fragment - Classe responsável pela camada de VISÃO (Layout)
@@ -30,8 +31,8 @@ public class AlterarClienteCardsFragment extends Fragment {
     TextView textView;
 
     EditText editAltCliNomeCompleto, editAltCliTelefone, editAltCliEmail, editAltCliCep,
-            editAltCliLogradouro, editAltCliComplemento, editAltCliNumero, editAltCliBairro,
-            editAltCliCidade, editAltCliEstado, editAltCliPais, editAltCliDocumento;
+             editAltCliLogradouro, editAltCliComplemento, editAltCliNumero, editAltCliBairro,
+             editAltCliCidade, editAltCliEstado, editAltCliPais, editAltCliDocumento;
 
 
     AppCompatButton btnAltCliCancelar, btnAltCliSalvar;
@@ -52,15 +53,19 @@ public class AlterarClienteCardsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if(getArguments() != null){
+            cliente = (Cliente) getArguments().getSerializable("cliente");
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        view =  inflater.inflate(R.layout.fragment_adicionar_cliente_cards, container, false);
+        view =  inflater.inflate(R.layout.fragment_alterar_cliente_cards, container, false);
 
         inicializarComponentesDeLayout();
+        eventoButton();
 
         return view;
     }
@@ -74,11 +79,21 @@ public class AlterarClienteCardsFragment extends Fragment {
      */
     public void inicializarComponentesDeLayout(){
 
-        textView = view.findViewById(R.id.txtViewCliente);
-        textView.setText(R.string.adicionar_cliente_cards);
+        textView = view.findViewById(R.id.txtAltCliViewCliente);
+        textView.setText("Alterar Dados Cliente");
 
-
-
+        editAltCliNomeCompleto = editAltCliNomeCompleto.findViewById(R.id.editAltCliNomeCompleto);
+        editAltCliTelefone = editAltCliTelefone.findViewById(R.id.editAltCliTelefone);
+        editAltCliEmail = editAltCliEmail.findViewById(R.id.editAltCliEmail);
+        editAltCliCep = editAltCliCep.findViewById(R.id.editAltCliCep);
+        editAltCliLogradouro = editAltCliLogradouro.findViewById(R.id.editAltCliLogradouro);
+        editAltCliComplemento = editAltCliComplemento.findViewById(R.id.editAltCliComplemento);
+        editAltCliNumero = editAltCliNumero.findViewById(R.id.editAltCliNumero);
+        editAltCliBairro = editAltCliBairro.findViewById(R.id.editAltCliBairro);
+        editAltCliCidade = editAltCliCidade.findViewById(R.id.editAltCliCidade);
+        editAltCliEstado = editAltCliEstado.findViewById(R.id.editAltCliEstado);
+        editAltCliPais = editAltCliPais.findViewById(R.id.editAltCliPais);
+        editAltCliDocumento = editAltCliDocumento.findViewById(R.id.editAltCliDocumento);
 
         cliente = new Cliente();
         clienteController = new ClienteController(getContext());
@@ -97,10 +112,6 @@ public class AlterarClienteCardsFragment extends Fragment {
             public void onClick(View view) {
 
                 boolean isDadosOK = true;
-
-
-
-
 
                 if(isDadosOK){
 
@@ -147,9 +158,9 @@ public class AlterarClienteCardsFragment extends Fragment {
 
                 if(isDadosOK){
 
-                    if(setClienteSQLLite()){
+                    if(!setClienteSQLLite()){
                         Toast.makeText(getContext(),"Erro ao salvar os dados SQLLITE...", Toast.LENGTH_LONG).show();
-                    }else if(setClienteORM()){
+                    }else if(!setClienteORM()){
                         Toast.makeText(getContext(),"Erro ao salvar os dados ORM...", Toast.LENGTH_LONG).show();
                     }else{
                         Toast.makeText(getContext(),"Dados salvos com sucesso...", Toast.LENGTH_LONG).show();

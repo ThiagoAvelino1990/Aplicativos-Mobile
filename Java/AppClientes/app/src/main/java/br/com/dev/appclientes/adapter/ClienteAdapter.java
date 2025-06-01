@@ -2,6 +2,7 @@ package br.com.dev.appclientes.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.shashank.sony.fancydialoglib.Animation;
 import com.shashank.sony.fancydialoglib.FancyAlertDialog;
@@ -110,24 +112,29 @@ public class ClienteAdapter extends ArrayAdapter<Cliente> implements View.OnClic
             TextView txtViewDocumento = parent.findViewById(R.id.txtViewDocumento);
             txtViewDocumento.setVisibility(View.VISIBLE);
 
-            TextView txtViewDescricao = parent.findViewById(R.id.txtViewDocumento);
+            TextView txtViewDescricao = parent.findViewById(R.id.txtViewDescricao);
             txtViewDescricao.setVisibility(View.VISIBLE);
 
-            TextView txtViewTelefone = parent.findViewById(R.id.txtViewDocumento);
+            TextView txtViewTelefone = parent.findViewById(R.id.txtViewTelefone);
             txtViewTelefone.setVisibility(View.VISIBLE);
 
             ImageView imgEye = parent.findViewById(R.id.imgEye);
             imgEye.setImageResource(R.drawable.eye_hide);
 
         }else if (id == R.id.imgEdit){
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Intent intent;
-                    intent = new Intent(getContext(), AlterarClienteCardsFragment.class);
-                    contexto.startActivity(intent);
-                }
-            },AppUtil.TIME_SPLASH);
+           AlterarClienteCardsFragment alterarClienteCardsFragment = new AlterarClienteCardsFragment();
+
+           //Passar os dados via Bundle
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("cliente", cliente);
+            alterarClienteCardsFragment.setArguments(bundle);
+
+            //Troca de tela(fragment)
+            ((AppCompatActivity) contexto).getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.content_fragment,alterarClienteCardsFragment)
+                    .addToBackStack(null)
+                    .commit();
 
         }else if (id == R.id.imgDelete){
 

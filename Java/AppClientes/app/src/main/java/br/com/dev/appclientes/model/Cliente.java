@@ -1,6 +1,8 @@
 package br.com.dev.appclientes.model;
 
-public class Cliente {
+import java.io.Serializable;
+
+public class Cliente implements Serializable {
 
     private int id;
     private String nome;
