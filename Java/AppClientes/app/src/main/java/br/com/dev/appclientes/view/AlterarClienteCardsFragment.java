@@ -29,13 +29,12 @@ public class AlterarClienteCardsFragment extends Fragment {
     View view;
     TextView textView;
 
-    EditText editNomeCompleto, editTelefone, editEmail, editCep, editLogradouro, editComplemento, editNumero, editBairro, editCidade, editEstado, editPais, editDocumento;
+    EditText editAltCliNomeCompleto, editAltCliTelefone, editAltCliEmail, editAltCliCep,
+            editAltCliLogradouro, editAltCliComplemento, editAltCliNumero, editAltCliBairro,
+            editAltCliCidade, editAltCliEstado, editAltCliPais, editAltCliDocumento;
 
-    CheckBox chkTermosDeUso;
 
-    AppCompatButton btnCancelar, btnSalvar;
-
-    SwitchCompat switchPjPFCli;
+    AppCompatButton btnAltCliCancelar, btnAltCliSalvar;
 
     Cliente cliente;
     ClienteController clienteController;
@@ -62,42 +61,12 @@ public class AlterarClienteCardsFragment extends Fragment {
         view =  inflater.inflate(R.layout.fragment_adicionar_cliente_cards, container, false);
 
         inicializarComponentesDeLayout();
-        btnSalvar(btnSalvar);
-        btnCancelar(btnCancelar);
-
-
-
-        switchPjPFCli.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if(switchPjPFCli.isChecked()){
-                switchPjPFCli.setText("Pessoa Jurídica");
-                editNomeCompleto.setHint("Razão Social");
-                editDocumento.setHint("CNPJ");
-                cleanComponent();
-            }else{
-                switchPjPFCli.setText("Pessoa Física");
-                editNomeCompleto.setHint("Nome Completo");
-                editDocumento.setHint("CPF");
-                cleanComponent();
-            }
-        });
 
         return view;
     }
 
     private void cleanComponent() {
-        editNomeCompleto.setText("");
-        editTelefone.setText("");
-        editEmail.setText("");
-        editCep.setText("");
-        editLogradouro.setText("");
-        editComplemento.setText("");
-        editNumero.setText("");
-        editBairro.setText("");
-        editCidade.setText("");
-        editBairro.setText("");
-        editEstado.setText("");
-        editPais.setText("");
-        editDocumento.setText("");
+
     }
 
     /**
@@ -109,25 +78,7 @@ public class AlterarClienteCardsFragment extends Fragment {
         textView.setText(R.string.adicionar_cliente_cards);
 
 
-        editNomeCompleto = view.findViewById(R.id.editNomeCompleto);
-        editTelefone = view.findViewById(R.id.editTelefone);
-        editEmail = view.findViewById(R.id.editEmail);
-        editCep = view.findViewById(R.id.editCep);
-        editLogradouro = view.findViewById(R.id.editLogradouro);
-        editComplemento = view.findViewById(R.id.editComplemento);
-        editNumero = view.findViewById(R.id.editNumero);
-        editBairro = view.findViewById(R.id.editBairro);
-        editCidade = view.findViewById(R.id.editCidade);
-        editEstado = view.findViewById(R.id.editEstado);
-        editPais = view.findViewById(R.id.editPais);
-        editDocumento = view.findViewById(R.id.editDocumento);
 
-        btnSalvar = view.findViewById(R.id.btnSalvar);
-        btnCancelar = view.findViewById(R.id.bntCancelar);
-
-        chkTermosDeUso = view.findViewById(R.id.chkTermosDeUso);
-
-        switchPjPFCli = view.findViewById(R.id.switchPjPFCli);
 
         cliente = new Cliente();
         clienteController = new ClienteController(getContext());
@@ -141,114 +92,25 @@ public class AlterarClienteCardsFragment extends Fragment {
 
     public void eventoButton(){
 
-        btnSalvar.setOnClickListener(new View.OnClickListener() {
+        btnAltCliSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 boolean isDadosOK = true;
 
-                if(TextUtils.isEmpty(editNomeCompleto.getText().toString())){
-                    isDadosOK = false;
-                    editNomeCompleto.setError("*");
-                    editNomeCompleto.requestFocus();
-                }
 
-                if(TextUtils.isEmpty(editTelefone.getText().toString())){
-                    isDadosOK = false;
-                    editTelefone.setError("*");
-                    editTelefone.requestFocus();
-                }
-
-                if(TextUtils.isEmpty(editEmail.getText().toString())){
-                    isDadosOK = false;
-                    editEmail.setError("*");
-                    editEmail.requestFocus();
-                }
-
-                if(TextUtils.isEmpty(editCep.getText().toString())){
-                    isDadosOK = false;
-                    editCep.setError("*");
-                    editCep.requestFocus();
-                }
-
-                if(TextUtils.isEmpty(editLogradouro.getText().toString())){
-                    isDadosOK = false;
-                    editLogradouro.setError("*");
-                    editLogradouro.requestFocus();
-                }
-
-                /** Removido. Complemento não deve ser um campo obrigatório
-                 *
-
-                if(TextUtils.isEmpty(editComplemento.getText().toString())){
-                    isDadosOK = false;
-                    editComplemento.setError("*");
-                    editComplemento.requestFocus();
-                }*/
-
-                if(TextUtils.isEmpty(editNumero.getText().toString())){
-                    isDadosOK = false;
-                    editNumero.setError("*");
-                    editNumero.requestFocus();
-                }
-
-                if(TextUtils.isEmpty(editBairro.getText().toString())){
-                    isDadosOK = false;
-                    editBairro.setError("*");
-                    editBairro.requestFocus();
-                }
-
-                if(TextUtils.isEmpty(editCidade.getText().toString())){
-                    isDadosOK = false;
-                    editCidade.setError("*");
-                    editCidade.requestFocus();
-                }
-
-                if(TextUtils.isEmpty(editEstado.getText().toString())){
-                    isDadosOK = false;
-                    editEstado.setError("*");
-                    editEstado.requestFocus();
-                }
-
-                if(TextUtils.isEmpty(editPais.getText().toString())){
-                    isDadosOK = false;
-                    editPais.setError("*");
-                    editPais.requestFocus();
-                }
 
 
 
                 if(isDadosOK){
 
-                    cliente.setNome(editNomeCompleto.getText().toString());
-                    cliente.setTelefone(editTelefone.getText().toString());
-                    cliente.setEmail(editEmail.getText().toString());
-                    cliente.setCep(Integer.parseInt(editCep.getText().toString()));
-                    cliente.setLogradouro(editLogradouro.getText().toString());
-                    cliente.setComplemento(editComplemento.getText().toString());
-                    cliente.setNumero(editNumero.getText().toString());
-                    cliente.setBairro(editBairro.getText().toString());
-                    cliente.setCidade(editCidade.getText().toString());
-                    cliente.setEstado(editEstado.getText().toString());
-                    cliente.setPais(editPais.getText().toString());
-                    cliente.setTermosDeUso(chkTermosDeUso.isChecked());
+
 
                     clienteController.insertObject(cliente);
 
 
                     /*Inclusão de dados ORM*/
-                    clienteORM.setNome(editNomeCompleto.getText().toString());
-                    clienteORM.setTelefone(editTelefone.getText().toString());
-                    clienteORM.setEmail(editEmail.getText().toString());
-                    clienteORM.setCep(Integer.parseInt(editCep.getText().toString()));
-                    clienteORM.setLogradouro(editLogradouro.getText().toString());
-                    clienteORM.setComplemento(editComplemento.getText().toString());
-                    clienteORM.setNumero(editNumero.getText().toString());
-                    clienteORM.setBairro(editBairro.getText().toString());
-                    clienteORM.setCidade(editCidade.getText().toString());
-                    clienteORM.setEstado(editEstado.getText().toString());
-                    clienteORM.setPais(editPais.getText().toString());
-                    clienteORM.setTermosDeUso(chkTermosDeUso.isChecked());
+
 
                     clienteORM.toString();
                     /** Verificar Erro ao salvar os dados
@@ -268,7 +130,7 @@ public class AlterarClienteCardsFragment extends Fragment {
 
 
     public void btnCancelar(View view) {
-        btnCancelar.setOnClickListener(new View.OnClickListener() {
+        btnAltCliCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -277,77 +139,10 @@ public class AlterarClienteCardsFragment extends Fragment {
     }
 
     public void btnSalvar(View view) {
-        btnSalvar.setOnClickListener(new View.OnClickListener() {
+        btnAltCliSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 boolean isDadosOK = true;
-
-                if(TextUtils.isEmpty(editNomeCompleto.getText().toString())){
-                    isDadosOK = false;
-                    editNomeCompleto.setError("*");
-                    editNomeCompleto.requestFocus();
-                }
-
-                if(TextUtils.isEmpty(editTelefone.getText().toString())){
-                    isDadosOK = false;
-                    editTelefone.setError("*");
-                    editTelefone.requestFocus();
-                }
-
-                if(TextUtils.isEmpty(editEmail.getText().toString())){
-                    isDadosOK = false;
-                    editEmail.setError("*");
-                    editEmail.requestFocus();
-                }
-
-                if(TextUtils.isEmpty(editCep.getText().toString())){
-                    isDadosOK = false;
-                    editCep.setError("*");
-                    editCep.requestFocus();
-                }
-
-                if(TextUtils.isEmpty(editLogradouro.getText().toString())){
-                    isDadosOK = false;
-                    editLogradouro.setError("*");
-                    editLogradouro.requestFocus();
-                }
-
-                if(TextUtils.isEmpty(editNumero.getText().toString())){
-                    isDadosOK = false;
-                    editNumero.setError("*");
-                    editNumero.requestFocus();
-                }
-
-                if(TextUtils.isEmpty(editBairro.getText().toString())){
-                    isDadosOK = false;
-                    editBairro.setError("*");
-                    editBairro.requestFocus();
-                }
-
-                if(TextUtils.isEmpty(editCidade.getText().toString())){
-                    isDadosOK = false;
-                    editCidade.setError("*");
-                    editCidade.requestFocus();
-                }
-
-                if(TextUtils.isEmpty(editEstado.getText().toString())){
-                    isDadosOK = false;
-                    editEstado.setError("*");
-                    editEstado.requestFocus();
-                }
-
-                if(TextUtils.isEmpty(editPais.getText().toString())){
-                    isDadosOK = false;
-                    editPais.setError("*");
-                    editPais.requestFocus();
-                }
-
-                if(TextUtils.isEmpty(editDocumento.getText().toString()) || !AppUtil.validaCnpjCpf(editDocumento.getText().toString())){
-                    isDadosOK = false;
-                    editDocumento.setHint("*");
-                    editDocumento.requestFocus();
-                }
-
 
 
                 if(isDadosOK){
@@ -372,19 +167,7 @@ public class AlterarClienteCardsFragment extends Fragment {
 
 
         try{
-            cliente.setNome(editNomeCompleto.getText().toString());
-            cliente.setTelefone(editTelefone.getText().toString());
-            cliente.setEmail(editEmail.getText().toString());
-            cliente.setDocumento(editDocumento.getText().toString());
-            cliente.setCep(Integer.parseInt(editCep.getText().toString()));
-            cliente.setLogradouro(editLogradouro.getText().toString());
-            cliente.setComplemento(editComplemento.getText().toString());
-            cliente.setNumero(editNumero.getText().toString());
-            cliente.setBairro(editBairro.getText().toString());
-            cliente.setCidade(editCidade.getText().toString());
-            cliente.setEstado(editEstado.getText().toString());
-            cliente.setPais(editPais.getText().toString());
-            cliente.setTermosDeUso(chkTermosDeUso.isChecked());
+
 
             clienteController.insertObject(cliente);
             return true;
@@ -397,18 +180,7 @@ public class AlterarClienteCardsFragment extends Fragment {
     public boolean setClienteORM(){
         try{
             /*Inclusão de dados ORM*/
-            clienteORM.setNome(editNomeCompleto.getText().toString());
-            clienteORM.setTelefone(editTelefone.getText().toString());
-            clienteORM.setEmail(editEmail.getText().toString());
-            clienteORM.setCep(Integer.parseInt(editCep.getText().toString()));
-            clienteORM.setLogradouro(editLogradouro.getText().toString());
-            clienteORM.setComplemento(editComplemento.getText().toString());
-            clienteORM.setNumero(editNumero.getText().toString());
-            clienteORM.setBairro(editBairro.getText().toString());
-            clienteORM.setCidade(editCidade.getText().toString());
-            clienteORM.setEstado(editEstado.getText().toString());
-            clienteORM.setPais(editPais.getText().toString());
-            clienteORM.setTermosDeUso(chkTermosDeUso.isChecked());
+
 
             clienteORM.toString();
 
