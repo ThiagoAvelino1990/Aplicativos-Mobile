@@ -22,6 +22,7 @@ import java.util.List;
 
 import br.com.dev.appclientes.R;
 import br.com.dev.appclientes.api.AppUtil;
+import br.com.dev.appclientes.api.AppUtilSharedPreferences;
 import br.com.dev.appclientes.controller.UsuarioController;
 import br.com.dev.appclientes.datamodel.ClienteDataModel;
 import br.com.dev.appclientes.datamodel.UsuarioDataModel;
@@ -96,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void getDataSharedPreferences() {
-        sharedPreferences = getSharedPreferences(AppUtil.PREF_APP, MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(AppUtilSharedPreferences.PREF_APP, MODE_PRIVATE);
 
         editLoginEmail.setText(sharedPreferences.getString("email", ""));
         editLoginSenha.setText(sharedPreferences.getString("senha", ""));
@@ -106,7 +107,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void saveDataSharedPreferences() {
 
-        sharedPreferences = getSharedPreferences(AppUtil.PREF_APP, MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(AppUtilSharedPreferences.PREF_APP, MODE_PRIVATE);
         SharedPreferences.Editor dadosSalvos = sharedPreferences.edit();
 
         int idUser = usuarioController.readObjetcIdByEmail(UsuarioDataModel.TABELA, sharedPreferences.getString("email", ""));
@@ -121,7 +122,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean validarDadosFormulario() {
 
-        sharedPreferences = getSharedPreferences(AppUtil.PREF_APP, MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(AppUtilSharedPreferences.PREF_APP, MODE_PRIVATE);
 
         boolean isDadosOK = true;
 
@@ -184,7 +185,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void validarTrocaDeSenha() {
-        sharedPreferences = getSharedPreferences(AppUtil.PREF_APP, MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(AppUtilSharedPreferences.PREF_APP, MODE_PRIVATE);
 
         List<Usuario> usuarioLista = new ArrayList<>();
 
@@ -204,7 +205,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void atualizarSenha() {
-        sharedPreferences = getSharedPreferences(AppUtil.PREF_APP, MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(AppUtilSharedPreferences.PREF_APP, MODE_PRIVATE);
         SharedPreferences.Editor dadosSalvos = sharedPreferences.edit();
 
         try{

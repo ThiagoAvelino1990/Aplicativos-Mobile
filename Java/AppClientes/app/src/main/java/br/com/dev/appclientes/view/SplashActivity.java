@@ -17,6 +17,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import br.com.dev.appclientes.R;
 import br.com.dev.appclientes.api.AppUtil;
+import br.com.dev.appclientes.api.AppUtilSharedPreferences;
 import br.com.dev.appclientes.datasource.AppDataBase;
 
 public class SplashActivity extends AppCompatActivity {
@@ -51,7 +52,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private boolean getDadosPref() {
 
-        sharedPreferences = getSharedPreferences(AppUtil.PREF_APP,MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(AppUtilSharedPreferences.PREF_APP,MODE_PRIVATE);
 
         return sharedPreferences.getBoolean("chklembrardados",false);
     }

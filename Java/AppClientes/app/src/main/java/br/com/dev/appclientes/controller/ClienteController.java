@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.dev.appclientes.api.AppUtil;
+import br.com.dev.appclientes.api.AppUtilSharedPreferences;
 import br.com.dev.appclientes.datamodel.ClienteDataModel;
 import br.com.dev.appclientes.datasource.AppDataBase;
 import br.com.dev.appclientes.model.Cliente;
@@ -34,7 +35,7 @@ public class ClienteController extends AppDataBase implements ICRUD<Cliente> {
     public boolean insertObject(Cliente obj) {
 
         contentValues = new ContentValues();
-        prefs = context.getSharedPreferences(AppUtil.PREF_APP,MODE_PRIVATE);
+        prefs = context.getSharedPreferences(AppUtilSharedPreferences.PREF_APP,MODE_PRIVATE);
 
         contentValues.put(ClienteDataModel.NOME, obj.getNome());
         contentValues.put(ClienteDataModel.TELEFONE, obj.getTelefone());

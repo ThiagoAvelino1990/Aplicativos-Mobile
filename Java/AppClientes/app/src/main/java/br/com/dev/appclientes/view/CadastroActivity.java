@@ -25,6 +25,7 @@ import com.shashank.sony.fancydialoglib.FancyAlertDialog;
 
 import br.com.dev.appclientes.R;
 import br.com.dev.appclientes.api.AppUtil;
+import br.com.dev.appclientes.api.AppUtilSharedPreferences;
 import br.com.dev.appclientes.controller.UsuarioController;
 import br.com.dev.appclientes.controller.UsuarioORMController;
 import br.com.dev.appclientes.model.Usuario;
@@ -381,7 +382,7 @@ public class CadastroActivity extends AppCompatActivity {
     private void setDataPreferences(boolean idGravarShared) {
 
         if(idGravarShared){
-            preferencesCadastro = getSharedPreferences(AppUtil.PREF_APP, MODE_PRIVATE);
+            preferencesCadastro = getSharedPreferences(AppUtilSharedPreferences.PREF_APP, MODE_PRIVATE);
             SharedPreferences.Editor data = preferencesCadastro.edit();
 
             try {

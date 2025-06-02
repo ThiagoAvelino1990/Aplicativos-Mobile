@@ -27,6 +27,7 @@ import com.shashank.sony.fancydialoglib.FancyAlertDialog;
 
 import br.com.dev.appclientes.R;
 import br.com.dev.appclientes.api.AppUtil;
+import br.com.dev.appclientes.api.AppUtilSharedPreferences;
 import br.com.dev.appclientes.controller.ClienteORMController;
 import br.com.dev.appclientes.model.ClienteORM;
 
@@ -97,7 +98,7 @@ public class MainActivity extends AppCompatActivity
         LayoutInflater inflater = LayoutInflater.from(this);
         View viewNavHeaderMain = inflater.inflate(R.layout.nav_header_main, null);
 
-        sharedPreferences = getSharedPreferences(AppUtil.PREF_APP, MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(AppUtilSharedPreferences.PREF_APP, MODE_PRIVATE);
 
         txtViewClienteNav = viewNavHeaderMain.findViewById(R.id.txtViewClienteNav);
         txtClienteNav = viewNavHeaderMain.findViewById(R.id.txtClienteNav);

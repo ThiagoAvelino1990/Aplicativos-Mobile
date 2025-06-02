@@ -23,6 +23,7 @@ import java.util.List;
 
 import br.com.dev.appclientes.R;
 import br.com.dev.appclientes.api.AppUtil;
+import br.com.dev.appclientes.api.AppUtilSharedPreferences;
 import br.com.dev.appclientes.controller.UsuarioController;
 import br.com.dev.appclientes.datamodel.UsuarioDataModel;
 import br.com.dev.appclientes.model.Usuario;
@@ -169,7 +170,7 @@ public class RecuperarSenhaActivity extends AppCompatActivity {
     }
 
     private boolean validaEmailInformado(String emailInformado) {
-        preferences = getSharedPreferences(AppUtil.PREF_APP, MODE_PRIVATE);
+        preferences = getSharedPreferences(AppUtilSharedPreferences.PREF_APP, MODE_PRIVATE);
         SharedPreferences.Editor dadosPreferences = preferences.edit();
 
 
