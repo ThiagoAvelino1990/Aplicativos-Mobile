@@ -78,19 +78,19 @@ public class UsuarioController extends AppDataBase implements ICRUD<Usuario> {
         return getUsuarioByID(UsuarioDataModel.TABELA, id);
     }
 
-    public List<Usuario> readObjectByEmail(String nomeTabela, String email){
+    public List<Usuario> readObjectByEmail(String email){
 
-        return getUsuarioByEmail(nomeTabela, email);
+        return getUsuarioByEmail(UsuarioDataModel.TABELA, email);
     }
 
-    public int readObjetcIdByEmail(String nomeTabela, String email){
+    public int readObjetcIdByEmail(String email){
 
-        return getIdUsuarioByEmail(nomeTabela, email);
+        return getIdUsuarioByEmail(UsuarioDataModel.TABELA, email);
     }
 
-    public int readObjetByTelefone(String nomeTabela, String telefone){
+    public int readObjetByTelefone(String telefone){
 
-        return getIdUsuarioByTelefone(nomeTabela, telefone);
+        return getIdUsuarioByTelefone(UsuarioDataModel.TABELA, telefone);
     }
 
 }

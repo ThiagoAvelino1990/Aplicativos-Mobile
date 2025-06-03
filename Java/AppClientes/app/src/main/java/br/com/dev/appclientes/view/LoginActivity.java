@@ -110,7 +110,7 @@ public class LoginActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences(AppUtilSharedPreferences.PREF_APP, MODE_PRIVATE);
         SharedPreferences.Editor dadosSalvos = sharedPreferences.edit();
 
-        int idUser = usuarioController.readObjetcIdByEmail(UsuarioDataModel.TABELA, sharedPreferences.getString("email", ""));
+        int idUser = usuarioController.readObjetcIdByEmail(sharedPreferences.getString("email", ""));
 
 
         dadosSalvos.putBoolean("chklembrardados", chkLembrarDados.isChecked());
@@ -128,7 +128,7 @@ public class LoginActivity extends AppCompatActivity {
 
         List<Usuario> usuarioList = new ArrayList<>();
         try{
-            usuarioList = usuarioController.readObjectByEmail(ClienteDataModel.TABELA,editLoginEmail.getText().toString());
+            usuarioList = usuarioController.readObjectByEmail(editLoginEmail.getText().toString());
             for (Usuario usuario: usuarioList) {
                 if(usuario.getEmail().isEmpty()){
                     editLoginEmail.setError("*");
@@ -190,7 +190,7 @@ public class LoginActivity extends AppCompatActivity {
         List<Usuario> usuarioLista = new ArrayList<>();
 
         try{
-            usuarioLista = usuarioController.readObjectByEmail(ClienteDataModel.TABELA,sharedPreferences.getString("email",null));
+            usuarioLista = usuarioController.readObjectByEmail(sharedPreferences.getString("email",null));
             for (Usuario usuario : usuarioLista) {
                 if (usuario.getAtualizaSenha().equals("S")) {
                     atualizarSenha();

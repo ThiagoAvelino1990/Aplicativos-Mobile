@@ -99,7 +99,7 @@ public class RecuperarSenhaActivity extends AppCompatActivity {
         boolean existeCadastro = false;
 
 
-        if (usuarioController.readObjetByTelefone(UsuarioDataModel.TABELA, editRecuperarSenha.getText().toString()) > -1) {
+        if (usuarioController.readObjetByTelefone(editRecuperarSenha.getText().toString()) > -1) {
             existeCadastro = true;
         }
 
@@ -174,7 +174,7 @@ public class RecuperarSenhaActivity extends AppCompatActivity {
         SharedPreferences.Editor dadosPreferences = preferences.edit();
 
 
-        int userID = usuarioController.readObjetcIdByEmail(UsuarioDataModel.TABELA, emailInformado);
+        int userID = usuarioController.readObjetcIdByEmail(emailInformado);
 
         if (userID > -1) {
 
