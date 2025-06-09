@@ -17,6 +17,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import br.com.dev.appclientes.R;
 import br.com.dev.appclientes.api.AppUtil;
+import br.com.dev.appclientes.api.AppUtilBkpDb;
 import br.com.dev.appclientes.api.AppUtilSharedPreferences;
 import br.com.dev.appclientes.datasource.AppDataBase;
 
@@ -64,6 +65,8 @@ public class SplashActivity extends AppCompatActivity {
                 Intent intent;
 
                 db = new AppDataBase(getApplicationContext());
+
+                AppUtilBkpDb.bkpDataBase();
 
                 if(getDadosPref()){
                     intent = new Intent(SplashActivity.this,MainActivity.class);
