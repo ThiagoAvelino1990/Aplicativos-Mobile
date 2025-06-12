@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -87,6 +88,9 @@ public class SplashActivity extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                     }
+                }else{
+                    //TODO: Colocar mensagem com as permissões negadas
+                    Toast.makeText(getApplicationContext(),"Verifique as permissões antes de continuar", Toast.LENGTH_SHORT).show();
                 }
 
             }
