@@ -24,6 +24,7 @@ public class AppUtil {
     public static final int TIME_SPLASH = 4 * 1000;
     public static final int TIME_CADASTRO = 1 * 1000;
     public static final String VERSION = "v1.0.0";
+    public static final int REQUEST_CODE_APP = 2025;
 
     public static final String TERMOS_DE_USO = "Última atualização: [data]\n" +
             "\n" +

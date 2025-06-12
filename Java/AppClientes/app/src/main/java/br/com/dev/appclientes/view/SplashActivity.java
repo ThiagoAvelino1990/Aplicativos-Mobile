@@ -1,7 +1,9 @@
 package br.com.dev.appclientes.view;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,9 +13,14 @@ import androidx.activity.EdgeToEdge;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.dev.appclientes.R;
 import br.com.dev.appclientes.api.AppUtil;
@@ -29,6 +36,8 @@ public class SplashActivity extends AppCompatActivity {
 
     AppDataBase db;
 
+    String[] permissoesRequiridas = {Manifest.permission.SEND_SMS, Manifest.permission.INTERNET,
+                                     Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,19 +77,45 @@ public class SplashActivity extends AppCompatActivity {
 
                 AppUtilBkpDb.bkpDataBase();
 
-                if(getDadosPref()){
-                    intent = new Intent(SplashActivity.this,MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                }else{
-                    intent = new Intent(SplashActivity.this,LoginActivity.class);
-                    startActivity(intent);
-                    finish();
+                if(verificaPermissoes()){
+                    if(getDadosPref()){
+                        intent = new Intent(SplashActivity.this,MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }else{
+                        intent = new Intent(SplashActivity.this,LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
                 }
-
 
             }
         }, AppUtil.TIME_SPLASH);
+
+    }
+
+    private boolean verificaPermissoes(){
+
+        List<String> permissoesNegadas = new ArrayList<>();
+
+        int tipoPermissão;
+
+        for (String permissãoRequirida : permissoesRequiridas) {
+
+            tipoPermissão = ContextCompat.checkSelfPermission(this,permissãoRequirida);
+
+            if(tipoPermissão != PackageManager.PERMISSION_GRANTED){
+                permissoesNegadas.add(permissãoRequirida);
+            }
+
+        }
+
+        if(!permissoesNegadas.isEmpty()){
+            ActivityCompat.requestPermissions(this,permissoesNegadas.toArray(new String[permissoesNegadas.size()]),AppUtil.REQUEST_CODE_APP);
+            return false;
+        }else{
+            return true;
+        }
 
     }
 }
