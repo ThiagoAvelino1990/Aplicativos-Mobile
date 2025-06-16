@@ -27,6 +27,7 @@ import br.com.dev.appclientes.R;
 import br.com.dev.appclientes.api.AppUtil;
 import br.com.dev.appclientes.api.AppUtilBkpDb;
 import br.com.dev.appclientes.api.AppUtilSharedPreferences;
+import br.com.dev.appclientes.controller.AppController;
 import br.com.dev.appclientes.datasource.AppDataBase;
 
 public class SplashActivity extends AppCompatActivity {
@@ -52,13 +53,14 @@ public class SplashActivity extends AppCompatActivity {
             return insets;
         });
 
-        txtVersao = findViewById(R.id.txtVersao);
+        initComponentes();
 
-        txtVersao.setText(AppUtil.VERSION);
+        if(AppController.verificarGooglePlayServices(SplashActivity.this)){
+            inicializarAplicativo();
 
-        inicializarAplicativo();
+            getDadosPref();
+        }
 
-        getDadosPref();
     }
 
     private boolean getDadosPref() {
@@ -121,5 +123,11 @@ public class SplashActivity extends AppCompatActivity {
             return true;
         }
 
+    }
+
+    public void initComponentes(){
+        txtVersao = findViewById(R.id.txtVersao);
+
+        txtVersao.setText(AppUtil.VERSION);
     }
 }
