@@ -26,6 +26,7 @@ import br.com.dev.appclientes.R;
 import br.com.dev.appclientes.adapter.ClienteAdapter;
 import br.com.dev.appclientes.api.AppUtil;
 import br.com.dev.appclientes.api.AppUtilSharedPreferences;
+import br.com.dev.appclientes.api.AppUtilToast;
 import br.com.dev.appclientes.controller.ClienteController;
 import br.com.dev.appclientes.controller.UsuarioController;
 import br.com.dev.appclientes.datamodel.UsuarioDataModel;
@@ -128,11 +129,11 @@ public class ListarClientesCardsFragment extends Fragment {
                 listViewCliente.setAdapter(clienteAdapter);
             }catch (Exception err){
                 Log.e(AppUtil.TAG,"Erro ao processar os dados [ListarClientesCardsFragment - atualizarListaClientes] "+err.getMessage());
-                Toast.makeText(getContext(),"Erro ao processar os dados.",Toast.LENGTH_LONG).show();
+                AppUtilToast.toastMessage(getContext(),"Erro ao processar os dados.");
             }
 
         }else{
-            Toast.makeText(getContext(),"Não foi possível encontrar o usuario para atualizar a lista.",Toast.LENGTH_LONG).show();
+            AppUtilToast.toastMessage(getContext(),"Não foi possível encontrar o usuario para atualizar a lista.");
         }
 
     }

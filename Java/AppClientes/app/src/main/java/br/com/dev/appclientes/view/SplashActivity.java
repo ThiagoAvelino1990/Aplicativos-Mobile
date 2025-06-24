@@ -27,6 +27,7 @@ import br.com.dev.appclientes.R;
 import br.com.dev.appclientes.api.AppUtil;
 import br.com.dev.appclientes.api.AppUtilBkpDb;
 import br.com.dev.appclientes.api.AppUtilSharedPreferences;
+import br.com.dev.appclientes.api.AppUtilToast;
 import br.com.dev.appclientes.controller.AppController;
 import br.com.dev.appclientes.datasource.AppDataBase;
 
@@ -92,7 +93,7 @@ public class SplashActivity extends AppCompatActivity {
                     }
                 }else{
                     //TODO: Colocar mensagem com as permissões negadas
-                    Toast.makeText(getApplicationContext(),"Verifique as permissões antes de continuar", Toast.LENGTH_SHORT).show();
+                    AppUtilToast.toastMessage(getApplicationContext(),"Verifique as permissões antes de continuar");
                 }
 
             }

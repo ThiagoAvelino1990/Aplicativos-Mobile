@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import br.com.dev.appclientes.R;
+import br.com.dev.appclientes.api.AppUtilToast;
 import br.com.dev.appclientes.controller.ClienteController;
 import br.com.dev.appclientes.model.Cliente;
 
@@ -182,9 +183,9 @@ public class AdicionarClienteFragment extends Fragment {
 
 
                     clienteController.insertObject(cliente);
-                    Toast.makeText(getContext(),"Dados salvos com sucesso...", Toast.LENGTH_LONG).show();
+                    AppUtilToast.toastMessage(getContext(),"Dados salvos com sucesso...");
                 }else{
-                    Toast.makeText(getContext(),"Verifique os campos...", Toast.LENGTH_LONG).show();
+                    AppUtilToast.toastMessage(getContext(),"Verifique os campos...");
                 }
 
             }

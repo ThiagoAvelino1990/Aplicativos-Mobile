@@ -24,6 +24,7 @@ import com.shashank.sony.fancydialoglib.FancyAlertDialogListener;
 
 import br.com.dev.appclientes.R;
 import br.com.dev.appclientes.api.AppUtil;
+import br.com.dev.appclientes.api.AppUtilToast;
 import br.com.dev.appclientes.controller.ClienteController;
 import br.com.dev.appclientes.controller.ClienteORMController;
 import br.com.dev.appclientes.controller.UsuarioController;
@@ -261,10 +262,9 @@ public class AdicionarClienteCardsFragment extends Fragment {
                     /** Verificar Erro ao salvar os dados
                     clienteORMController.insertORM(clienteORM);
                     */
-
-                    Toast.makeText(getContext(),"Dados salvos com sucesso...", Toast.LENGTH_LONG).show();
+                    AppUtilToast.toastMessage(getContext(),"Dados salvos com sucesso...");
                 }else{
-                    Toast.makeText(getContext(),"Verifique os campos...", Toast.LENGTH_LONG).show();
+                    AppUtilToast.toastMessage(getContext(),"Verifique os campos...");
                 }
 
             }
@@ -360,16 +360,15 @@ public class AdicionarClienteCardsFragment extends Fragment {
                 if(isDadosOK){
 
                     if(setClienteSQLLite()){
-                        Toast.makeText(getContext(),"Erro ao salvar os dados SQLLITE...", Toast.LENGTH_LONG).show();
+                        AppUtilToast.toastMessage(getContext(),"Erro ao salvar os dados SQLLITE...");
                     }else if(setClienteORM()){
-                        Toast.makeText(getContext(),"Erro ao salvar os dados ORM...", Toast.LENGTH_LONG).show();
+                        AppUtilToast.toastMessage(getContext(),"Erro ao salvar os dados ORM...");
                     }else{
-                        Toast.makeText(getContext(),"Dados salvos com sucesso...", Toast.LENGTH_LONG).show();
+                        AppUtilToast.toastMessage(getContext(),"Dados salvos com sucesso...");
                     }
 
-
                 }else{
-                    Toast.makeText(getContext(),"Verifique os campos...", Toast.LENGTH_LONG).show();
+                    AppUtilToast.toastMessage(getContext(),"Verifique os campos...");
                 }
             }
         });

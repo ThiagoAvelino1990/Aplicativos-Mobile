@@ -1,5 +1,7 @@
 package br.com.dev.appclientes.view;
 
+import static java.security.AccessController.getContext;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -26,6 +28,7 @@ import com.shashank.sony.fancydialoglib.FancyAlertDialog;
 import br.com.dev.appclientes.R;
 import br.com.dev.appclientes.api.AppUtil;
 import br.com.dev.appclientes.api.AppUtilSharedPreferences;
+import br.com.dev.appclientes.api.AppUtilToast;
 import br.com.dev.appclientes.controller.UsuarioController;
 import br.com.dev.appclientes.controller.UsuarioORMController;
 import br.com.dev.appclientes.model.Usuario;
@@ -113,7 +116,7 @@ public class CadastroActivity extends AppCompatActivity {
                                 new Handler().postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
-                                        Toast.makeText(CadastroActivity.this, "Usuário cadastrado com sucesso !", Toast.LENGTH_LONG).show();
+                                        AppUtilToast.toastMessage(getApplicationContext(),"Usuário cadastrado com sucesso !");
                                         intent = new Intent(CadastroActivity.this, LoginActivity.class);
                                         startActivity(intent);
                                         finish();
@@ -122,7 +125,7 @@ public class CadastroActivity extends AppCompatActivity {
                             }
                         })
                         .onNegativeClicked(dialog -> {
-                            Toast.makeText(CadastroActivity.this, "Desculpa, o cadastro só pode ser concluído aceitando os termos", Toast.LENGTH_SHORT).show();
+                            AppUtilToast.toastMessage(getApplicationContext(),"Desculpe, o cadastro só pode ser concluído aceitando os termos");
                             closeContextMenu();
                         })
                         .build()
@@ -291,7 +294,7 @@ public class CadastroActivity extends AppCompatActivity {
 
             setDataPreferences(true);
         }catch(Exception err){
-            Toast.makeText(getApplicationContext(),"Erro ao gravar os dados SQLite",Toast.LENGTH_LONG).show();
+            AppUtilToast.toastMessage(getApplicationContext(),"Erro ao gravar os dados SQLite");
             Log.e(AppUtil.TAG,"[CadastroActivity - setUsuarioSQL] Erro ao gravar os dados SQLite "+err.getMessage());
             setDataPreferences(false);
         }
@@ -314,7 +317,7 @@ public class CadastroActivity extends AppCompatActivity {
 
             controllerORM.insertORM(usuarioORM);
         }catch(Exception err){
-            Toast.makeText(getApplicationContext(),"Erro ao gravar os dados Realm",Toast.LENGTH_LONG).show();
+            AppUtilToast.toastMessage(getApplicationContext(),"Erro ao gravar os dados Realm");
             Log.e(AppUtil.TAG,"[CadastroActivity - setUsuarioORM] Erro ao gravar os dados Realm "+err.getMessage());
             setDataPreferences(false);
         }
@@ -329,37 +332,37 @@ public class CadastroActivity extends AppCompatActivity {
             isDadosOK = false;
             editNomeCompleto.requestFocus();
             editNomeCompleto.setError("*");
-            Toast.makeText(CadastroActivity.this, "* Nome não pode ser vazio", Toast.LENGTH_LONG).show();
+            AppUtilToast.toastMessage(getApplicationContext(),"* Nome não pode ser vazio");
         } else if (editCadastroEmail.getText().toString().isEmpty() || !AppUtil.validaEmail(editCadastroEmail.getText().toString())) {
             isDadosOK = false;
             editCadastroEmail.requestFocus();
             editCadastroEmail.setError("*");
-            Toast.makeText(CadastroActivity.this, "* Email não pode ser vazio", Toast.LENGTH_LONG).show();
+            AppUtilToast.toastMessage(getApplicationContext(),"* Email não pode ser vazio");
         } else if (editCpfCnpj.getText().toString().isEmpty() || !AppUtil.validaCnpjCpf(editCpfCnpj.getText().toString())) {
             isDadosOK = false;
             editCpfCnpj.requestFocus();
             editCpfCnpj.setError("*");
-            Toast.makeText(CadastroActivity.this, "* Documento Inválido", Toast.LENGTH_LONG).show();
+            AppUtilToast.toastMessage(getApplicationContext(), "* Documento Inválido");
         }else if(editCep.getText().toString().isEmpty()){
             editCep.requestFocus();
             editCep.setError("*");
-            Toast.makeText(CadastroActivity.this, "Cep deve ser informado", Toast.LENGTH_LONG).show();
+            AppUtilToast.toastMessage(getApplicationContext(), "Cep deve ser informado");
         } else if (editEndereco.getText().toString().isEmpty()) {
             editEndereco.requestFocus();
             editEndereco.setError("*");
-            Toast.makeText(CadastroActivity.this, "Endereço deve ser informado", Toast.LENGTH_LONG).show();
+            AppUtilToast.toastMessage(getApplicationContext(), "Endereço deve ser informado");
         } else if(editBairro.getText().toString().isEmpty()) {
             editBairro.requestFocus();
             editBairro.setError("*");
-            Toast.makeText(CadastroActivity.this, "Bairro deve ser informado", Toast.LENGTH_LONG).show();
+            AppUtilToast.toastMessage(getApplicationContext(), "Bairro deve ser informado");
         }else if(editCidade.getText().toString().isEmpty()) {
             editCidade.requestFocus();
             editCidade.setError("*");
-            Toast.makeText(CadastroActivity.this, "Cidade deve ser informado", Toast.LENGTH_LONG).show();
+            AppUtilToast.toastMessage(getApplicationContext(), "Cidade deve ser informado");
         }else if(editEstado.getText().toString().isEmpty()){
             editEstado.requestFocus();
             editEstado.setError("*");
-            Toast.makeText(CadastroActivity.this, "Estado deve ser informado", Toast.LENGTH_LONG).show();
+            AppUtilToast.toastMessage(getApplicationContext(), "Estado deve ser informado");
         } else if (editTelefone.getText().toString().isEmpty()) {
             isDadosOK = false;
             editTelefone.requestFocus();
@@ -372,7 +375,7 @@ public class CadastroActivity extends AppCompatActivity {
             editConfirmarSenha.requestFocus();
             editConfirmarSenha.setError("*");
             editConfirmarSenha.setText(null);
-            Toast.makeText(CadastroActivity.this, "* Senhas não coeincidem", Toast.LENGTH_LONG).show();
+            AppUtilToast.toastMessage(getApplicationContext(), "* Senhas não coeincidem");
         }
 
         return isDadosOK;
@@ -403,8 +406,10 @@ public class CadastroActivity extends AppCompatActivity {
 
                 data.apply();
             } catch (SecurityException err) {
+                AppUtilToast.toastMessage(getApplicationContext(),"Erro ao gravar os dados no sharedPreferens ");
                 Log.e(AppUtil.TAG, "Erro ao gravar os dados no sharedPreferens " + err.getMessage());
             } catch (Exception err) {
+                AppUtilToast.toastMessage(getApplicationContext(),"Erro ao gravar os dados no sharedPreferens ");
                 Log.e(AppUtil.TAG, "Erro ao genérico no sharedPreferens " + err.getMessage());
             }
         }

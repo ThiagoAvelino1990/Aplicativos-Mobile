@@ -24,6 +24,7 @@ import java.util.List;
 import br.com.dev.appclientes.R;
 import br.com.dev.appclientes.api.AppUtil;
 import br.com.dev.appclientes.api.AppUtilSharedPreferences;
+import br.com.dev.appclientes.api.AppUtilToast;
 import br.com.dev.appclientes.controller.UsuarioController;
 import br.com.dev.appclientes.datamodel.UsuarioDataModel;
 import br.com.dev.appclientes.model.Usuario;
@@ -156,14 +157,14 @@ public class RecuperarSenhaActivity extends AppCompatActivity {
                         startActivity(Intent.createChooser(intent, "Seleciona aplicativo para enviar o e-mail"));
                         finish();
                     } else {
-                        Toast.makeText(RecuperarSenhaActivity.this, "Erro ao atualizar senha. \nPor favor tente mais tarde....", Toast.LENGTH_LONG).show();
+                        AppUtilToast.toastMessage(getApplicationContext(), "Erro ao atualizar senha. \nPor favor tente mais tarde....");
                     }
 
 
                 } else {
                     editRecuperarSenha.setError("*");
                     editRecuperarSenha.requestFocus();
-                    Toast.makeText(RecuperarSenhaActivity.this, "Favor informar um email válido", Toast.LENGTH_LONG).show();
+                    AppUtilToast.toastMessage(getApplicationContext(), "Favor informar um email válido");
                 }
             }
         });

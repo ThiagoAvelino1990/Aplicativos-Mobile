@@ -23,6 +23,7 @@ import java.util.List;
 import br.com.dev.appclientes.R;
 import br.com.dev.appclientes.api.AppUtil;
 import br.com.dev.appclientes.api.AppUtilSharedPreferences;
+import br.com.dev.appclientes.api.AppUtilToast;
 import br.com.dev.appclientes.controller.UsuarioController;
 import br.com.dev.appclientes.datamodel.ClienteDataModel;
 import br.com.dev.appclientes.datamodel.UsuarioDataModel;
@@ -136,7 +137,7 @@ public class LoginActivity extends AppCompatActivity {
                     txtVerifiqueDados.setVisibility(View.VISIBLE);
                     btnEsqueceuSenha.setVisibility(View.VISIBLE);
                     isDadosOK = false;
-                    Toast.makeText(getApplicationContext(),"Verifique os dados e tente novamente", Toast.LENGTH_SHORT).show();
+                    AppUtilToast.toastMessage(getApplicationContext(),"Verifique os dados e tente novamente");
                     break;
                 } else if (usuario.getSenha().isEmpty()) {
                     editLoginSenha.setError("*");
@@ -144,13 +145,13 @@ public class LoginActivity extends AppCompatActivity {
                     txtVerifiqueDados.setVisibility(View.VISIBLE);
                     btnEsqueceuSenha.setVisibility(View.VISIBLE);
                     isDadosOK = false;
-                    Toast.makeText(getApplicationContext(),"Verifique os dados e tente novamente", Toast.LENGTH_SHORT).show();
+                    AppUtilToast.toastMessage(getApplicationContext(),"Verifique os dados e tente novamente");
                 } else {
                     saveDataSharedPreferences();
                 }
             }
         }catch(Exception err){
-            Toast.makeText(getApplicationContext(),"Erro ao validar os dados",Toast.LENGTH_LONG).show();
+            AppUtilToast.toastMessage(getApplicationContext(),"Erro ao validar os dados");
             isDadosOK = false;
             Log.e(AppUtil.TAG,"[LoginActivity - validarDadosFormulario]" + err.getMessage());
         }
@@ -237,7 +238,7 @@ public class LoginActivity extends AppCompatActivity {
                 String senhaConfirmar = confirmarSenha.getText().toString();
 
                 if (senhaNova.isEmpty() || (!senhaNova.equals(senhaConfirmar))) {
-                    Toast.makeText(LoginActivity.this, "As senhas não conferem", Toast.LENGTH_LONG).show();
+                    AppUtilToast.toastMessage(getApplicationContext(),"As senhas não conferem");
                 } else {
                     try {
                         dadosSalvos.putString("senha", AppUtil.criptografarPass(senhaConfirmar));
@@ -256,7 +257,7 @@ public class LoginActivity extends AppCompatActivity {
                         //Limpar o campo de senha
                         txtLoginSenha.setText("");
 
-                        Toast.makeText(LoginActivity.this, "Senha atualizada com sucesso", Toast.LENGTH_LONG).show();
+                        AppUtilToast.toastMessage(getApplicationContext(), "Senha atualizada com sucesso");
 
 
                     } catch (Exception err) {
@@ -272,10 +273,10 @@ public class LoginActivity extends AppCompatActivity {
 
             alertDialog.show();
         }catch(NullPointerException err){
-            Toast.makeText(getApplicationContext(),"Não foi possível realizar a troca de senha.",Toast.LENGTH_LONG).show();
+            AppUtilToast.toastMessage(getApplicationContext(),"Não foi possível realizar a troca de senha.");
             Log.e(AppUtil.TAG,"Não foi possível realizar a troca de senha(NullPointerException).[LoginActivity - atualizarSenha] "+err.getMessage());
         }catch(Exception err){
-            Toast.makeText(getApplicationContext(),"Não foi possível criar a tela para troca de senha.",Toast.LENGTH_LONG).show();
+            AppUtilToast.toastMessage(getApplicationContext(),"Não foi possível criar a tela para troca de senha.");
             Log.e(AppUtil.TAG,"Não foi possível realizar a troca de senha.[LoginActivity - atualizarSenha] "+err.getMessage());
         }
     }
