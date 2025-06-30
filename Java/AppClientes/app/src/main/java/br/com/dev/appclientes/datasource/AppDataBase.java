@@ -482,4 +482,25 @@ public class AppDataBase extends SQLiteOpenHelper {
         return idUsuario;
     }
 
+    public void dropTable(String nomeTabela){
+        try{
+            db.execSQL("DROP TABLE IF EXISTS "+nomeTabela);
+        }catch(SQLException err){
+            Log.e(AppUtil.TAG,"Erro SQL ao dropar a tabela. "+err.getMessage());
+        }catch(Exception err){
+            Log.e(AppUtil.TAG,"Erro ao dropar a tabela. "+err.getMessage());
+        }
+
+    }
+
+    public void createTabela(String ddlTabela){
+        try{
+            db.execSQL(ddlTabela);
+        }catch(SQLException err){
+            Log.e(AppUtil.TAG,"Erro SQL ao criar a tabela. "+err.getMessage());
+        }catch(Exception err){
+            Log.e(AppUtil.TAG,"Erro ao criar a tabela. "+err.getMessage());
+        }
+    }
+
 }
