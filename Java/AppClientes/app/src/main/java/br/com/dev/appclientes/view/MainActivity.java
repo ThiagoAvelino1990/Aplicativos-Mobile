@@ -1,10 +1,14 @@
 package br.com.dev.appclientes.view;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,9 +29,23 @@ import com.google.android.material.snackbar.Snackbar;
 import com.shashank.sony.fancydialoglib.Animation;
 import com.shashank.sony.fancydialoglib.FancyAlertDialog;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.BufferOverflowException;
+
 import br.com.dev.appclientes.R;
 import br.com.dev.appclientes.api.AppUtil;
 import br.com.dev.appclientes.api.AppUtilSharedPreferences;
+import br.com.dev.appclientes.api.AppUtilWebService;
+import br.com.dev.appclientes.controller.ClienteController;
 import br.com.dev.appclientes.controller.ClienteORMController;
 import br.com.dev.appclientes.model.ClienteORM;
 
@@ -55,6 +73,12 @@ public class MainActivity extends AppCompatActivity
     //SharedPreferences
     SharedPreferences sharedPreferences;
 
+    //ClienteController
+    ClienteController clienteControler;
+
+    //TaskSincronizar
+    SincronizarSistema task;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +96,8 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
+
+        task = new SincronizarSistema();
 
         initComponentesDeLayout();
 
@@ -105,6 +131,8 @@ public class MainActivity extends AppCompatActivity
 
         txtViewClienteNav.setText(sharedPreferences.getString("nome",null));
         txtClienteNav.setText(sharedPreferences.getString("email",null));
+
+        clienteControler = new ClienteController(getApplicationContext());
 
     }
 
@@ -185,6 +213,108 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private class SincronizarSistema extends AsyncTask<String, String, String>{
+
+        ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
+
+        HttpURLConnection conn;
+        URL url = null;
+        Uri.Builder builder;
+
+        public SincronizarSistema(){
+            this.builder = new Uri.Builder();
+
+            builder.appendQueryParameter("app","Cliente");
+        }
+
+        @Override
+        protected void onPreExecute(){
+            progressDialog.setMessage("Sincronizando dados");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            //Montar URL com o endereço do script php
+            try{
+                url = new URL(AppUtilWebService.URL_WEB_SERVICE+"nomedoScript.php");//TODO:Ajustar URL correta
+            }catch(MalformedURLException err){
+                Log.e(AppUtil.TAG,"MalformedURLException - "+err.getMessage());
+            }catch(Exception err){
+                Log.e(AppUtil.TAG,"Exception - "+err.getMessage());
+            }
+
+            //Conectando com o servidor apache
+            try{
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setConnectTimeout(AppUtilWebService.CONNECTION_TIMEOUT);
+                conn.setReadTimeout(AppUtilWebService.READ_TIMEOUT);
+                conn.setRequestMethod("POST");//"GET", "PUT", "POST", "DELETE"
+                conn.setRequestProperty("chatset", "utf-8");
+
+                conn.setDoInput(true);
+                conn.setDoOutput(true);
+
+                String query = builder.build().getEncodedQuery();
+
+                OutputStream outputStream = conn.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+
+                writer.write(query);
+                writer.flush();
+                writer.close();
+                outputStream.close();
+
+                conn.connect();
+
+            }catch(IOException err){
+                Log.e(AppUtil.TAG,"IOException -"+err.getMessage());
+            }catch(Exception err){
+                Log.e(AppUtil.TAG,"Exceptio -"+err.getMessage());
+            }
+
+            try{
+                /**
+                 * 200 - OK
+                 * 403 - Forbideen
+                 * 404 - página não encontrada
+                 * 500 - erro interno do servidor
+                 */
+                int response_code = conn.getResponseCode();
+
+                if(response_code == HttpURLConnection.HTTP_OK){
+                    InputStream input = conn.getInputStream();
+
+                    BufferedReader reader = new BufferedReader((new InputStreamReader(input)));
+                    StringBuilder result = new StringBuilder();
+
+                    String line;
+
+                    while ((line = reader.readLine()) != null) {
+                        result.append(line);
+                    }
+
+                    return (result.toString());
+
+                }else{
+                    return "Erro de conexão";
+                }
+
+            }catch(Exception err){
+
+            }finally {
+                conn.disconnect();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result){
+
+        }
     }
 
 }
