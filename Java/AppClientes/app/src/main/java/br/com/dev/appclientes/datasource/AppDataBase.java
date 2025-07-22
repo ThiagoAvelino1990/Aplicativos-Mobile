@@ -256,7 +256,7 @@ public class AppDataBase extends SQLiteOpenHelper {
                     cliente.setId(cursor.getInt(cursor.getColumnIndexOrThrow("ID")));
                     cliente.setNome(cursor.getString(cursor.getColumnIndexOrThrow("NOME")));
 
-                    //TODO:AJUSTAR PARA BUSCAR MAIS QUANDO QUANDO CORRIGIR O LISTVIEW
+                    //TODO:AJUSTAR PARA BUSCAR MAIS QUANDO CORRIGIR O LISTVIEW
                     /*cliente.setTelefone(cursor.getString(cursor.getColumnIndexOrThrow("TELEFONE")));
                     cliente.setEmail(cursor.getString(cursor.getColumnIndexOrThrow("EMAIL")));
                     cliente.setCep(cursor.getInt(cursor.getColumnIndexOrThrow("CEP")));

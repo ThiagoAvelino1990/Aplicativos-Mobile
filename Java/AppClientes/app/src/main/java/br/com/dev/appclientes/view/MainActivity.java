@@ -76,8 +76,6 @@ public class MainActivity extends AppCompatActivity
     //ClienteController
     ClienteController clienteControler;
 
-    //TaskSincronizar
-    SincronizarSistema task;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,8 +94,6 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
-
-        task = new SincronizarSistema();
 
         initComponentesDeLayout();
 
@@ -215,106 +211,5 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    private class SincronizarSistema extends AsyncTask<String, String, String>{
-
-        ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
-
-        HttpURLConnection conn;
-        URL url = null;
-        Uri.Builder builder;
-
-        public SincronizarSistema(){
-            this.builder = new Uri.Builder();
-
-            builder.appendQueryParameter("app","Cliente");
-        }
-
-        @Override
-        protected void onPreExecute(){
-            progressDialog.setMessage("Sincronizando dados");
-            progressDialog.setCancelable(false);
-            progressDialog.show();
-        }
-
-        @Override
-        protected String doInBackground(String... strings) {
-            //Montar URL com o endereço do script php
-            try{
-                url = new URL(AppUtilWebService.URL_WEB_SERVICE+"nomedoScript.php");//TODO:Ajustar URL correta
-            }catch(MalformedURLException err){
-                Log.e(AppUtil.TAG,"MalformedURLException - "+err.getMessage());
-            }catch(Exception err){
-                Log.e(AppUtil.TAG,"Exception - "+err.getMessage());
-            }
-
-            //Conectando com o servidor apache
-            try{
-                conn = (HttpURLConnection) url.openConnection();
-                conn.setConnectTimeout(AppUtilWebService.CONNECTION_TIMEOUT);
-                conn.setReadTimeout(AppUtilWebService.READ_TIMEOUT);
-                conn.setRequestMethod("POST");//"GET", "PUT", "POST", "DELETE"
-                conn.setRequestProperty("chatset", "utf-8");
-
-                conn.setDoInput(true);
-                conn.setDoOutput(true);
-
-                String query = builder.build().getEncodedQuery();
-
-                OutputStream outputStream = conn.getOutputStream();
-                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-
-                writer.write(query);
-                writer.flush();
-                writer.close();
-                outputStream.close();
-
-                conn.connect();
-
-            }catch(IOException err){
-                Log.e(AppUtil.TAG,"IOException -"+err.getMessage());
-            }catch(Exception err){
-                Log.e(AppUtil.TAG,"Exceptio -"+err.getMessage());
-            }
-
-            try{
-                /**
-                 * 200 - OK
-                 * 403 - Forbideen
-                 * 404 - página não encontrada
-                 * 500 - erro interno do servidor
-                 */
-                int response_code = conn.getResponseCode();
-
-                if(response_code == HttpURLConnection.HTTP_OK){
-                    InputStream input = conn.getInputStream();
-
-                    BufferedReader reader = new BufferedReader((new InputStreamReader(input)));
-                    StringBuilder result = new StringBuilder();
-
-                    String line;
-
-                    while ((line = reader.readLine()) != null) {
-                        result.append(line);
-                    }
-
-                    return (result.toString());
-
-                }else{
-                    return "Erro de conexão";
-                }
-
-            }catch(Exception err){
-
-            }finally {
-                conn.disconnect();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String result){
-
-        }
-    }
 
 }

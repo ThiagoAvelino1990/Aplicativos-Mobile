@@ -29,7 +29,11 @@ import br.com.dev.appclientes.api.AppUtilBkpDb;
 import br.com.dev.appclientes.api.AppUtilSharedPreferences;
 import br.com.dev.appclientes.api.AppUtilToast;
 import br.com.dev.appclientes.controller.AppController;
+import br.com.dev.appclientes.datamodel.ClienteDataModel;
+import br.com.dev.appclientes.datamodel.UsuarioDataModel;
 import br.com.dev.appclientes.datasource.AppDataBase;
+import br.com.dev.appclientes.model.Cliente;
+import br.com.dev.appclientes.service.SincronizarSistema;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -41,6 +45,8 @@ public class SplashActivity extends AppCompatActivity {
 
     String[] permissoesRequiridas = {Manifest.permission.SEND_SMS, Manifest.permission.INTERNET,
                                      Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
+    SincronizarSistema sincronizarSistema;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +63,24 @@ public class SplashActivity extends AppCompatActivity {
         initComponentes();
 
         if(AppController.verificarGooglePlayServices(SplashActivity.this)){
+
             inicializarAplicativo();
 
-            getDadosPref();
         }
+
+        sincronizarDados();
+
+    }
+
+    private void sincronizarDados() {
+        db.dropTable(ClienteDataModel.TABELA);
+        db.createTabela(ClienteDataModel.criarTabela());
+
+        db.dropTable(UsuarioDataModel.TABELA);
+        db.createTabela(UsuarioDataModel.criarTabela());
+
+        //TODO: Ajustar para buscar dados do websrevice e atualizar as tabelas
+        sincronizarSistema = (SincronizarSistema) new SincronizarSistema().execute();
 
     }
 
@@ -80,6 +100,9 @@ public class SplashActivity extends AppCompatActivity {
                 db = new AppDataBase(getApplicationContext());
 
                 AppUtilBkpDb.bkpDataBase();
+
+                sincronizarDados();
+
 
                 if(verificaPermissoes()){
                     if(getDadosPref()){
