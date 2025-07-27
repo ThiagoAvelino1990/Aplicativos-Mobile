@@ -68,8 +68,6 @@ public class SplashActivity extends AppCompatActivity {
 
         }
 
-        sincronizarDados();
-
     }
 
     private void sincronizarDados() {
@@ -78,9 +76,10 @@ public class SplashActivity extends AppCompatActivity {
 
         db.dropTable(UsuarioDataModel.TABELA);
         db.createTabela(UsuarioDataModel.criarTabela());
-
-        //TODO: Ajustar para buscar dados do websrevice e atualizar as tabelas
-        sincronizarSistema = (SincronizarSistema) new SincronizarSistema().execute();
+        //TODO: Buscar ID do usuário logado para passar nos parametros
+        
+        //TODO: Ajustar para buscar dados do websrevice e atualizar as tabelas.
+        sincronizarSistema.execute("");
 
     }
 
@@ -124,6 +123,7 @@ public class SplashActivity extends AppCompatActivity {
 
     }
 
+    //TODO: Ajustar para ao permitir as permissões, o APP carregar a tela inicial
     private boolean verificaPermissoes(){
 
         List<String> permissoesNegadas = new ArrayList<>();
@@ -153,5 +153,7 @@ public class SplashActivity extends AppCompatActivity {
         txtVersao = findViewById(R.id.txtVersao);
 
         txtVersao.setText(AppUtil.VERSION);
+
+        //sincronizarSistema = new SincronizarSistema();
     }
 }

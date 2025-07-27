@@ -6,6 +6,12 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.google.gson.JsonParser;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -19,6 +25,8 @@ import java.net.URL;
 
 import br.com.dev.appclientes.api.AppUtil;
 import br.com.dev.appclientes.api.AppUtilWebService;
+import br.com.dev.appclientes.controller.ClienteController;
+import br.com.dev.appclientes.model.Cliente;
 
 public class SincronizarSistema extends AsyncTask<String, String, String> {
 
@@ -28,7 +36,9 @@ public class SincronizarSistema extends AsyncTask<String, String, String> {
     private URL url = null;
     private Uri.Builder builder;
 
+
     public SincronizarSistema(){
+        this.context = context;
         this.builder = new Uri.Builder();
         this.progressDialog = new ProgressDialog(context);
 
@@ -45,9 +55,12 @@ public class SincronizarSistema extends AsyncTask<String, String, String> {
 
     @Override
     protected String doInBackground(String... strings) {
+
+        String param = strings[0];
+
         //Montar URL com o endereço do script php
         try{
-            url = new URL(AppUtilWebService.URL_WEB_SERVICE+"nomedoScript.php");//TODO:Ajustar URL correta
+            url = new URL(AppUtilWebService.URL_WEB_SERVICE+"getClientesByIdUser.php?token=xpto&userID="+param);//TODO: Modificar token
         }catch(MalformedURLException err){
             Log.e(AppUtil.TAG,"MalformedURLException - "+err.getMessage());
         }catch(Exception err){
@@ -59,7 +72,7 @@ public class SincronizarSistema extends AsyncTask<String, String, String> {
             conn = (HttpURLConnection) url.openConnection();
             conn.setConnectTimeout(AppUtilWebService.CONNECTION_TIMEOUT);
             conn.setReadTimeout(AppUtilWebService.READ_TIMEOUT);
-            conn.setRequestMethod("POST");//"GET", "PUT", "POST", "DELETE"
+            conn.setRequestMethod("GET");//"GET", "PUT", "POST", "DELETE"
             conn.setRequestProperty("chatset", "utf-8");
 
             conn.setDoInput(true);
@@ -122,13 +135,60 @@ public class SincronizarSistema extends AsyncTask<String, String, String> {
     protected void onPostExecute(String result){
 
         if (result != null && !result.startsWith("ERRO")) {
+            JSONArray jsonArray;
+            JSONObject jsonObject;
+            Cliente cliente;
+            ClienteController clienteController;
             // Aqui você parseia o JSON e salva no banco local
             Log.i(AppUtil.TAG, "Dados recebidos: " + result);
 
-            // TODO: chamar método para salvar no banco
+            try{
+                jsonArray = new JSONArray(result);
+                cliente = new Cliente();
+                clienteController = new ClienteController(context);
+
+                for(int i = 0; i < jsonArray.length(); i++){
+                    jsonObject = new JSONObject();
+
+                    cliente.setId(jsonObject.getInt("ID"));
+                    cliente.setNome(jsonObject.getString("NOME"));
+                    cliente.setTelefone(jsonObject.getString("TELEFONE"));
+                    cliente.setEmail(jsonObject.getString("EMAIL"));
+                    cliente.setCep(jsonObject.getInt("CEP"));
+                    cliente.setLogradouro(jsonObject.getString("LOGRAODURO"));
+                    cliente.setComplemento(jsonObject.getString("COMPLEMENTO"));
+                    cliente.setNumero(jsonObject.getString("NUMERO"));
+                    cliente.setBairro(jsonObject.getString("BAIRRO"));
+                    cliente.setCidade(jsonObject.getString("CIDADE"));
+                    cliente.setEstado(jsonObject.getString("ESTADO"));
+                    cliente.setPais(jsonObject.getString("PAIS"));
+                    cliente.setDocumento(jsonObject.getString("DOCUMENTO"));
+                    cliente.setIdTipoDocumento(jsonObject.getString("ID_TIPO_DOCUMENTO"));
+                    cliente.setIdTipoPessoa(jsonObject.getString("ID_TIPO_PESSOA"));
+
+                    if(jsonObject.getString("TERMOS_DE_USO") == "0"){
+                        cliente.setTermosDeUso(true);
+                    }else{
+                        cliente.setTermosDeUso(false);
+                    }
+
+                    cliente.setDataInclusao(jsonObject.getString("DATA_INCLUSAO"));
+                    cliente.setDataAlteracao(jsonObject.getString("DATA_ALTERACAO"));
+                    cliente.setFkIdUsuario(jsonObject.getInt("ID_USUARIO"));
+
+                    //TODO: Modificar o programa para atualizar os dados e não excluir e incluir novos dados
+                    clienteController.insertObject(cliente);
+                }
 
 
-            // Depois de salvar, inicia a MainActivity
+            }catch(JSONException err){
+                Log.e(AppUtil.TAG,"Erro ao converter o JSON[onPostExecute] -"+err.getMessage());
+            }catch(Exception err){
+                Log.e(AppUtil.TAG,"Erro ao na execução JSON[onPostExecute] -"+err.getMessage());
+            }
+
+
+
 
         } else {
 
