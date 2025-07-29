@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
@@ -64,7 +65,12 @@ public class SplashActivity extends AppCompatActivity {
 
         if(AppController.verificarGooglePlayServices(SplashActivity.this)){
 
-            inicializarAplicativo();
+            if(verificaPermissoes()){
+                inicializarAplicativo();
+            }else{
+                //TODO: Colocar mensagem com as permissões negadas
+                AppUtilToast.toastMessage(getApplicationContext(),"Verifique as permissões antes de continuar");
+            }
 
         }
 
@@ -79,7 +85,7 @@ public class SplashActivity extends AppCompatActivity {
         //TODO: Buscar ID do usuário logado para passar nos parametros
         
         //TODO: Ajustar para buscar dados do websrevice e atualizar as tabelas.
-        sincronizarSistema.execute("");
+        sincronizarSistema.execute("1");
 
     }
 
@@ -103,19 +109,15 @@ public class SplashActivity extends AppCompatActivity {
                 sincronizarDados();
 
 
-                if(verificaPermissoes()){
-                    if(getDadosPref()){
-                        intent = new Intent(SplashActivity.this,MainActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }else{
-                        intent = new Intent(SplashActivity.this,LoginActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
+
+                if(getDadosPref()){
+                    intent = new Intent(SplashActivity.this,MainActivity.class);
+                    startActivity(intent);
+                    finish();
                 }else{
-                    //TODO: Colocar mensagem com as permissões negadas
-                    AppUtilToast.toastMessage(getApplicationContext(),"Verifique as permissões antes de continuar");
+                    intent = new Intent(SplashActivity.this,LoginActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
 
             }
@@ -149,11 +151,35 @@ public class SplashActivity extends AppCompatActivity {
 
     }
 
-    public void initComponentes(){
+    private void initComponentes(){
         txtVersao = findViewById(R.id.txtVersao);
 
         txtVersao.setText(AppUtil.VERSION);
 
-        //sincronizarSistema = new SincronizarSistema();
+        sincronizarSistema = new SincronizarSistema(SplashActivity.this);
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == AppUtil.REQUEST_CODE_APP) {
+            boolean todasPermissoesConcedidas = true;
+
+            for (int resultado : grantResults) {
+                if (resultado != PackageManager.PERMISSION_GRANTED) {
+                    todasPermissoesConcedidas = false;
+                    break;
+                }
+            }
+
+            if (todasPermissoesConcedidas) {
+                inicializarAplicativo();
+            } else {
+                AppUtilToast.toastMessage(getApplicationContext(), "Permissões necessárias não concedidas!");
+                finish();
+            }
+        }
+    }
+
 }

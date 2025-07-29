@@ -37,7 +37,7 @@ public class SincronizarSistema extends AsyncTask<String, String, String> {
     private Uri.Builder builder;
 
 
-    public SincronizarSistema(){
+    public SincronizarSistema(Context context){
         this.context = context;
         this.builder = new Uri.Builder();
         this.progressDialog = new ProgressDialog(context);
