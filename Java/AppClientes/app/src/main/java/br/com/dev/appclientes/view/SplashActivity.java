@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
@@ -22,7 +23,10 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import br.com.dev.appclientes.R;
 import br.com.dev.appclientes.api.AppUtil;
@@ -69,7 +73,8 @@ public class SplashActivity extends AppCompatActivity {
                 inicializarAplicativo();
             }else{
                 //TODO: Colocar mensagem com as permissões negadas
-                AppUtilToast.toastMessage(getApplicationContext(),"Verifique as permissões antes de continuar");
+                //AppUtilToast.toastMessage(getApplicationContext(),"Verifique as permissões antes de continuar");
+                Toast.makeText(getApplicationContext(), "Verifique as permissões antes de continuar",Toast.LENGTH_SHORT).show();
             }
 
         }
@@ -82,10 +87,14 @@ public class SplashActivity extends AppCompatActivity {
 
         db.dropTable(UsuarioDataModel.TABELA);
         db.createTabela(UsuarioDataModel.criarTabela());
-        //TODO: Buscar ID do usuário logado para passar nos parametros
+
+        String idUserLog = String.valueOf(AppUtilSharedPreferences.getIdUserByPref(SplashActivity.this));
+
+        if (!idUserLog.isEmpty()){
+            sincronizarSistema.execute(idUserLog);
+        }
         
-        //TODO: Ajustar para buscar dados do websrevice e atualizar as tabelas.
-        sincronizarSistema.execute("1");
+
 
     }
 

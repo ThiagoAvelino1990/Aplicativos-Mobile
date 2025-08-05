@@ -26,7 +26,10 @@ import java.net.URL;
 import br.com.dev.appclientes.api.AppUtil;
 import br.com.dev.appclientes.api.AppUtilWebService;
 import br.com.dev.appclientes.controller.ClienteController;
+import br.com.dev.appclientes.controller.UsuarioController;
+import br.com.dev.appclientes.datamodel.UsuarioDataModel;
 import br.com.dev.appclientes.model.Cliente;
+import br.com.dev.appclientes.model.Usuario;
 
 public class SincronizarSistema extends AsyncTask<String, String, String> {
 
@@ -135,51 +138,87 @@ public class SincronizarSistema extends AsyncTask<String, String, String> {
     protected void onPostExecute(String result){
 
         if (result != null && !result.startsWith("ERRO")) {
-            JSONArray jsonArray;
+            //JSONArray jsonArray;
             JSONObject jsonObject;
             Cliente cliente;
             ClienteController clienteController;
+            Usuario usuario;
+            UsuarioController usuarioController;
             // Aqui você parseia o JSON e salva no banco local
             Log.i(AppUtil.TAG, "Dados recebidos: " + result);
 
             try{
-                jsonArray = new JSONArray(result);
+                //jsonArray = new JSONArray(result);
+                jsonObject = new JSONObject(result);
+
+                JSONArray usuarioJson = jsonObject.getJSONArray("usuario");
+                JSONArray clienteJson = jsonObject.getJSONArray("cliente");
+
                 cliente = new Cliente();
                 clienteController = new ClienteController(context);
+                usuario = new Usuario();
+                usuarioController = new UsuarioController(context);
 
-                for(int i = 0; i < jsonArray.length(); i++){
-                    jsonObject = new JSONObject();
+                for(int i = 0; i < clienteJson.length(); i++){
+                    JSONObject objCliente = clienteJson.getJSONObject(i);
 
-                    cliente.setId(jsonObject.getInt("ID"));
-                    cliente.setNome(jsonObject.getString("NOME"));
-                    cliente.setTelefone(jsonObject.getString("TELEFONE"));
-                    cliente.setEmail(jsonObject.getString("EMAIL"));
-                    cliente.setCep(jsonObject.getInt("CEP"));
-                    cliente.setLogradouro(jsonObject.getString("LOGRAODURO"));
-                    cliente.setComplemento(jsonObject.getString("COMPLEMENTO"));
-                    cliente.setNumero(jsonObject.getString("NUMERO"));
-                    cliente.setBairro(jsonObject.getString("BAIRRO"));
-                    cliente.setCidade(jsonObject.getString("CIDADE"));
-                    cliente.setEstado(jsonObject.getString("ESTADO"));
-                    cliente.setPais(jsonObject.getString("PAIS"));
-                    cliente.setDocumento(jsonObject.getString("DOCUMENTO"));
-                    cliente.setIdTipoDocumento(jsonObject.getString("ID_TIPO_DOCUMENTO"));
-                    cliente.setIdTipoPessoa(jsonObject.getString("ID_TIPO_PESSOA"));
+                    cliente.setId(objCliente.getInt("ID"));
+                    cliente.setNome(objCliente.getString("NOME"));
+                    cliente.setTelefone(objCliente.getString("TELEFONE"));
+                    cliente.setEmail(objCliente.getString("EMAIL"));
+                    cliente.setCep(objCliente.getInt("CEP"));
+                    cliente.setLogradouro(objCliente.getString("LOGRAODURO"));
+                    cliente.setComplemento(objCliente.getString("COMPLEMENTO"));
+                    cliente.setNumero(objCliente.getString("NUMERO"));
+                    cliente.setBairro(objCliente.getString("BAIRRO"));
+                    cliente.setCidade(objCliente.getString("CIDADE"));
+                    cliente.setEstado(objCliente.getString("ESTADO"));
+                    cliente.setPais(objCliente.getString("PAIS"));
+                    cliente.setDocumento(objCliente.getString("DOCUMENTO"));
+                    cliente.setIdTipoDocumento(objCliente.getString("ID_TIPO_DOCUMENTO"));
+                    cliente.setIdTipoPessoa(objCliente.getString("ID_TIPO_PESSOA"));
 
-                    if(jsonObject.getString("TERMOS_DE_USO") == "0"){
+                    if(objCliente.getString("TERMOS_DE_USO") == "0"){
                         cliente.setTermosDeUso(true);
                     }else{
                         cliente.setTermosDeUso(false);
                     }
 
-                    cliente.setDataInclusao(jsonObject.getString("DATA_INCLUSAO"));
-                    cliente.setDataAlteracao(jsonObject.getString("DATA_ALTERACAO"));
-                    cliente.setFkIdUsuario(jsonObject.getInt("ID_USUARIO"));
+                    cliente.setDataInclusao(objCliente.getString("DATA_INCLUSAO"));
+                    cliente.setDataAlteracao(objCliente.getString("DATA_ALTERACAO"));
+                    cliente.setFkIdUsuario(objCliente.getInt("ID_USUARIO"));
 
-                    //TODO: Modificar o programa para atualizar os dados e não excluir e incluir novos dados
-                    clienteController.insertObject(cliente);
+                    clienteController.updateObject(cliente);
                 }
 
+                /**
+                 * Dados do usuario
+                 */
+                for (int j=0; j<usuarioJson.length();j++){
+                    JSONObject objUsuario = usuarioJson.getJSONObject(j);
+
+                    usuario.setId(objUsuario.getInt("ID"));
+
+                    if (objUsuario.getString("ID_TIPO_PESSOA") == "PF"){
+                        usuario.setPessoaFisica(true);
+                    }else usuario.setPessoaFisica(false);
+
+                    usuario.setNome(objUsuario.getString("NOME"));
+                    usuario.setCpfCnpj(objUsuario.getString("CPF_CNPJ"));
+                    usuario.setLogradouro(objUsuario.getString("LOGRADOURO"));
+                    usuario.setComplemento(objUsuario.getString("COMPLEMENTO"));
+                    usuario.setEmail(objUsuario.getString("EMAIL"));
+                    usuario.setSenha(objUsuario.getString("SENHA"));
+                    if (objUsuario.getString("LEMBRAR_SENHA") == "1"){
+                        usuario.setChkLembrarSenha(true);
+                    }else{
+                        usuario.setChkLembrarSenha(false);
+                    }
+                    usuario.setDataInclusao(objUsuario.getString("DATA_DE_INCLUSAO"));
+                    usuario.setDataAlteracao(objUsuario.getString("DATA_DE_ALTERACAO"));
+
+                    usuarioController.updateObject(usuario);
+                }
 
             }catch(JSONException err){
                 Log.e(AppUtil.TAG,"Erro ao converter o JSON[onPostExecute] -"+err.getMessage());
@@ -191,7 +230,7 @@ public class SincronizarSistema extends AsyncTask<String, String, String> {
 
 
         } else {
-
+            Log.i(AppUtil.TAG,"Verificar esta condição");
         }
 
     }
