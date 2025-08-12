@@ -45,7 +45,7 @@ public class SincronizarSistema extends AsyncTask<String, String, String> {
         this.builder = new Uri.Builder();
         this.progressDialog = new ProgressDialog(context);
 
-        builder.appendQueryParameter("app","Cliente");
+        // builder.appendQueryParameter("app","Cliente");
     }
 
     @Override
@@ -80,7 +80,7 @@ public class SincronizarSistema extends AsyncTask<String, String, String> {
             conn.setConnectTimeout(AppUtilWebService.CONNECTION_TIMEOUT);
             conn.setReadTimeout(AppUtilWebService.READ_TIMEOUT);
             conn.setRequestMethod("GET");//"GET", "PUT", "POST", "DELETE"
-            conn.setRequestProperty("chatset", "utf-8");
+            conn.setRequestProperty("charset", "utf-8");
 
             conn.setDoInput(true);
             conn.setDoOutput(true);
@@ -171,7 +171,7 @@ public class SincronizarSistema extends AsyncTask<String, String, String> {
                     cliente.setTelefone(objCliente.getString("TELEFONE"));
                     cliente.setEmail(objCliente.getString("EMAIL"));
                     cliente.setCep(objCliente.getInt("CEP"));
-                    cliente.setLogradouro(objCliente.getString("LOGRAODURO"));
+                    cliente.setLogradouro(objCliente.getString("LOGRADOURO"));
                     cliente.setComplemento(objCliente.getString("COMPLEMENTO"));
                     cliente.setNumero(objCliente.getString("NUMERO"));
                     cliente.setBairro(objCliente.getString("BAIRRO"));
@@ -182,7 +182,7 @@ public class SincronizarSistema extends AsyncTask<String, String, String> {
                     cliente.setIdTipoDocumento(objCliente.getString("ID_TIPO_DOCUMENTO"));
                     cliente.setIdTipoPessoa(objCliente.getString("ID_TIPO_PESSOA"));
 
-                    if(objCliente.getString("TERMOS_DE_USO") == "0"){
+                    if(objCliente.getString("TERMOS_DE_USO").equals("0")){
                         cliente.setTermosDeUso(true);
                     }else{
                         cliente.setTermosDeUso(false);
@@ -203,7 +203,7 @@ public class SincronizarSistema extends AsyncTask<String, String, String> {
 
                     usuario.setId(objUsuario.getInt("ID"));
 
-                    if (objUsuario.getString("ID_TIPO_PESSOA") == "PF"){
+                    if (objUsuario.getString("ID_TIPO_PESSOA").equals("PF")){
                         usuario.setPessoaFisica(true);
                     }else usuario.setPessoaFisica(false);
 
@@ -213,10 +213,10 @@ public class SincronizarSistema extends AsyncTask<String, String, String> {
                     usuario.setComplemento(objUsuario.getString("COMPLEMENTO"));
                     usuario.setEmail(objUsuario.getString("EMAIL"));
                     usuario.setSenha(objUsuario.getString("SENHA"));
-                    if (objUsuario.getString("LEMBRAR_SENHA") == "1"){
-                        usuario.setChkLembrarSenha(true);
-                    }else{
+                    if (objUsuario.getString("LEMBRAR_SENHA").equals("1")){
                         usuario.setChkLembrarSenha(false);
+                    }else{
+                        usuario.setChkLembrarSenha(true);
                     }
                     usuario.setDataInclusao(objUsuario.getString("DATA_DE_INCLUSAO"));
                     usuario.setDataAlteracao(objUsuario.getString("DATA_DE_ALTERACAO"));

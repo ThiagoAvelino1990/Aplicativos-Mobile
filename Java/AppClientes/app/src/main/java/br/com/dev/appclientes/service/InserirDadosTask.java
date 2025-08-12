@@ -5,6 +5,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,6 +29,7 @@ import br.com.dev.appclientes.controller.UsuarioController;
 import br.com.dev.appclientes.model.Cliente;
 import br.com.dev.appclientes.model.Usuario;
 
+//Enviar os dados para o Servidor
 public class InserirDadosTask extends AsyncTask<String, String, String> {
 
 
@@ -43,7 +45,7 @@ public class InserirDadosTask extends AsyncTask<String, String, String> {
         this.builder = new Uri.Builder();
         this.progressDialog = new ProgressDialog(context);
 
-        builder.appendQueryParameter("app","Cliente");
+        // builder.appendQueryParameter("app","Cliente");
     }
 
 
@@ -55,17 +57,17 @@ public class InserirDadosTask extends AsyncTask<String, String, String> {
     @Override
     protected String doInBackground(String... strings) {
 
-        String[] param = null;
+        String[] param = new String[strings.length];
 
-        for(int i = 0; i <= strings.length; i++){
+        for(int i = 0; i < strings.length; i++){
             param[i] = strings[i];
         }
 
         //Montar URL com o endereço do script php
         try{
-            if (param[0] == "cliente"){
+            if (param[0].equals("cliente")){
                 url = new URL(AppUtilWebService.URL_WEB_SERVICE);//TODO: Colocar script PHP correto -> +"getClientesByIdUser.php?token=xpto&userID="+param);
-            } else if (param[0] == "usuario") {
+            } else if (param[0].equals("usuario")) {
                 url = new URL(AppUtilWebService.URL_WEB_SERVICE);//TODO: Colocar script PHP correto -> +"getClientesByIdUser.php?token=xpto&userID="+param);
             }else{
                 return "ERRO - Não foi possível definir uma parâmetro válido. "+param;
@@ -84,7 +86,7 @@ public class InserirDadosTask extends AsyncTask<String, String, String> {
             conn.setConnectTimeout(AppUtilWebService.CONNECTION_TIMEOUT);
             conn.setReadTimeout(AppUtilWebService.READ_TIMEOUT);
             conn.setRequestMethod("POST");//"GET", "PUT", "POST", "DELETE"
-            conn.setRequestProperty("chatset", "utf-8");
+            conn.setRequestProperty("charset", "utf-8");
 
             conn.setDoInput(true);
             conn.setDoOutput(true);
@@ -139,7 +141,10 @@ public class InserirDadosTask extends AsyncTask<String, String, String> {
             Log.e(AppUtil.TAG,"[SincronizarSistema] "+err.getMessage());
             return "ERRO ao sincronizar os dados";
         }finally {
-            conn.disconnect();
+            if(conn != null){
+                conn.disconnect();
+            }
+
         }
 
     }
@@ -147,107 +152,5 @@ public class InserirDadosTask extends AsyncTask<String, String, String> {
     @Override
     protected void onPostExecute(String result){
 
-        // Persar o JSON para realizar a interção dos dados
-        if (result != null && !result.startsWith("ERRO")) {
-
-            JSONObject jsonObject;
-            Cliente cliente;
-            ClienteController clienteController;
-            Usuario usuario;
-            UsuarioController usuarioController;
-
-            Log.i(AppUtil.TAG, "Dados recebidos: " + result);
-
-            try{
-
-                jsonObject = new JSONObject(result);
-
-                JSONArray usuarioJson = jsonObject.getJSONArray("usuario");
-                JSONArray clienteJson = jsonObject.getJSONArray("cliente");
-
-                cliente = new Cliente();
-                clienteController = new ClienteController(context);
-                usuario = new Usuario();
-                usuarioController = new UsuarioController(context);
-
-                if (!usuarioJson.toString().isEmpty()){
-                    /**
-                     * Dados do usuario
-                     */
-                    for (int j=0; j<usuarioJson.length();j++){
-                        JSONObject objUsuario = usuarioJson.getJSONObject(j);
-
-                        usuario.setId(objUsuario.getInt("ID"));
-
-                        if (objUsuario.getString("ID_TIPO_PESSOA") == "PF"){
-                            usuario.setPessoaFisica(true);
-                        }else usuario.setPessoaFisica(false);
-
-                        usuario.setNome(objUsuario.getString("NOME"));
-                        usuario.setCpfCnpj(objUsuario.getString("CPF_CNPJ"));
-                        usuario.setLogradouro(objUsuario.getString("LOGRADOURO"));
-                        usuario.setComplemento(objUsuario.getString("COMPLEMENTO"));
-                        usuario.setEmail(objUsuario.getString("EMAIL"));
-                        usuario.setSenha(objUsuario.getString("SENHA"));
-                        if (objUsuario.getString("LEMBRAR_SENHA") == "1"){
-                            usuario.setChkLembrarSenha(true);
-                        }else{
-                            usuario.setChkLembrarSenha(false);
-                        }
-                        usuario.setDataInclusao(objUsuario.getString("DATA_DE_INCLUSAO"));
-                        usuario.setDataAlteracao(objUsuario.getString("DATA_DE_ALTERACAO"));
-
-                        usuarioController.updateObject(usuario);
-                    }
-                }
-
-                if(!clienteJson.toString().isEmpty()){
-                    for(int i = 0; i < clienteJson.length(); i++){
-                        JSONObject objCliente = clienteJson.getJSONObject(i);
-
-                        cliente.setId(objCliente.getInt("ID"));
-                        cliente.setNome(objCliente.getString("NOME"));
-                        cliente.setTelefone(objCliente.getString("TELEFONE"));
-                        cliente.setEmail(objCliente.getString("EMAIL"));
-                        cliente.setCep(objCliente.getInt("CEP"));
-                        cliente.setLogradouro(objCliente.getString("LOGRAODURO"));
-                        cliente.setComplemento(objCliente.getString("COMPLEMENTO"));
-                        cliente.setNumero(objCliente.getString("NUMERO"));
-                        cliente.setBairro(objCliente.getString("BAIRRO"));
-                        cliente.setCidade(objCliente.getString("CIDADE"));
-                        cliente.setEstado(objCliente.getString("ESTADO"));
-                        cliente.setPais(objCliente.getString("PAIS"));
-                        cliente.setDocumento(objCliente.getString("DOCUMENTO"));
-                        cliente.setIdTipoDocumento(objCliente.getString("ID_TIPO_DOCUMENTO"));
-                        cliente.setIdTipoPessoa(objCliente.getString("ID_TIPO_PESSOA"));
-
-                        if(objCliente.getString("TERMOS_DE_USO") == "0"){
-                            cliente.setTermosDeUso(true);
-                        }else{
-                            cliente.setTermosDeUso(false);
-                        }
-
-                        cliente.setDataInclusao(objCliente.getString("DATA_INCLUSAO"));
-                        cliente.setDataAlteracao(objCliente.getString("DATA_ALTERACAO"));
-                        cliente.setFkIdUsuario(objCliente.getInt("ID_USUARIO"));
-
-                        clienteController.updateObject(cliente);
-                    }
-                }
-
-
-
-            }catch(JSONException err){
-                Log.e(AppUtil.TAG,"Erro ao converter o JSON[onPostExecute] -"+err.getMessage());
-            }catch(Exception err){
-                Log.e(AppUtil.TAG,"Erro ao na execução JSON[onPostExecute] -"+err.getMessage());
-            }
-
-
-
-
-        } else {
-            Log.i(AppUtil.TAG,"Verificar esta condição");
-        }
     }
 }
