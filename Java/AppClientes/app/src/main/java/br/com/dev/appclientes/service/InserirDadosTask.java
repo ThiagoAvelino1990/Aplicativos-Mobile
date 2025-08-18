@@ -5,11 +5,6 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -24,10 +19,6 @@ import java.net.URL;
 
 import br.com.dev.appclientes.api.AppUtil;
 import br.com.dev.appclientes.api.AppUtilWebService;
-import br.com.dev.appclientes.controller.ClienteController;
-import br.com.dev.appclientes.controller.UsuarioController;
-import br.com.dev.appclientes.model.Cliente;
-import br.com.dev.appclientes.model.Usuario;
 
 //Enviar os dados para o Servidor
 public class InserirDadosTask extends AsyncTask<String, String, String> {
@@ -52,6 +43,9 @@ public class InserirDadosTask extends AsyncTask<String, String, String> {
     @Override
     protected void onPreExecute(){
         super.onPreExecute();
+        progressDialog.setMessage("Enviando dados..");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
     }
 
     @Override
@@ -63,13 +57,57 @@ public class InserirDadosTask extends AsyncTask<String, String, String> {
             param[i] = strings[i];
         }
 
+        /**
+         *TODO: ajustar o builder
+         * builder.appendQueryParameter("token",param[1])
+         *          .appendQueryParameter("cliente",param[2])...
+         */
+
         //Montar URL com o endereço do script php
         try{
             if (param[0].equals("cliente")){
-                url = new URL(AppUtilWebService.URL_WEB_SERVICE);//TODO: Colocar script PHP correto -> +"getClientesByIdUser.php?token=xpto&userID="+param);
+
+                builder.appendQueryParameter("id",param[1])
+                        .appendQueryParameter("nome",param[2])
+                        .appendQueryParameter("telefone",param[3])
+                        .appendQueryParameter("email",param[4])
+                        .appendQueryParameter("cep",param[5])
+                        .appendQueryParameter("logradouro",param[6])
+                        .appendQueryParameter("complemento",param[7])
+                        .appendQueryParameter("numero",param[8])
+                        .appendQueryParameter("bairro",param[9])
+                        .appendQueryParameter("cidade",param[10])
+                        .appendQueryParameter("estado",param[11])
+                        .appendQueryParameter("pais",param[12])
+                        .appendQueryParameter("documento",param[13])
+                        .appendQueryParameter("id_tipo_documento",param[14])
+                        .appendQueryParameter("id_tipo_pessoa",param[15])
+                        .appendQueryParameter("termos_de_uso",param[16])
+                        .appendQueryParameter("data_inclusao",param[17])
+                        .appendQueryParameter("data_alteracao",param[18])
+                        .appendQueryParameter("id_usuario",param[19]);
+
+                url = new URL(AppUtilWebService.URL_WEB_SERVICE+"updateClientes.php?token=xpto");
+
             } else if (param[0].equals("usuario")) {
-                url = new URL(AppUtilWebService.URL_WEB_SERVICE);//TODO: Colocar script PHP correto -> +"getClientesByIdUser.php?token=xpto&userID="+param);
-            }else{
+
+                builder.appendQueryParameter("id",param[1])
+                       .appendQueryParameter("id_tipo_pessoa",param[2])
+                       .appendQueryParameter("nome",param[3])
+                       .appendQueryParameter("cpf_cnpj",param[4])
+                       .appendQueryParameter("logradouro",param[5])
+                       .appendQueryParameter("complemento",param[6])
+                       .appendQueryParameter("email",param[7])
+                       .appendQueryParameter("senha",param[8])
+                       .appendQueryParameter("telefone",param[9])
+                       .appendQueryParameter("lembrar_senha",param[10])
+                       .appendQueryParameter("atualizar_senha",param[11])
+                       .appendQueryParameter("data_de_inclusao",param[12])
+                       .appendQueryParameter("data_de_alteracao",param[13]);
+
+
+                url = new URL(AppUtilWebService.URL_WEB_SERVICE+"updateUsuario.phptoken=xpto");
+                
                 return "ERRO - Não foi possível definir uma parâmetro válido. "+param;
             }
 
@@ -151,6 +189,8 @@ public class InserirDadosTask extends AsyncTask<String, String, String> {
 
     @Override
     protected void onPostExecute(String result){
+        super.onPostExecute(result);
 
+        progressDialog.dismiss();
     }
 }
