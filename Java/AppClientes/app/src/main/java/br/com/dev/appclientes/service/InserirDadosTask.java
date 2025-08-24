@@ -43,7 +43,7 @@ public class InserirDadosTask extends AsyncTask<String, String, String> {
     @Override
     protected void onPreExecute(){
         super.onPreExecute();
-        progressDialog.setMessage("Enviando dados..");
+        progressDialog.setMessage("Processando dados..");
         progressDialog.setCancelable(false);
         progressDialog.show();
     }
@@ -56,12 +56,6 @@ public class InserirDadosTask extends AsyncTask<String, String, String> {
         for(int i = 0; i < strings.length; i++){
             param[i] = strings[i];
         }
-
-        /**
-         *TODO: ajustar o builder
-         * builder.appendQueryParameter("token",param[1])
-         *          .appendQueryParameter("cliente",param[2])...
-         */
 
         //Montar URL com o endereço do script php
         try{
@@ -107,7 +101,7 @@ public class InserirDadosTask extends AsyncTask<String, String, String> {
 
 
                 url = new URL(AppUtilWebService.URL_WEB_SERVICE+"updateUsuario.phptoken=xpto");
-                
+
                 return "ERRO - Não foi possível definir uma parâmetro válido. "+param;
             }
 
