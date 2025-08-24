@@ -20,9 +20,10 @@ import java.net.URL;
 import br.com.dev.appclientes.api.AppUtil;
 import br.com.dev.appclientes.api.AppUtilWebService;
 
-//Enviar os dados para o Servidor
-public class InserirDadosTask extends AsyncTask<String, String, String> {
-
+/**
+ * Atualizar dados no servidor
+ */
+public class AtualizarDadosTask extends AsyncTask<String, String, String> {
 
     private ProgressDialog progressDialog;
     private Context context;
@@ -31,7 +32,7 @@ public class InserirDadosTask extends AsyncTask<String, String, String> {
     private Uri.Builder builder;
 
 
-    public InserirDadosTask(Context context){
+    public AtualizarDadosTask(Context context){
         this.context = context;
         this.builder = new Uri.Builder();
         this.progressDialog = new ProgressDialog(context);
@@ -61,44 +62,46 @@ public class InserirDadosTask extends AsyncTask<String, String, String> {
         try{
             if (param[0].equals("cliente")){
 
-                builder.appendQueryParameter("nome",param[1])
-                        .appendQueryParameter("telefone",param[2])
-                        .appendQueryParameter("email",param[3])
-                        .appendQueryParameter("cep",param[4])
-                        .appendQueryParameter("logradouro",param[5])
-                        .appendQueryParameter("complemento",param[6])
-                        .appendQueryParameter("numero",param[7])
-                        .appendQueryParameter("bairro",param[8])
-                        .appendQueryParameter("cidade",param[9])
-                        .appendQueryParameter("estado",param[10])
-                        .appendQueryParameter("pais",param[11])
-                        .appendQueryParameter("documento",param[12])
-                        .appendQueryParameter("id_tipo_documento",param[13])
-                        .appendQueryParameter("id_tipo_pessoa",param[14])
-                        .appendQueryParameter("termos_de_uso",param[15])
-                        .appendQueryParameter("data_inclusao",param[16])
-                        .appendQueryParameter("data_alteracao",param[17])
-                        .appendQueryParameter("id_usuario",param[18]);
+                builder.appendQueryParameter("id",param[1])
+                        .appendQueryParameter("nome",param[2])
+                        .appendQueryParameter("telefone",param[3])
+                        .appendQueryParameter("email",param[4])
+                        .appendQueryParameter("cep",param[5])
+                        .appendQueryParameter("logradouro",param[6])
+                        .appendQueryParameter("complemento",param[7])
+                        .appendQueryParameter("numero",param[8])
+                        .appendQueryParameter("bairro",param[9])
+                        .appendQueryParameter("cidade",param[10])
+                        .appendQueryParameter("estado",param[11])
+                        .appendQueryParameter("pais",param[12])
+                        .appendQueryParameter("documento",param[13])
+                        .appendQueryParameter("id_tipo_documento",param[14])
+                        .appendQueryParameter("id_tipo_pessoa",param[15])
+                        .appendQueryParameter("termos_de_uso",param[16])
+                        .appendQueryParameter("data_inclusao",param[17])
+                        .appendQueryParameter("data_alteracao",param[18])
+                        .appendQueryParameter("id_usuario",param[19]);
 
-                url = new URL(AppUtilWebService.URL_WEB_SERVICE+"insertClientes.php?token=xpto");//TODO:Remover token fixado
+                url = new URL(AppUtilWebService.URL_WEB_SERVICE+"updateClientes.php?token=xpto");//TODO:Remover token fixado
 
             } else if (param[0].equals("usuario")) {
 
-                builder.appendQueryParameter("id_tipo_pessoa",param[1])
-                       .appendQueryParameter("nome",param[2])
-                       .appendQueryParameter("cpf_cnpj",param[3])
-                       .appendQueryParameter("logradouro",param[4])
-                       .appendQueryParameter("complemento",param[5])
-                       .appendQueryParameter("email",param[6])
-                       .appendQueryParameter("senha",param[7])
-                       .appendQueryParameter("telefone",param[8])
-                       .appendQueryParameter("lembrar_senha",param[9])
-                       .appendQueryParameter("atualizar_senha",param[10])
-                       .appendQueryParameter("data_de_inclusao",param[11])
-                       .appendQueryParameter("data_de_alteracao",param[12]);
+                builder.appendQueryParameter("id",param[1])
+                        .appendQueryParameter("id_tipo_pessoa",param[2])
+                        .appendQueryParameter("nome",param[3])
+                        .appendQueryParameter("cpf_cnpj",param[4])
+                        .appendQueryParameter("logradouro",param[5])
+                        .appendQueryParameter("complemento",param[6])
+                        .appendQueryParameter("email",param[7])
+                        .appendQueryParameter("senha",param[8])
+                        .appendQueryParameter("telefone",param[9])
+                        .appendQueryParameter("lembrar_senha",param[10])
+                        .appendQueryParameter("atualizar_senha",param[11])
+                        .appendQueryParameter("data_de_inclusao",param[12])
+                        .appendQueryParameter("data_de_alteracao",param[13]);
 
 
-                url = new URL(AppUtilWebService.URL_WEB_SERVICE+"insertUsuario.phptoken=xpto");//TODO:Remover token fixado
+                url = new URL(AppUtilWebService.URL_WEB_SERVICE+"updateUsuario.phptoken=xpto");//TODO:Remover token fixado
 
                 return "ERRO - Não foi possível definir uma parâmetro válido. "+param;
             }
@@ -115,7 +118,7 @@ public class InserirDadosTask extends AsyncTask<String, String, String> {
             conn = (HttpURLConnection) url.openConnection();
             conn.setConnectTimeout(AppUtilWebService.CONNECTION_TIMEOUT);
             conn.setReadTimeout(AppUtilWebService.READ_TIMEOUT);
-            conn.setRequestMethod("POST");//"GET", "PUT", "POST", "DELETE"
+            conn.setRequestMethod("PUT");//"GET", "PUT", "POST", "DELETE"
             conn.setRequestProperty("charset", "utf-8");
 
             conn.setDoInput(true);
@@ -168,8 +171,8 @@ public class InserirDadosTask extends AsyncTask<String, String, String> {
             }
 
         }catch(Exception err){
-            Log.e(AppUtil.TAG,"[InsedirDados] "+err.getMessage());
-            return "ERRO ao inserir os dados";
+            Log.e(AppUtil.TAG,"[AtualizarSistema] "+err.getMessage());
+            return "ERRO ao atualizar os dados";
         }finally {
             if(conn != null){
                 conn.disconnect();
