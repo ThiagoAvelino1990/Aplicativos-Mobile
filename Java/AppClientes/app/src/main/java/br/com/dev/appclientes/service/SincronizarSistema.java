@@ -67,7 +67,7 @@ public class SincronizarSistema extends AsyncTask<String, String, String> {
 
         //Montar URL com o endereço do script php
         try{
-            url = new URL(AppUtilWebService.URL_WEB_SERVICE+"getClientesByIdUser.php?token=xpto&userID="+param);//TODO: Modificar token
+            url = new URL(AppUtilWebService.URL_WEB_SERVICE+"getDadosByIdUser.php?token=xpto&userID="+param);//TODO: Modificar token
         }catch(MalformedURLException err){
             Log.e(AppUtil.TAG,"MalformedURLException - "+err.getMessage());
         }catch(Exception err){
