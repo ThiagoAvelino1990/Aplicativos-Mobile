@@ -1,6 +1,7 @@
 package br.com.dev.appclientes.service;
 
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -16,6 +17,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
 
 import br.com.dev.appclientes.api.AppUtil;
 import br.com.dev.appclientes.api.AppUtilWebService;
@@ -30,12 +32,14 @@ public class AtualizarDadosTask extends AsyncTask<String, String, String> {
     private HttpURLConnection conn = null;
     private URL url = null;
     private Uri.Builder builder;
+    private ContentValues values;
 
 
-    public AtualizarDadosTask(Context context){
+    public AtualizarDadosTask(Context context, ContentValues contentValues){
         this.context = context;
         this.builder = new Uri.Builder();
         this.progressDialog = new ProgressDialog(context);
+        this.values = contentValues;
 
         // builder.appendQueryParameter("app","Cliente");
     }
@@ -62,44 +66,17 @@ public class AtualizarDadosTask extends AsyncTask<String, String, String> {
         try{
             if (param[0].equals("cliente")){
 
-                builder.appendQueryParameter("id",param[1])
-                        .appendQueryParameter("nome",param[2])
-                        .appendQueryParameter("telefone",param[3])
-                        .appendQueryParameter("email",param[4])
-                        .appendQueryParameter("cep",param[5])
-                        .appendQueryParameter("logradouro",param[6])
-                        .appendQueryParameter("complemento",param[7])
-                        .appendQueryParameter("numero",param[8])
-                        .appendQueryParameter("bairro",param[9])
-                        .appendQueryParameter("cidade",param[10])
-                        .appendQueryParameter("estado",param[11])
-                        .appendQueryParameter("pais",param[12])
-                        .appendQueryParameter("documento",param[13])
-                        .appendQueryParameter("id_tipo_documento",param[14])
-                        .appendQueryParameter("id_tipo_pessoa",param[15])
-                        .appendQueryParameter("termos_de_uso",param[16])
-                        .appendQueryParameter("data_inclusao",param[17])
-                        .appendQueryParameter("data_alteracao",param[18])
-                        .appendQueryParameter("id_usuario",param[19]);
+                for(Map.Entry<String, Object> entry : values.valueSet()){
+                    builder.appendQueryParameter(entry.getKey(), String.valueOf(entry.getValue()));
+                }
 
                 url = new URL(AppUtilWebService.URL_WEB_SERVICE+"updateClientes.php?token=xpto");//TODO:Remover token fixado
 
             } else if (param[0].equals("usuario")) {
 
-                builder.appendQueryParameter("id",param[1])
-                        .appendQueryParameter("id_tipo_pessoa",param[2])
-                        .appendQueryParameter("nome",param[3])
-                        .appendQueryParameter("cpf_cnpj",param[4])
-                        .appendQueryParameter("logradouro",param[5])
-                        .appendQueryParameter("complemento",param[6])
-                        .appendQueryParameter("email",param[7])
-                        .appendQueryParameter("senha",param[8])
-                        .appendQueryParameter("telefone",param[9])
-                        .appendQueryParameter("lembrar_senha",param[10])
-                        .appendQueryParameter("atualizar_senha",param[11])
-                        .appendQueryParameter("data_de_inclusao",param[12])
-                        .appendQueryParameter("data_de_alteracao",param[13]);
-
+                for(Map.Entry<String, Object> entry : values.valueSet()){
+                    builder.appendQueryParameter(entry.getKey(), String.valueOf(entry.getValue()));
+                }
 
                 url = new URL(AppUtilWebService.URL_WEB_SERVICE+"updateUsuario.phptoken=xpto");//TODO:Remover token fixado
 

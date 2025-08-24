@@ -1,5 +1,6 @@
 package br.com.dev.appclientes.controller;
 
+import android.content.Context;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -8,11 +9,14 @@ import java.util.Objects;
 
 import br.com.dev.appclientes.api.AppUtil;
 import br.com.dev.appclientes.model.ClienteORM;
+import br.com.dev.appclientes.service.InserirDadosTask;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.exceptions.RealmException;
 
 public class ClienteORMController {
+
+    private Context context;
 
     public void insertORM(ClienteORM obj){
 
@@ -31,6 +35,7 @@ public class ClienteORMController {
 
             realm.beginTransaction();
             realm.copyToRealm(obj);
+
 
         }catch(RealmException err){
             Log.e(AppUtil.TAG,"insertORM: "+err.getMessage());

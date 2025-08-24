@@ -4,16 +4,12 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
@@ -23,10 +19,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import br.com.dev.appclientes.R;
 import br.com.dev.appclientes.api.AppUtil;
@@ -37,7 +30,6 @@ import br.com.dev.appclientes.controller.AppController;
 import br.com.dev.appclientes.datamodel.ClienteDataModel;
 import br.com.dev.appclientes.datamodel.UsuarioDataModel;
 import br.com.dev.appclientes.datasource.AppDataBase;
-import br.com.dev.appclientes.model.Cliente;
 import br.com.dev.appclientes.service.SincronizarSistema;
 
 public class SplashActivity extends AppCompatActivity {
@@ -73,8 +65,7 @@ public class SplashActivity extends AppCompatActivity {
                 inicializarAplicativo();
             }else{
                 //TODO: Colocar mensagem com as permissões negadas
-                //AppUtilToast.toastMessage(getApplicationContext(),"Verifique as permissões antes de continuar");
-                Toast.makeText(getApplicationContext(), "Verifique as permissões antes de continuar",Toast.LENGTH_SHORT).show();
+                AppUtilToast.toastMessage(getApplicationContext(),"Verifique as permissões antes de continuar");
             }
 
         }

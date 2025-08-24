@@ -17,6 +17,9 @@ import br.com.dev.appclientes.api.AppUtilSharedPreferences;
 import br.com.dev.appclientes.datamodel.ClienteDataModel;
 import br.com.dev.appclientes.datasource.AppDataBase;
 import br.com.dev.appclientes.model.Cliente;
+import br.com.dev.appclientes.service.AtualizarDadosTask;
+import br.com.dev.appclientes.service.DeletarDadosTask;
+import br.com.dev.appclientes.service.InserirDadosTask;
 
 public class ClienteController extends AppDataBase implements ICRUD<Cliente> {
 
@@ -63,6 +66,9 @@ public class ClienteController extends AppDataBase implements ICRUD<Cliente> {
         contentValues.put(ClienteDataModel.DATAINLCUSAO, AppUtil.getDataFormat());
         contentValues.put(ClienteDataModel.IDUSUARIO, prefs.getString("idUsuario",String.valueOf(-1)));
 
+        // Chamaa a classe assincrona
+        new InserirDadosTask(context, contentValues).execute("cliente");
+
         return insertDados(ClienteDataModel.TABELA,contentValues);
     }
 
@@ -72,6 +78,9 @@ public class ClienteController extends AppDataBase implements ICRUD<Cliente> {
         contentValues = new ContentValues();
 
         contentValues.put(ClienteDataModel.ID, obj.getId());
+
+        // Chama a classe assincrona
+        new DeletarDadosTask(context).execute("cliente",contentValues.getAsString("ID"));
 
         return deleteDados(ClienteDataModel.TABELA, (Integer) contentValues.get(ClienteDataModel.ID));
     }
@@ -107,6 +116,10 @@ public class ClienteController extends AppDataBase implements ICRUD<Cliente> {
         contentValues.put(ClienteDataModel.TERMOSDEUSO, obj.isTermosDeUso());
         contentValues.put(ClienteDataModel.DATAALTERACAO, AppUtil.getDataFormat());
         contentValues.put(ClienteDataModel.IDUSUARIO, obj.getFkIdUsuario());
+
+        // Chama a classe assincrona
+        new AtualizarDadosTask(context, contentValues).execute("cliente");
+
 
         return updateDados(ClienteDataModel.TABELA, contentValues);
     }

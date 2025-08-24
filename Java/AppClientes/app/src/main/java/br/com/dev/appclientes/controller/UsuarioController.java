@@ -2,17 +2,20 @@ package br.com.dev.appclientes.controller;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
 
-import java.util.Collections;
 import java.util.List;
 
 import br.com.dev.appclientes.api.AppUtil;
 import br.com.dev.appclientes.datamodel.UsuarioDataModel;
 import br.com.dev.appclientes.datasource.AppDataBase;
 import br.com.dev.appclientes.model.Usuario;
+import br.com.dev.appclientes.service.AtualizarDadosTask;
+import br.com.dev.appclientes.service.DeletarDadosTask;
+import br.com.dev.appclientes.service.InserirDadosTask;
 
 public class UsuarioController extends AppDataBase implements ICRUD<Usuario> {
+
+    private Context context;
 
     ContentValues values;
     public UsuarioController(Context context) {
@@ -44,12 +47,18 @@ public class UsuarioController extends AppDataBase implements ICRUD<Usuario> {
             values.put(UsuarioDataModel.LEMBRARSENHA, 0);
         }
 
+        //Chamando função assícrona
+        new InserirDadosTask(context, values).execute("usuario");
 
         return insertDados(UsuarioDataModel.TABELA, values);
     }
 
     @Override
     public boolean deleteObject(Usuario obj) {
+
+        //Chamando função assícrona
+        new DeletarDadosTask(context).execute("usuario", String.valueOf(obj.getId()));
+
 
         return deleteDados(UsuarioDataModel.TABELA, obj.getId());
     }
@@ -64,6 +73,9 @@ public class UsuarioController extends AppDataBase implements ICRUD<Usuario> {
         values.put(UsuarioDataModel.ATUALIZARSENHA, obj.getAtualizaSenha());
         values.put(UsuarioDataModel.LEMBRARSENHA, obj.isChkLembrarSenha());
         values.put(UsuarioDataModel.DATAALTERACAO, AppUtil.getDataFormat());
+
+        //Chamando função assíncrona
+        new AtualizarDadosTask(context, values).execute("usuario");
 
         return updateDados(UsuarioDataModel.TABELA, values);
     }

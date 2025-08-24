@@ -1,6 +1,7 @@
 package br.com.dev.appclientes.service;
 
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -16,6 +17,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
 
 import br.com.dev.appclientes.api.AppUtil;
 import br.com.dev.appclientes.api.AppUtilWebService;
@@ -29,12 +31,14 @@ public class InserirDadosTask extends AsyncTask<String, String, String> {
     private HttpURLConnection conn = null;
     private URL url = null;
     private Uri.Builder builder;
+    private ContentValues values;
 
 
-    public InserirDadosTask(Context context){
+    public InserirDadosTask(Context context, ContentValues contentValues){
         this.context = context;
         this.builder = new Uri.Builder();
         this.progressDialog = new ProgressDialog(context);
+        this.values = contentValues;
 
         // builder.appendQueryParameter("app","Cliente");
     }
@@ -61,42 +65,17 @@ public class InserirDadosTask extends AsyncTask<String, String, String> {
         try{
             if (param[0].equals("cliente")){
 
-                builder.appendQueryParameter("nome",param[1])
-                        .appendQueryParameter("telefone",param[2])
-                        .appendQueryParameter("email",param[3])
-                        .appendQueryParameter("cep",param[4])
-                        .appendQueryParameter("logradouro",param[5])
-                        .appendQueryParameter("complemento",param[6])
-                        .appendQueryParameter("numero",param[7])
-                        .appendQueryParameter("bairro",param[8])
-                        .appendQueryParameter("cidade",param[9])
-                        .appendQueryParameter("estado",param[10])
-                        .appendQueryParameter("pais",param[11])
-                        .appendQueryParameter("documento",param[12])
-                        .appendQueryParameter("id_tipo_documento",param[13])
-                        .appendQueryParameter("id_tipo_pessoa",param[14])
-                        .appendQueryParameter("termos_de_uso",param[15])
-                        .appendQueryParameter("data_inclusao",param[16])
-                        .appendQueryParameter("data_alteracao",param[17])
-                        .appendQueryParameter("id_usuario",param[18]);
+                for(Map.Entry<String, Object> entry : values.valueSet()){
+                    builder.appendQueryParameter(entry.getKey(), String.valueOf(entry.getValue()));
+                }
 
                 url = new URL(AppUtilWebService.URL_WEB_SERVICE+"insertClientes.php?token=xpto");//TODO:Remover token fixado
 
             } else if (param[0].equals("usuario")) {
 
-                builder.appendQueryParameter("id_tipo_pessoa",param[1])
-                       .appendQueryParameter("nome",param[2])
-                       .appendQueryParameter("cpf_cnpj",param[3])
-                       .appendQueryParameter("logradouro",param[4])
-                       .appendQueryParameter("complemento",param[5])
-                       .appendQueryParameter("email",param[6])
-                       .appendQueryParameter("senha",param[7])
-                       .appendQueryParameter("telefone",param[8])
-                       .appendQueryParameter("lembrar_senha",param[9])
-                       .appendQueryParameter("atualizar_senha",param[10])
-                       .appendQueryParameter("data_de_inclusao",param[11])
-                       .appendQueryParameter("data_de_alteracao",param[12]);
-
+                for(Map.Entry<String, Object> entry : values.valueSet()){
+                    builder.appendQueryParameter(entry.getKey(), String.valueOf(entry.getValue()));
+                }
 
                 url = new URL(AppUtilWebService.URL_WEB_SERVICE+"insertUsuario.phptoken=xpto");//TODO:Remover token fixado
 
