@@ -2,7 +2,6 @@ package br.com.dev.appclientes.api;
 
 public class AppUtilWebService {
     //Url do servidor apache - PHP
-    //192.168.0.21 -- > ipconfig
     public static final String URL_WEB_SERVICE = "http://localhost/meusprojetos/appclientes/";
 
     //TIMEOUT 5 segundos

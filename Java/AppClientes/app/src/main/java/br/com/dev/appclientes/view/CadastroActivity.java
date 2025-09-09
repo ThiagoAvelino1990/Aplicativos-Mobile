@@ -337,7 +337,7 @@ public class CadastroActivity extends AppCompatActivity {
             isDadosOK = false;
             editCadastroEmail.requestFocus();
             editCadastroEmail.setError("*");
-            AppUtilToast.toastMessage(getApplicationContext(),"* Email não pode ser vazio");
+            AppUtilToast.toastMessage(getApplicationContext(),"* Verifique email");
         } else if (editCpfCnpj.getText().toString().isEmpty() || !AppUtil.validaCnpjCpf(editCpfCnpj.getText().toString())) {
             isDadosOK = false;
             editCpfCnpj.requestFocus();

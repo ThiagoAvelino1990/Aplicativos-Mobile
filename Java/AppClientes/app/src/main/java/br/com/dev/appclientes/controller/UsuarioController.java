@@ -1,5 +1,7 @@
 package br.com.dev.appclientes.controller;
 
+import static io.realm.Realm.getApplicationContext;
+
 import android.content.ContentValues;
 import android.content.Context;
 
@@ -18,8 +20,10 @@ public class UsuarioController extends AppDataBase implements ICRUD<Usuario> {
     private Context context;
 
     ContentValues values;
+
     public UsuarioController(Context context) {
         super(context);
+        this.context = context;
     }
 
     @Override
@@ -40,6 +44,8 @@ public class UsuarioController extends AppDataBase implements ICRUD<Usuario> {
         values.put(UsuarioDataModel.SENHA, obj.getSenha());
         values.put(UsuarioDataModel.TELEFONE, obj.getTelefone());
         values.put(UsuarioDataModel.DATACINLUSAO, AppUtil.getDataFormat());
+
+        values.put(UsuarioDataModel.ATUALIZARSENHA, 0);
 
         if(obj.isChkLembrarSenha()) {
             values.put(UsuarioDataModel.LEMBRARSENHA, 1);

@@ -69,7 +69,8 @@ public class InserirDadosTask extends AsyncTask<String, String, String> {
                     builder.appendQueryParameter(entry.getKey(), String.valueOf(entry.getValue()));
                 }
 
-                url = new URL(AppUtilWebService.URL_WEB_SERVICE+"insertClientes.php?token=xpto");//TODO:Remover token fixado
+                url = new URL(AppUtilWebService.URL_WEB_SERVICE+"insertClientes.php");
+                Log.i(AppUtil.TAG, url.toString());
 
             } else if (param[0].equals("usuario")) {
 
@@ -77,10 +78,14 @@ public class InserirDadosTask extends AsyncTask<String, String, String> {
                     builder.appendQueryParameter(entry.getKey(), String.valueOf(entry.getValue()));
                 }
 
-                url = new URL(AppUtilWebService.URL_WEB_SERVICE+"insertUsuario.phptoken=xpto");//TODO:Remover token fixado
+                url = new URL(AppUtilWebService.URL_WEB_SERVICE+"insertUsuario.php");
+                Log.i(AppUtil.TAG, url.toString());
 
-                return "ERRO - Não foi possível definir uma parâmetro válido. "+param;
+            }else{
+                Log.e(AppUtil.TAG,"ERRO - Não foi possível definir uma parâmetro válido. "+param);
             }
+
+            builder.appendQueryParameter("token","xpto"); //TODO:Remover token fixado
 
         }catch(MalformedURLException err){
             Log.e(AppUtil.TAG,"MalformedURLException - "+err.getMessage());
@@ -95,12 +100,14 @@ public class InserirDadosTask extends AsyncTask<String, String, String> {
             conn.setConnectTimeout(AppUtilWebService.CONNECTION_TIMEOUT);
             conn.setReadTimeout(AppUtilWebService.READ_TIMEOUT);
             conn.setRequestMethod("POST");//"GET", "PUT", "POST", "DELETE"
-            conn.setRequestProperty("charset", "utf-8");
+            //conn.setRequestProperty("charset", "utf-8");
+            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 
             conn.setDoInput(true);
             conn.setDoOutput(true);
 
             String query = builder.build().getEncodedQuery();
+            Log.i(AppUtil.TAG, query);
 
             OutputStream outputStream = conn.getOutputStream();
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
@@ -139,6 +146,7 @@ public class InserirDadosTask extends AsyncTask<String, String, String> {
                 while ((line = reader.readLine()) != null) {
                     result.append(line);
                 }
+                Log.i(AppUtil.TAG, result.toString());
                 reader.close();
                 return (result.toString()); //Retorna o JSON
 

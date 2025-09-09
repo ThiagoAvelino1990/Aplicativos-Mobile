@@ -9,7 +9,7 @@ public class UsuarioDataModel {
     public static final String IDTIPOPESSOA = "ID_TIPO_PESSOA";
     public static final String NOME = "NOME";
     public static final String CPFCNPJ = "CPF_CNPJ";
-    public static final String LOGRADOURO = "LOGRAODURO";
+    public static final String LOGRADOURO = "LOGRADOURO";
     public static final String COMPLEMENTO = "COMPLEMENTO";
     public static final String EMAIL = "EMAIL";
     public static final String SENHA = "SENHA";

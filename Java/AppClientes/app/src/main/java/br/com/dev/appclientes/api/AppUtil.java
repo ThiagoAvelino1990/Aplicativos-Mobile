@@ -17,6 +17,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.InputMismatchException;
+import java.util.Locale;
 
 public class AppUtil {
 
@@ -48,7 +49,7 @@ public class AppUtil {
 
         String dataAtualFormat;
 
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         Date date = new Date();
 
         dataAtualFormat = dateFormat.format(date);
@@ -316,7 +317,7 @@ public class AppUtil {
     }
 
     public static boolean validaEmail(String email){
-        if (email.contains("@.com")){
+        if (email.contains("@") && email.contains(".com")){
             return true;
         }
         return false;

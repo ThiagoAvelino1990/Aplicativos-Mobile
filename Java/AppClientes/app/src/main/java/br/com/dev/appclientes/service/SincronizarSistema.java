@@ -51,9 +51,6 @@ public class SincronizarSistema extends AsyncTask<String, String, String> {
     @Override
     protected void onPreExecute(){
         super.onPreExecute();
-        progressDialog.setMessage("Sincronizando dados");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
     }
 
     @Override
@@ -61,7 +58,7 @@ public class SincronizarSistema extends AsyncTask<String, String, String> {
 
         String param = "";
 
-        for(int i = 0; i <= strings.length; i++){
+        for(int i = 0; i < strings.length; i++){
             param = strings[i];
         }
 
@@ -236,6 +233,7 @@ public class SincronizarSistema extends AsyncTask<String, String, String> {
         } else {
             Log.i(AppUtil.TAG,"Verificar esta condição");
         }
+
 
     }
 }
