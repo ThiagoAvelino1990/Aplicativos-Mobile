@@ -1,49 +1,49 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
     
-    $token = $_GET['token'];
-    $clienteID = $_GET['clienteID'];
-    $nome = $_GET['nome'];
-	$telefone = $_GET['telefone'];
-	$email = $_GET['email'];
-	$cep = $_GET['cep'];
-	$logradouro = $_GET['logradouro'];
-	$complemento = $_GET['complemento'];
-	$numero = $_GET['numero'];
-	$bairo = $_GET['bairro'];
-	$cidade = $_GET['cidade'];
-	$estado = $_GET['estado'];
-	$pais = $_GET['pais'];
-	$documento = $_GET['documento'];
-	$id_tipo_documento = $_GET['id_tipo_documento'];
-	$id_tipo_pessoa = $_GET['id_tipo_pessoa'];
-	$termos_de_uso = $_GET['termos_de_uso'];
-	$data_inclusoa = $_GET['data_inclusao'];
-	$data_alteracao = $_GET['data_alteracao'];
-	$id_usuario = $_GET['id_usuario'];    
+    $token 				= $_PUT['token'];
+    $clienteID 			= $_PUT['ID'];
+    $nome 				= $_PUT['NOME'];
+	$telefone 			= $_PUT['TELEFONE'];
+	$email 				= $_PUT['EMAIL'];
+	$cep 				= $_PUT['CEP'];
+	$logradouro 		= $_PUT['LOGRADOURO'];
+	$complemento 		= $_PUT['COMPLEMENTO'];
+	$numero 			= $_PUT['NUMERO'];
+	$bairo 				= $_PUT['BAIRRO'];
+	$cidade 			= $_PUT['CIDADE'];
+	$estado 			= $_PUT['ESTADO'];
+	$pais 				= $_PUT['PAIS'];
+	$documento 			= $_PUT['DOCUMENTO'];
+	$id_tipo_documento 	= $_PUT['ID_TIPO_DOCUMENTO'];
+	$id_tipo_pessoa 	= $_PUT['ID_TIPO_PESSOA'];
+	$termos_de_uso 		= $_PUT['TERMOS_DE_USO'];
+	$data_inclusoa 		= $_PUT['DATA_INCLUSAO'];
+	$data_alteracao 	= $_PUT['DATA_ALTERACAO'];
+	$id_usuario 		= $_PUT['ID_USUARIO'];    
     
     if ($token == "xpto" && !is_null($clienteID)) {
         include_once "dbConnection.php";
-        $sql = "UPDATE cliente SET nome = ?
-								  ,telefone = ?
-								  ,email = ?
-								  ,cep = ? 
-								  ,logradouro = ?
-								  ,complemento = ?
-								  ,numero = ?
-								  ,bairo = ?
-								  ,cidade = ?
-								  ,estado = ?
-								  ,pais = ?
-								  ,documento = ?
-								  ,id_tipo_documento = ?
-								  ,id_tipo_pessoa = ?
-								  ,termos_de_uso = ?
-								  ,data_inclusao = ?
-								  ,data_alteracao =?
-								  ,id_usuario = ?
+        $sql = "UPDATE CLIENTE SET NOME = ?
+								  ,TELEFONE = ?
+								  ,EMAIL = ?
+								  ,CEP = ? 
+								  ,LOGRADOURO = ?
+								  ,COMPLEMENTO = ?
+								  ,NUMERO = ?
+								  ,BAIRRO = ?
+								  ,CIDADE = ?
+								  ,ESTADO = ?
+								  ,PAIS = ?
+								  ,DOCUMENTO = ?
+								  ,ID_TIPO_DOCUMENTO = ?
+								  ,ID_TIPO_PESSOA = ?
+								  ,TERMOS_DE_USO = ?
+								  ,DATa_INCLUSAO = ?
+								  ,DATa_ALTERACAO =?
+								  ,ID_USUARIO = ?
 								  
-				 WHERE id = ?";
+				 WHERE ID = ?";
         $statement = $pdo->prepare($sql);
 
 		$statement->bindParam(1, $clienteID;
@@ -67,16 +67,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
 		$statement->bindParam(19, $id_usuario);
 		
 
-        $statement->execute();
+        if($statement->execute()){
+			echo json_encode(["Status"=>"Sucesso","Mensagem"=>"UPDATE realizado com sucesso"]);
+		}else{
+			$error = $statement->errorInfo();			
+			echo json_encode(["Status"=>"Erro", "Mensagem"=>"Erro ao realizar o UPDATE ".$error[2]]);			
+		}         
        // $results = $statement->fetchAll(PDO::FETCH_ASSOC);
         //echo "<pre>".print_r($results)."</pre"; 
         //echo$json = json_encode($results);
-        echo "Registro alterado com sucesso";
+        
     
     }else{
-        echo "Não autorizado.";
+        echo json_encode(["Status"=>"Erro", "Mensagem"=>"Não autorizado"]);
     }
 } else {
-    echo "Acesso Negado.";
+    echo json_encode(["Status"=>"Erro", "Mensagem"=>"Acesso Negado"]);
 }
 ?>

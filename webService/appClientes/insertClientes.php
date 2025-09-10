@@ -1,30 +1,30 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
-    $token = $_GET['token'];    
-    $nome = $_GET['nome'];
-	$telefone = $_GET['telefone'];
-	$email = $_GET['email'];
-	$cep = $_GET['cep'];
-	$logradouro = $_GET['logradouro'];
-	$complemento = $_GET['complemento'];
-	$numero = $_GET['numero'];
-	$bairo = $_GET['bairro'];
-	$cidade = $_GET['cidade'];
-	$estado = $_GET['estado'];
-	$pais = $_GET['pais'];
-	$documento = $_GET['documento'];
-	$id_tipo_documento = $_GET['id_tipo_documento'];
-	$id_tipo_pessoa = $_GET['id_tipo_pessoa'];
-	$termos_de_uso = $_GET['termos_de_uso'];
-	$data_inclusoa = $_GET['data_inclusao'];
-	$data_alteracao = $_GET['data_alteracao'];
-	$id_usuario = $_GET['id_usuario'];    
+    $token = $_POST['token'];    
+    $nome = $_POST['NOME'];
+	$telefone = $_POST['TELEFONE'];
+	$email = $_POST['EMAIL'];
+	$cep = $_POST['CEP'];
+	$logradouro = $_POST['LOGRADOURO'];
+	$complemento = $_POST['COMPLEMENTO'];
+	$numero = $_POST['NUMERO'];
+	$bairo = $_POST['BAIRRO'];
+	$cidade = $_POST['CIDADE'];
+	$estado = $_POST['ESTADO'];
+	$pais = $_POST['PAIS'];
+	$documento = $_POST['DOCUMENTO'];
+	$id_tipo_documento = $_POST['ID_TIPO_DOCUMENTO'];
+	$id_tipo_pessoa = $_POST['ID_TIPO_PESSOA'];
+	$termos_de_uso = $_POST['TERMOS_DE_USO'];
+	$data_inclusoa = $_POST['DATA_INCLUSAO'];
+	$data_alteracao = $_POST['DATA_ALTREACAO'];
+	$id_usuario = $_POST['ID_USUARIO'];    
     
     if ($token == "xpto" && !is_null($id_usuario)) {
         include_once "dbConnection.php";
-        $sql = "INSERT INTO cliente (nome, telefone, email, cep, logradouro, complemento, numero, bairro, cidade, estado, pais,
-									 documento, id_tipo_documento, id_tipo_pessoa, termos_de_uso, data_inclusao, data_alteracao, id_usuario)									 
+        $sql = "INSERT INTO CLIENTE (NOME, TELEFONE, EMAIL, CEP, LOGRADOURO, COMPLEMENTO, NUMERO, BAIRRO, CIDADE, ESTADO, PAIS,
+									 DOCUMENTO, ID_TIPO_DOCUMENTO, ID_TIPO_PESSOA, TERMOS_DE_USO, DATA__INCLUSAO, DATA_ALTERACAO, ID_USUARIO)									 
 				VALUES( ?, ?, ?, ? , ?, ?, ?, ?, ?, ?, ?,
 						?, ?, ?, ?, ?, ?, ?);";
         $statement = $pdo->prepare($sql);
@@ -49,16 +49,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$statement->bindParam(18, $id_usuario);
 		
 
-        $statement->execute();
+        if($statement->execute()){
+			echo json_encode(["Status"=>"Sucesso","Mensagem"=>"INSERT realizado com sucesso"]);
+		}else{
+			$error = $statement->errorInfo();			
+			echo json_encode(["Status"=>"Erro", "Mensagem"=>"Erro ao realizar o INSERT ".$error[2]]);			
+		}   
        // $results = $statement->fetchAll(PDO::FETCH_ASSOC);
         //echo "<pre>".print_r($results)."</pre"; 
-        //echo$json = json_encode($results);
-        echo "Registro incluso com sucesso";
+        //echo$json = json_encode($results);        
     
     }else{
-        echo "Não autorizado.";
+        echo json_encode(["Status"=>"Erro", "Mensagem"=>"Não autorizado"]);
     }
 } else {
-    echo "Acesso Negado.";
+    echo json_encode(["Status"=>"Erro", "Mensagem"=>"Acesso Negado"]);
 }
 ?>

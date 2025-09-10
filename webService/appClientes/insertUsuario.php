@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		
 
         if($statement->execute()){
-			echo json_encode(["Status"=>"Sucesso","Mensagem"=>"Registro incluso com sucesso"]);
+			echo json_encode(["Status"=>"Sucesso","Mensagem"=>"INSERT realizado com sucesso"]);
 		}else{
 			$error = $statement->errorInfo();			
 			echo json_encode(["Status"=>"Erro", "Mensagem"=>"Erro ao realizar o INSERT ".$error[2]]);			
