@@ -80,7 +80,7 @@ public class ClienteController extends AppDataBase implements ICRUD<Cliente> {
         contentValues.put(ClienteDataModel.ID, obj.getId());
 
         // Chama a classe assincrona
-        new DeletarDadosTask(context).execute("cliente",contentValues.getAsString("ID"));
+        new DeletarDadosTask(context).execute("cliente", String.valueOf(obj.getId()));
 
         return deleteDados(ClienteDataModel.TABELA, (Integer) contentValues.get(ClienteDataModel.ID));
     }

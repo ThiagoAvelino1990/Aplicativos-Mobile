@@ -61,17 +61,21 @@ public class DeletarDadosTask extends AsyncTask<String, String, String> {
 
                 builder.appendQueryParameter("id",param[1]);
 
-                url = new URL(AppUtilWebService.URL_WEB_SERVICE+"deleteClientes.php?token=xpto");//TODO:Remover token fixado
+                url = new URL(AppUtilWebService.URL_WEB_SERVICE+"deleteClientes.php");
+                Log.i(AppUtil.TAG, url.toString());
 
             } else if (param[0].equals("usuario")) {
 
                 builder.appendQueryParameter("id",param[1]);
 
+                url = new URL(AppUtilWebService.URL_WEB_SERVICE+"deleteUsuario.php");
+                Log.i(AppUtil.TAG, url.toString());
 
-                url = new URL(AppUtilWebService.URL_WEB_SERVICE+"deleteUsuario.phptoken=xpto");//TODO:Remover token fixado
-
-                return "ERRO - Não foi possível definir uma parâmetro válido. "+param;
+            }else{
+                Log.e(AppUtil.TAG,"ERRO - Não foi possível definir uma parâmetro válido. "+param);
             }
+
+            builder.appendQueryParameter("token","xpto"); //TODO:Remover token fixado
 
         }catch(MalformedURLException err){
             Log.e(AppUtil.TAG,"MalformedURLException - "+err.getMessage());
@@ -86,7 +90,8 @@ public class DeletarDadosTask extends AsyncTask<String, String, String> {
             conn.setConnectTimeout(AppUtilWebService.CONNECTION_TIMEOUT);
             conn.setReadTimeout(AppUtilWebService.READ_TIMEOUT);
             conn.setRequestMethod("DELETE");//"GET", "PUT", "POST", "DELETE"
-            conn.setRequestProperty("charset", "utf-8");
+            //conn.setRequestProperty("charset", "utf-8");
+            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 
             conn.setDoInput(true);
             conn.setDoOutput(true);
