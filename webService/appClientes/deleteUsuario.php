@@ -1,5 +1,8 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
+
+    // Captura e converte os dados x-www-form-urlencoded
+    parse_str(file_get_contents("php://input"), $_DELTE);		
     
     $usuarioID = $_DELETE['ID'];
     

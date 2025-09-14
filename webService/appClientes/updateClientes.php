@@ -1,5 +1,8 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
+
+    // Captura e converte os dados x-www-form-urlencoded
+    parse_str(file_get_contents("php://input"), $_PUT);	
     
     $token 				= $_PUT['token'];
     $clienteID 			= $_PUT['ID'];
@@ -45,26 +48,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
 								  
 				 WHERE ID = ?";
         $statement = $pdo->prepare($sql);
-
-		$statement->bindParam(1, $clienteID;
-		$statement->bindParam(2, $nome);
-		$statement->bindParam(3, $telefone);
-		$statement->bindParam(4, $email);
-		$statement->bindParam(5, $cep);
-		$statement->bindParam(6, $logradouro);
-		$statement->bindParam(7, $complemento);
-		$statement->bindParam(8, $numero);
-		$statement->bindParam(9, $bairo);
-		$statement->bindParam(10, $cidade);
-		$statement->bindParam(11, $estado);
-		$statement->bindParam(12, $pais);
-		$statement->bindParam(13, $documento);
-		$statement->bindParam(14, $id_tipo_documento);
-		$statement->bindParam(15, $id_tipo_pessoa);
-		$statement->bindParam(16, $termos_de_uso);
-		$statement->bindParam(17, $data_inclusoa);
-		$statement->bindParam(18, $data_alteracao);
-		$statement->bindParam(19, $id_usuario);
+		
+		$statement->bindParam(1, $nome);
+		$statement->bindParam(2, $telefone);
+		$statement->bindParam(3, $email);
+		$statement->bindParam(4, $cep);
+		$statement->bindParam(5, $logradouro);
+		$statement->bindParam(6, $complemento);
+		$statement->bindParam(7, $numero);
+		$statement->bindParam(8, $bairo);
+		$statement->bindParam(9, $cidade);
+		$statement->bindParam(10, $estado);
+		$statement->bindParam(11, $pais);
+		$statement->bindParam(12, $documento);
+		$statement->bindParam(13, $id_tipo_documento);
+		$statement->bindParam(14, $id_tipo_pessoa);
+		$statement->bindParam(15, $termos_de_uso);
+		$statement->bindParam(16, $data_inclusoa);
+		$statement->bindParam(17, $data_alteracao);
+		$statement->bindParam(18, $id_usuario);
+		$statement->bindParam(19, $clienteID;		
 		
 
         if($statement->execute()){

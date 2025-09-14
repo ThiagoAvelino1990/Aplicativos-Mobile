@@ -1,6 +1,9 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
     
+    // Captura e converte os dados x-www-form-urlencoded
+    parse_str(file_get_contents("php://input"), $_DELETE);	
+	
     $clienteID = $_DELETE['ID'];
     
     if ($token == "xpto" && !is_null($clienteID)) {
